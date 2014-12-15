@@ -1,21 +1,42 @@
 #!/usr/local/bin/python3
 # -*- coding: utf-8 -*-
 """
-(C) Copyright [2014] Avery Rozar
+(C) Copyright [2015] InfoSec Consulting, Inc.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
 You may obtain a copy of the License at
- 
+
 http://www.apache.org/licenses/LICENSE-2.0
- 
+
 Unless required by applicable law or agreed to in writing, software
 distributed under the License is distributed on an "AS IS" BASIS,
 WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 
+         ...
+    .:::|#:#|::::.
+ .:::::|##|##|::::::.
+ .::::|##|:|##|:::::.
+  ::::|#|:::|#|:::::
+  ::::|#|:::|#|:::::
+  ::::|##|:|##|:::::
+  ::::.|#|:|#|.:::::
+  ::|####|::|####|::
+  :|###|:|##|:|###|:
+  |###|::|##|::|###|
+  |#|::|##||##|::|#|
+  |#|:|##|::|##|:|#|
+  |#|##|::::::|##|#|
+   |#|::::::::::|#|
+    ::::::::::::::
+      ::::::::::
+       ::::::::
+        ::::::
+          ::
 """
+
 __author__ = 'Avery Rozar'
 
 from sqlalchemy import Column, Integer, Text, ForeignKey, Sequence, TIMESTAMP, String
@@ -114,7 +135,7 @@ class NvdVulnReference(Base):
     nvd_vuln_source_id = Column(Integer, ForeignKey('nvd_vuln_sources.id'), nullable=False)
     nvd_vuln_source = relationship('NvdVulnSource', backref='nvd_vuln_references', order_by=id)
 
-    type = Column(Text)
+    nvd_ref_type = Column(Text)
     href = Column(Text)
 
 
@@ -132,6 +153,7 @@ class InventoryHost(Base):
     ipv4_addr = Column(postgresql.INET, unique=True)
     ipv6_addr = Column(postgresql.INET)
     macaddr = Column(postgresql.MACADDR)
+    host_type = Column(Text)
 
     """Relation to tie mac address vendors to inventory hosts"""
     mac_vendor_id = Column(Integer, ForeignKey('mac_vendors.id'))

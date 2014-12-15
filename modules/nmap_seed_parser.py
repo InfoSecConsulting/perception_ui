@@ -1,21 +1,42 @@
 #!/usr/local/bin/python3
 # -*- coding: utf-8 -*-
 """
-(C) Copyright [2014] InfoSec Consulting, Inc.
+(C) Copyright [2015] InfoSec Consulting, Inc.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
 You may obtain a copy of the License at
- 
+
 http://www.apache.org/licenses/LICENSE-2.0
- 
+
 Unless required by applicable law or agreed to in writing, software
 distributed under the License is distributed on an "AS IS" BASIS,
 WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 
+         ...
+    .:::|#:#|::::.
+ .:::::|##|##|::::::.
+ .::::|##|:|##|:::::.
+  ::::|#|:::|#|:::::
+  ::::|#|:::|#|:::::
+  ::::|##|:|##|:::::
+  ::::.|#|:|#|.:::::
+  ::|####|::|####|::
+  :|###|:|##|:|###|:
+  |###|::|##|::|###|
+  |#|::|##||##|::|#|
+  |#|:|##|::|##|:|#|
+  |#|##|::::::|##|#|
+   |#|::::::::::|#|
+    ::::::::::::::
+      ::::::::::
+       ::::::::
+        ::::::
+          ::
 """
+
 __author__ = 'Avery Rozar'
 
 import xml.etree.ElementTree as ET
@@ -50,6 +71,7 @@ def parse_nmap_xml(nmap_xml):
         v6_addr = None
         mac_addr = None
         mac_vendor = None
+        ostype = None
         os_cpe = None
         ports_info = []
         host_name = None
@@ -80,6 +102,8 @@ def parse_nmap_xml(nmap_xml):
         svc_nse_script_output = None
         svc_nse_script_id_a = []
         svc_nse_script_output_a = []
+        host_nse_script_id_a = []
+        host_nse_script_output_a = []
 
         """Get the hosts state, and find all addresses"""
         state = host[0].get('state')
@@ -109,17 +133,22 @@ def parse_nmap_xml(nmap_xml):
         try:
             osmatch_elm = os_elm.find('osmatch')
             osclass_elm = osmatch_elm.findall('osclass')
+            ostype = osclass_elm[0].get('type')
             os_cpe = osclass_elm[0][0].text
         except:
             """Nothing found"""
 
         """Get Host NSE Script Info"""
         try:
-            hs = host.find('hostscript')
-            for script in hs:
-                if script.text == 'true':
-                    host_nse_script_id = script.get('id')
-                    host_nse_script_output = script.get('output')
+            find_host_nse_scripts = host.find('hostscript')
+
+            for host_nse_script in find_host_nse_scripts:
+                host_nse_script_id = host_nse_script.get('id')
+                host_nse_script_output = host_nse_script.get('output')
+
+                """Build a dictionary of the NSE script names and output"""
+                host_nse_script_id_a.append(host_nse_script_id)
+                host_nse_script_output_a.append(host_nse_script_output)
         except TypeError:
             """Nothing found"""
 
@@ -248,6 +277,7 @@ def parse_nmap_xml(nmap_xml):
         add_inventory_host = InventoryHost(ipv4_addr=ipv4,
                                            ipv6_addr=ipv6,
                                            macaddr=mac,
+                                           host_type=ostype,
                                            host_name=name,
                                            mac_vendor_id=select_mac.id,
                                            state=current_state,
@@ -264,6 +294,7 @@ def parse_nmap_xml(nmap_xml):
                     .values(macaddr=mac,
                             ipv6_addr=ipv6,
                             host_name=name,
+                            host_type=ostype,
                             mac_vendor_id=select_mac.id,
                             state=current_state,
                             product_id=os_product.id))
@@ -277,19 +308,18 @@ def parse_nmap_xml(nmap_xml):
         session.query(HostNseScript).filter(HostNseScript.host_id == inventory_hosts.id).delete()
         session.commit()
 
-        """Add the new HostNseScript"""
-        add_host_nse_script_op = HostNseScript(host_id=inventory_hosts.id, name=host_nse_script_id,
-                                               output=host_nse_script_output)
-        host_nse_script = session.query(HostNseScript)\
-            .filter_by(host_id=inventory_hosts.id, name=host_nse_script_id, output=host_nse_script_output).first()
+        """Add the new HostNseScripts"""
+        host_nse_script_keys = host_nse_script_id_a
+        host_nse_script_values = host_nse_script_output_a
 
-        """Check to see if I exist, but how could I? Look above ^ """
-        if host_nse_script is None:
-            try:
-                session.add(add_host_nse_script_op)
-                session.commit()
-            except sqlalchemy.exc.IntegrityError:
-                session.rollback()
+        host_nse_scripts_dict = dict(zip(host_nse_script_keys, host_nse_script_values))
+
+        for k, v in host_nse_scripts_dict.items():
+            add_nse_script_op = HostNseScript(host_id=inventory_hosts.id,
+                                              name=k,
+                                              output=v)
+            session.add(add_nse_script_op)
+            session.commit()
 
         """Find all port Info"""
         port_info = host.findall('ports')
@@ -434,23 +464,6 @@ def parse_nmap_xml(nmap_xml):
                             """Then you must already exist."""
                             session.rollback()
 
-                    """"""
-                    #if svc_product is None:
-                    #    add_inventory_svcs = InventorySvc(host_id=inventory_hosts.id,
-                    #                                      protocol=protocol,
-                    #                                      portid=portid,
-                    #                                      name=service_name,
-                    #                                      svc_product=service_product,
-                    #                                      extra_info=ex_info)
-                    #
-                    #    inventory_svcs = session.query(InventorySvc).filter_by(host_id=inventory_hosts.id,
-                    #                                                           protocol=protocol,
-                    #                                                           portid=portid,
-                    #                                                           name=service_name,
-                    #                                                           svc_product=service_product,
-                    #                                                           extra_info=ex_info).first()
-                    #else:
-
                     """Add the new inventory_svc"""
                     add_inventory_svcs = InventorySvc(host_id=inventory_hosts.id,
                                                       protocol=protocol,
@@ -460,28 +473,11 @@ def parse_nmap_xml(nmap_xml):
                                                       product_id=svc_product.id,
                                                       extra_info=ex_info)
 
-                    #"""Get the inventory_svc.id"""
-                    #inventory_svcs = session.query(InventorySvc).filter_by(host_id=inventory_hosts.id,
-                    #                                                       protocol=protocol,
-                    #                                                       portid=portid,
-                    #                                                       name=service_name,
-                    #                                                       svc_product=service_product,
-                    #                                                       product_id=svc_product.id,
-                    #                                                       extra_info=ex_info).first()
-                    #
-                    #if inventory_svcs is None:
                     try:
                         session.add(add_inventory_svcs)
                         session.commit()
-                        #if svc_product is None:
-                        #    svc = session.query(InventorySvc).filter_by(host_id=inventory_hosts.id,
-                        #                                                protocol=protocol,
-                        #                                                portid=portid,
-                        #                                                name=service_name,
-                        #                                                svc_product=service_product,
-                        #                                                extra_info=ex_info).first()
-                        #else:
 
+                        """Get the inventory_svcs.id"""
                         svc = session.query(InventorySvc).filter_by(host_id=inventory_hosts.id,
                                                                     protocol=protocol,
                                                                     portid=portid,
@@ -494,6 +490,7 @@ def parse_nmap_xml(nmap_xml):
                         svc_nse_script_keys = svc_nse_script_id_a
                         svc_nse_script_values = svc_nse_script_output_a
 
+                        """Put the two NSE id and output lists together as a dictionary"""
                         svc_nse_scripts_dict = dict(zip(svc_nse_script_keys, svc_nse_script_values))
 
                         for k, v in svc_nse_scripts_dict.items():
@@ -512,6 +509,7 @@ def parse_nmap_xml(nmap_xml):
                     v6_addr = None
                     mac_addr = None
                     mac_vendor = None
+                    ostype = None
                     os_cpe = None
                     ports_info = []
                     host_name = None
@@ -542,6 +540,8 @@ def parse_nmap_xml(nmap_xml):
                     svc_nse_script_output = None
                     svc_nse_script_id_a = []
                     svc_nse_script_output_a = []
+                    host_nse_script_id_a = []
+                    host_nse_script_output_a = []
 
                     """Add SVC only info to database"""
                 else:
@@ -551,13 +551,6 @@ def parse_nmap_xml(nmap_xml):
                                                       name=service_name,
                                                       svc_product=service_product,
                                                       extra_info=ex_info)
-                    #inventory_svcs = session.query(InventorySvc).filter_by(host_id=inventory_hosts.id,
-                    #                                                       protocol=protocol,
-                    #                                                       portid=portid,
-                    #                                                       name=service_name,
-                    #                                                       svc_product=service_product,
-                    #                                                       extra_info=ex_info).first()
-                    #if inventory_svcs is None:
                     try:
                         session.add(add_inventory_svcs)
                         session.commit()
@@ -594,6 +587,7 @@ def parse_nmap_xml(nmap_xml):
                 v6_addr = None
                 mac_addr = None
                 mac_vendor = None
+                ostype = None
                 os_cpe = None
                 ports_info = []
                 host_name = None
@@ -624,5 +618,7 @@ def parse_nmap_xml(nmap_xml):
                 svc_nse_script_output = None
                 svc_nse_script_id_a = []
                 svc_nse_script_output_a = []
+                host_nse_script_id_a = []
+                host_nse_script_output_a = []
 
     session.close()

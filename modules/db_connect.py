@@ -1,7 +1,7 @@
 #!/usr/local/bin/python3
 # -*- coding: utf-8 -*-
 """
-(C) Copyright [2014] InfoSec Consulting, Inc.
+(C) Copyright [2015] InfoSec Consulting, Inc.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -36,6 +36,7 @@ limitations under the License.
         ::::::
           ::
 """
+
 __author__ = 'Avery Rozar'
 
 import os
@@ -74,6 +75,25 @@ except ImportError:
 Session = sessionmaker()
 
 
+def connect():
+
+    db_yml = open('config/database.yml', 'r')
+    db_info = yaml.safe_load(db_yml)
+    cursor = None
+
+    try:
+        Session = sessionmaker()
+        engine = create_engine(URL(**db_info), pool_size=20)
+        Session.configure(bind=engine)
+        return Session
+    except sqlalchemy.exc.OperationalError as e:
+        print(e)
+        sys.exit(1)
+    finally:
+        if cursor:
+            cursor.close()
+
+
 def connect_and_create_db():
 
     db_yml = open('config/database.yml', 'r')
@@ -93,16 +113,16 @@ def connect_and_create_db():
             cursor.close()
 
 
-def connect():
+def connect_and_drop_all():
 
     db_yml = open('config/database.yml', 'r')
     db_info = yaml.safe_load(db_yml)
     cursor = None
 
     try:
-        Session = sessionmaker()
-        engine = create_engine(URL(**db_info), pool_size=20)
+        engine = create_engine(URL(**db_info))
         Session.configure(bind=engine)
+        classes.db_tables.Base.metadata.drop_all(engine)
         return Session
     except sqlalchemy.exc.OperationalError as e:
         print(e)
