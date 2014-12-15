@@ -1,0 +1,8 @@
+#
+# Database connection info
+
+drivername: postgres
+host: dbsvr
+database: csdashboard
+username: csdashboard
+password: csdashboard

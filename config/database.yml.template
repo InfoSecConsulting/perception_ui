@@ -1,0 +1,9 @@
+#
+# Database connection info
+
+host: dbsvr
+database: csdashboard
+pool: 5
+timeout: 5000
+username: csdashboard
+password: csdashboard
