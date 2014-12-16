@@ -1,0 +1,48 @@
+Perception
+==========
+
+
+Perception is a tool used to parse NMAP XML output and insert info into a PostgreSQL database..
+
+===============================================================================================
+
+
+First thing to do is edit the config/database.yml file.
+
+Add host, database, user, and password.
+
+PostgreSQL 8.4 and ^ is supported.
+
+PostgreSQL 8.4 has been tested.
+
+=================================
+
+Usage:
+
+To get help use the -h argument.
+
+     python3 perception.py -h
+
+===================================
+
+Drop all tables from the database.
+
+     python3 perception.py --drop_all
+
+=====================================================================================
+
+Parse an NMAP scan.
+
+     python3 perception.py --nmap_xml nmap_scans/example.nmap_scan.xml --seed_parse
+
+=====================================================================================
+
+--seed_parse is used to add hosts from an NMAP scan into the database. This will clear
+
+    all services associated with a host (if any ), and add the service from the new
+
+    XML as new services. An option to update the hosts with new information will come
+
+    soon. This script will not work without this flag this time.
+
+=====================================================================================
