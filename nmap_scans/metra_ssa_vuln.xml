@@ -1,0 +1,194 @@
+<?xml version="1.0"?>
+<!DOCTYPE nmaprun>
+<?xml-stylesheet href="file:///usr/bin/../share/nmap/nmap.xsl" type="text/xsl"?>
+<!-- Nmap 6.47 scan initiated Wed Dec 17 17:06:21 2014 as: nmap -sS -A -&#45;script vuln -oX metra_ssa_vuln.xml 12.16.20.100 12.16.20.101 12.16.20.102 12.16.20.103 12.16.20.104 12.16.20.105 -->
+<nmaprun scanner="nmap" args="nmap -sS -A -&#45;script vuln -oX metra_ssa_vuln.xml 12.16.20.100 12.16.20.101 12.16.20.102 12.16.20.103 12.16.20.104 12.16.20.105" start="1418853981" startstr="Wed Dec 17 17:06:21 2014" version="6.47" xmloutputversion="1.04">
+<scaninfo type="syn" protocol="tcp" numservices="1000" services="1,3-4,6-7,9,13,17,19-26,30,32-33,37,42-43,49,53,70,79-85,88-90,99-100,106,109-111,113,119,125,135,139,143-144,146,161,163,179,199,211-212,222,254-256,259,264,280,301,306,311,340,366,389,406-407,416-417,425,427,443-445,458,464-465,481,497,500,512-515,524,541,543-545,548,554-555,563,587,593,616-617,625,631,636,646,648,666-668,683,687,691,700,705,711,714,720,722,726,749,765,777,783,787,800-801,808,843,873,880,888,898,900-903,911-912,981,987,990,992-993,995,999-1002,1007,1009-1011,1021-1100,1102,1104-1108,1110-1114,1117,1119,1121-1124,1126,1130-1132,1137-1138,1141,1145,1147-1149,1151-1152,1154,1163-1166,1169,1174-1175,1183,1185-1187,1192,1198-1199,1201,1213,1216-1218,1233-1234,1236,1244,1247-1248,1259,1271-1272,1277,1287,1296,1300-1301,1309-1311,1322,1328,1334,1352,1417,1433-1434,1443,1455,1461,1494,1500-1501,1503,1521,1524,1533,1556,1580,1583,1594,1600,1641,1658,1666,1687-1688,1700,1717-1721,1723,1755,1761,1782-1783,1801,1805,1812,1839-1840,1862-1864,1875,1900,1914,1935,1947,1971-1972,1974,1984,1998-2010,2013,2020-2022,2030,2033-2035,2038,2040-2043,2045-2049,2065,2068,2099-2100,2103,2105-2107,2111,2119,2121,2126,2135,2144,2160-2161,2170,2179,2190-2191,2196,2200,2222,2251,2260,2288,2301,2323,2366,2381-2383,2393-2394,2399,2401,2492,2500,2522,2525,2557,2601-2602,2604-2605,2607-2608,2638,2701-2702,2710,2717-2718,2725,2800,2809,2811,2869,2875,2909-2910,2920,2967-2968,2998,3000-3001,3003,3005-3007,3011,3013,3017,3030-3031,3052,3071,3077,3128,3168,3211,3221,3260-3261,3268-3269,3283,3300-3301,3306,3322-3325,3333,3351,3367,3369-3372,3389-3390,3404,3476,3493,3517,3527,3546,3551,3580,3659,3689-3690,3703,3737,3766,3784,3800-3801,3809,3814,3826-3828,3851,3869,3871,3878,3880,3889,3905,3914,3918,3920,3945,3971,3986,3995,3998,4000-4006,4045,4111,4125-4126,4129,4224,4242,4279,4321,4343,4443-4446,4449,4550,4567,4662,4848,4899-4900,4998,5000-5004,5009,5030,5033,5050-5051,5054,5060-5061,5080,5087,5100-5102,5120,5190,5200,5214,5221-5222,5225-5226,5269,5280,5298,5357,5405,5414,5431-5432,5440,5500,5510,5544,5550,5555,5560,5566,5631,5633,5666,5678-5679,5718,5730,5800-5802,5810-5811,5815,5822,5825,5850,5859,5862,5877,5900-5904,5906-5907,5910-5911,5915,5922,5925,5950,5952,5959-5963,5987-5989,5998-6007,6009,6025,6059,6100-6101,6106,6112,6123,6129,6156,6346,6389,6502,6510,6543,6547,6565-6567,6580,6646,6666-6669,6689,6692,6699,6779,6788-6789,6792,6839,6881,6901,6969,7000-7002,7004,7007,7019,7025,7070,7100,7103,7106,7200-7201,7402,7435,7443,7496,7512,7625,7627,7676,7741,7777-7778,7800,7911,7920-7921,7937-7938,7999-8002,8007-8011,8021-8022,8031,8042,8045,8080-8090,8093,8099-8100,8180-8181,8192-8194,8200,8222,8254,8290-8292,8300,8333,8383,8400,8402,8443,8500,8600,8649,8651-8652,8654,8701,8800,8873,8888,8899,8994,9000-9003,9009-9011,9040,9050,9071,9080-9081,9090-9091,9099-9103,9110-9111,9200,9207,9220,9290,9415,9418,9485,9500,9502-9503,9535,9575,9593-9595,9618,9666,9876-9878,9898,9900,9917,9929,9943-9944,9968,9998-10004,10009-10010,10012,10024-10025,10082,10180,10215,10243,10566,10616-10617,10621,10626,10628-10629,10778,11110-11111,11967,12000,12174,12265,12345,13456,13722,13782-13783,14000,14238,14441-14442,15000,15002-15004,15660,15742,16000-16001,16012,16016,16018,16080,16113,16992-16993,17877,17988,18040,18101,18988,19101,19283,19315,19350,19780,19801,19842,20000,20005,20031,20221-20222,20828,21571,22939,23502,24444,24800,25734-25735,26214,27000,27352-27353,27355-27356,27715,28201,30000,30718,30951,31038,31337,32768-32785,33354,33899,34571-34573,35500,38292,40193,40911,41511,42510,44176,44442-44443,44501,45100,48080,49152-49161,49163,49165,49167,49175-49176,49400,49999-50003,50006,50300,50389,50500,50636,50800,51103,51493,52673,52822,52848,52869,54045,54328,55055-55056,55555,55600,56737-56738,57294,57797,58080,60020,60443,61532,61900,62078,63331,64623,64680,65000,65129,65389"/>
+<verbose level="0"/>
+<debugging level="0"/>
+
+<host starttime="1418853991" endtime="1418854993"><status state="up" reason="reset" reason_ttl="254"/>
+<address addr="12.16.20.100" addrtype="ipv4"/>
+<hostnames>
+<hostname name="mail.metra-autosound.com" type="PTR"/>
+</hostnames>
+<ports><extraports state="filtered" count="1000">
+<extrareasons reason="no-responses" count="1000"/>
+</extraports>
+</ports>
+<os></os>
+<distance value="2"/>
+<trace port="80" proto="tcp">
+<hop ttl="1" ipaddr="172.31.254.1" rtt="90.84"/>
+<hop ttl="2" ipaddr="12.16.20.100" rtt="3.80" host="mail.metra-autosound.com"/>
+</trace>
+<times srtt="62328" rttvar="41042" to="226496"/>
+</host>
+
+<host starttime="1418853991" endtime="1418854991"><status state="up" reason="reset" reason_ttl="254"/>
+<address addr="12.16.20.101" addrtype="ipv4"/>
+<hostnames>
+</hostnames>
+<ports><extraports state="filtered" count="1000">
+<extrareasons reason="no-responses" count="1000"/>
+</extraports>
+</ports>
+<os></os>
+<distance value="2"/>
+<trace port="80" proto="tcp">
+<hop ttl="1" ipaddr="172.31.254.1" rtt="90.84"/>
+<hop ttl="2" ipaddr="12.16.20.101" rtt="93.31"/>
+</trace>
+<times srtt="72533" rttvar="31115" to="196993"/>
+</host>
+
+<host starttime="1418853991" endtime="1418855208"><status state="up" reason="syn-ack" reason_ttl="119"/>
+<address addr="12.16.20.102" addrtype="ipv4"/>
+<hostnames>
+<hostname name="webmail.metra-autosound.com" type="PTR"/>
+</hostnames>
+<ports><extraports state="filtered" count="999">
+<extrareasons reason="no-responses" count="999"/>
+</extraports>
+<port protocol="tcp" portid="443"><state state="open" reason="syn-ack" reason_ttl="119"/><service name="http" product="Microsoft IIS httpd" version="7.5" ostype="Windows" tunnel="ssl" method="probed" conf="10"><cpe>cpe:/a:microsoft:iis:7.5</cpe><cpe>cpe:/o:microsoft:windows</cpe></service><script id="http-csrf" output="Couldn&apos;t find any CSRF vulnerabilities."/><script id="http-dombased-xss" output="Couldn&apos;t find any DOM based XSS."/><script id="http-fileupload-exploiter" output="&#xa;"></script><script id="http-frontpage-login" output="false">false</script><script id="http-slowloris-check" output="&#xa;  VULNERABLE:&#xa;  Slowloris DOS attack&#xa;    State: VULNERABLE&#xa;    Description:&#xa;      Slowloris tries to keep many connections to the target web server open and hold them open as long as possible.&#xa;      It accomplishes this by opening connections to the target web server and sending a partial request. By doing&#xa;      so, it starves the http server&apos;s resources causing Denial Of Service.&#xa;      &#xa;    Disclosure date: 2009-09-17&#xa;    References:&#xa;      http://ha.ckers.org/slowloris/&#xa;"/><script id="http-stored-xss" output="Couldn&apos;t find any stored XSS vulnerabilities."/></port>
+</ports>
+<os><portused state="open" proto="tcp" portid="443"/>
+<osmatch name="Linksys BEFW11S4 WAP" accuracy="91" line="36620">
+<osclass type="WAP" vendor="Linksys" osfamily="embedded" accuracy="91"><cpe>cpe:/h:linksys:befw11s4</cpe></osclass>
+</osmatch>
+<osmatch name="Asus RT-53N WAP" accuracy="89" line="6898">
+<osclass type="WAP" vendor="Asus" osfamily="embedded" accuracy="89"><cpe>cpe:/h:asus:rt-53n</cpe></osclass>
+</osmatch>
+<osmatch name="HP HP-UX B.11.11 - B.11.23" accuracy="88" line="29399">
+<osclass type="general purpose" vendor="HP" osfamily="HP-UX" osgen="11.X" accuracy="88"><cpe>cpe:/o:hp:hp-ux:11</cpe></osclass>
+</osmatch>
+<osmatch name="Cisco ASA 5510 firewall (PIX OS 8.2)" accuracy="87" line="16314">
+<osclass type="firewall" vendor="Cisco" osfamily="PIX OS" osgen="6.X" accuracy="87"><cpe>cpe:/o:cisco:pix_os:6</cpe></osclass>
+</osmatch>
+<osmatch name="Microsoft Windows Server 2008 SP1" accuracy="86" line="58201">
+<osclass type="general purpose" vendor="Microsoft" osfamily="Windows" osgen="2008" accuracy="86"><cpe>cpe:/o:microsoft:windows_server_2008::sp1</cpe></osclass>
+</osmatch>
+<osmatch name="Cisco IPS 4270 intrusion prevention system" accuracy="86" line="11841">
+<osclass type="firewall" vendor="Cisco" osfamily="embedded" accuracy="86"><cpe>cpe:/h:cisco:ips_4270</cpe></osclass>
+</osmatch>
+<osmatch name="HP HP-UX B.11.23" accuracy="85" line="29454">
+<osclass type="general purpose" vendor="HP" osfamily="HP-UX" osgen="11.X" accuracy="85"><cpe>cpe:/o:hp:hp-ux:11</cpe></osclass>
+</osmatch>
+<osmatch name="Cisco MDS 9509 switch (NX-OS 4.2)" accuracy="85" line="15937">
+<osclass type="switch" vendor="Cisco" osfamily="NX-OS" osgen="4.X" accuracy="85"><cpe>cpe:/o:cisco:mds_9509</cpe><cpe>cpe:/o:cisco:nx_os:4</cpe></osclass>
+</osmatch>
+<osmatch name="Cisco Adaptive Security Appliance 5510 or 5540 firewall (PIX OS 8.0)" accuracy="85" line="16388">
+<osclass type="firewall" vendor="Cisco" osfamily="PIX OS" osgen="8.X" accuracy="85"><cpe>cpe:/o:cisco:pix_os:8</cpe></osclass>
+</osmatch>
+</os>
+<uptime seconds="17198008" lastboot="Sun Jun  1 17:13:20 2014"/>
+<distance value="10"/>
+<tcpsequence index="255" difficulty="Good luck!" values="EE940FA5,4B409E00,1AE09AC5,844E0395,4A7D9F15,64719F1"/>
+<ipidsequence class="Incremental" values="695D,6961,6967,6970,6976,697F"/>
+<tcptssequence class="100HZ" values="6681BAF6,6681BB00,6681BB0A,6681BB14,6681BB1E,6681BB28"/>
+<trace port="443" proto="tcp">
+<hop ttl="1" ipaddr="172.31.254.1" rtt="90.84"/>
+<hop ttl="10" ipaddr="12.16.20.102" rtt="110.75" host="webmail.metra-autosound.com"/>
+</trace>
+<times srtt="81173" rttvar="24289" to="178329"/>
+</host>
+
+<host starttime="1418853991" endtime="1418854997"><status state="up" reason="reset" reason_ttl="254"/>
+<address addr="12.16.20.103" addrtype="ipv4"/>
+<hostnames>
+</hostnames>
+<ports><extraports state="filtered" count="1000">
+<extrareasons reason="no-responses" count="1000"/>
+</extraports>
+</ports>
+<os></os>
+<distance value="2"/>
+<trace port="80" proto="tcp">
+<hop ttl="1" ipaddr="172.31.254.1" rtt="90.84"/>
+<hop ttl="2" ipaddr="12.16.20.103" rtt="91.90"/>
+</trace>
+<times srtt="71837" rttvar="31862" to="199285"/>
+</host>
+<host starttime="1418853991" endtime="1418855044"><status state="up" reason="reset" reason_ttl="119"/>
+<address addr="12.16.20.104" addrtype="ipv4"/>
+<hostnames>
+</hostnames>
+<ports><extraports state="closed" count="988">
+<extrareasons reason="resets" count="988"/>
+</extraports>
+<port protocol="tcp" portid="53"><state state="filtered" reason="no-response" reason_ttl="0"/><service name="domain" method="table" conf="3"/></port>
+<port protocol="tcp" portid="80"><state state="open" reason="syn-ack" reason_ttl="119"/><service name="http" product="Microsoft HTTPAPI httpd" version="2.0" extrainfo="SSDP/UPnP" ostype="Windows" method="probed" conf="10"><cpe>cpe:/o:microsoft:windows</cpe></service><script id="http-csrf" output="Couldn&apos;t find any CSRF vulnerabilities."/><script id="http-dombased-xss" output="Couldn&apos;t find any DOM based XSS."/><script id="http-fileupload-exploiter" output="&#xa;"></script><script id="http-frontpage-login" output="false">false</script><script id="http-slowloris-check" output="&#xa;  VULNERABLE:&#xa;  Slowloris DOS attack&#xa;    State: VULNERABLE&#xa;    Description:&#xa;      Slowloris tries to keep many connections to the target web server open and hold them open as long as possible.&#xa;      It accomplishes this by opening connections to the target web server and sending a partial request. By doing&#xa;      so, it starves the http server&apos;s resources causing Denial Of Service.&#xa;      &#xa;    Disclosure date: 2009-09-17&#xa;    References:&#xa;      http://ha.ckers.org/slowloris/&#xa;"/><script id="http-stored-xss" output="Couldn&apos;t find any stored XSS vulnerabilities."/><script id="http-vuln-cve2011-3368" output="&#xa;  ERROR: Got no answers from pipelined queries"/></port>
+<port protocol="tcp" portid="135"><state state="open" reason="syn-ack" reason_ttl="119"/><service name="msrpc" servicefp="SF-Port135-TCP:V=6.47%I=7%D=12/17%Time=549201EE%P=x86_64-unknown-linux-gnu%r(GetRequest,B9,&quot;HTTP/1\.0\x20302\x20Moved\x20Temporarily\r\nLocation:\x20https://12\.16\.20\.104:6082/php/uid\.php\?vsys=1&amp;url=http://12\.16\.20\.104%3a135%2f\r\nContent-Length:\x200\r\nPragma:\x20no-cache\r\nCache-Control:\x20no-cache\r\n\r\n&quot;);" method="table" conf="3"/></port>
+<port protocol="tcp" portid="139"><state state="open" reason="syn-ack" reason_ttl="119"/><service name="netbios-ssn" method="probed" conf="10"/></port>
+<port protocol="tcp" portid="445"><state state="open" reason="syn-ack" reason_ttl="119"/><service name="microsoft-ds" servicefp="SF-Port445-TCP:V=6.47%I=7%D=12/17%Time=549201F0%P=x86_64-unknown-linux-gnu%r(FourOhFourRequest,DC,&quot;HTTP/1\.0\x20302\x20Moved\x20Temporarily\r\nLocation:\x20https://12\.16\.20\.104:6082/php/uid\.php\?vsys=1&amp;url=http://12\.16\.20\.104%3a445%2fnice%2520ports%2c%2fTrinity\.txt\.bak\r\nContent-Length:\x200\r\nPragma:\x20no-cache\r\nCache-Control:\x20no-cache\r\n\r\n&quot;);" method="table" conf="3"/></port>
+<port protocol="tcp" portid="515"><state state="filtered" reason="no-response" reason_ttl="0"/><service name="printer" method="table" conf="3"/></port>
+<port protocol="tcp" portid="1311"><state state="open" reason="syn-ack" reason_ttl="119"/><service name="rxmon" tunnel="ssl" method="table" conf="3"/></port>
+<port protocol="tcp" portid="1433"><state state="open" reason="syn-ack" reason_ttl="119"/><service name="ms-sql-s" servicefp="SF-Port1433-TCP:V=6.47%I=7%D=12/17%Time=549201F3%P=x86_64-unknown-linux-gnu%r(GetRequest,BA,&quot;HTTP/1\.0\x20302\x20Moved\x20Temporarily\r\nLocation:\x20https://12\.16\.20\.104:6082/php/uid\.php\?vsys=1&amp;url=http://12\.16\.20\.104%3a1433%2f\r\nContent-Length:\x200\r\nPragma:\x20no-cache\r\nCache-Control:\x20no-cache\r\n\r\n&quot;)%r(FourOhFourRequest,DD,&quot;HTTP/1\.0\x20302\x20Moved\x20Temporarily\r\nLocation:\x20https://12\.16\.20\.104:6082/php/uid\.php\?vsys=1&amp;url=http://12\.16\.20\.104%3a1433%2fnice%2520ports%2c%2fTrinity\.txt\.bak\r\nContent-Length:\x200\r\nPragma:\x20no-cache\r\nCache-Control:\x20no-cache\r\n\r\n&quot;);" method="table" conf="3"/></port>
+<port protocol="tcp" portid="3389"><state state="open" reason="syn-ack" reason_ttl="119"/><service name="ms-wbt-server" servicefp="SF-Port3389-TCP:V=6.47%I=7%D=12/17%Time=54920202%P=x86_64-unknown-linux-gnu%r(FourOhFourRequest,DD,&quot;HTTP/1\.0\x20302\x20Moved\x20Temporarily\r\nLocation:\x20https://12\.16\.20\.104:6082/php/uid\.php\?vsys=1&amp;url=http://12\.16\.20\.104%3a3389%2fnice%2520ports%2c%2fTrinity\.txt\.bak\r\nContent-Length:\x200\r\nPragma:\x20no-cache\r\nCache-Control:\x20no-cache\r\n\r\n&quot;);" method="table" conf="3"/></port>
+<port protocol="tcp" portid="49152"><state state="open" reason="syn-ack" reason_ttl="119"/><service name="unknown" method="table" conf="3"/></port>
+<port protocol="tcp" portid="49153"><state state="open" reason="syn-ack" reason_ttl="119"/><service name="unknown" servicefp="SF-Port49153-TCP:V=6.47%I=7%D=12/17%Time=549201E9%P=x86_64-unknown-linux-gnu%r(GetRequest,BB,&quot;HTTP/1\.0\x20302\x20Moved\x20Temporarily\r\nLocation:\x20https://12\.16\.20\.104:6082/php/uid\.php\?vsys=1&amp;url=http://12\.16\.20\.104%3a49153%2f\r\nContent-Length:\x200\r\nPragma:\x20no-cache\r\nCache-Control:\x20no-cache\r\n\r\n&quot;)%r(FourOhFourRequest,DE,&quot;HTTP/1\.0\x20302\x20Moved\x20Temporarily\r\nLocation:\x20https://12\.16\.20\.104:6082/php/uid\.php\?vsys=1&amp;url=http://12\.16\.20\.104%3a49153%2fnice%2520ports%2c%2fTrinity\.txt\.bak\r\nContent-Length:\x200\r\nPragma:\x20no-cache\r\nCache-Control:\x20no-cache\r\n\r\n&quot;);" method="table" conf="3"/></port>
+<port protocol="tcp" portid="49154"><state state="open" reason="syn-ack" reason_ttl="119"/><service name="unknown" method="table" conf="3"/></port>
+</ports>
+<os><portused state="open" proto="tcp" portid="80"/>
+<portused state="closed" proto="tcp" portid="1"/>
+<osmatch name="Linksys BEFW11S4 WAP" accuracy="89" line="36620">
+<osclass type="WAP" vendor="Linksys" osfamily="embedded" accuracy="89"><cpe>cpe:/h:linksys:befw11s4</cpe></osclass>
+</osmatch>
+<osmatch name="Cisco IPS 4270 intrusion prevention system" accuracy="88" line="11841">
+<osclass type="firewall" vendor="Cisco" osfamily="embedded" accuracy="88"><cpe>cpe:/h:cisco:ips_4270</cpe></osclass>
+</osmatch>
+<osmatch name="Cisco MDS 9509 switch (NX-OS 4.2)" accuracy="88" line="15937">
+<osclass type="switch" vendor="Cisco" osfamily="NX-OS" osgen="4.X" accuracy="88"><cpe>cpe:/o:cisco:mds_9509</cpe><cpe>cpe:/o:cisco:nx_os:4</cpe></osclass>
+</osmatch>
+<osmatch name="HP HP-UX B.11.11 - B.11.23" accuracy="88" line="29399">
+<osclass type="general purpose" vendor="HP" osfamily="HP-UX" osgen="11.X" accuracy="88"><cpe>cpe:/o:hp:hp-ux:11</cpe></osclass>
+</osmatch>
+<osmatch name="Asus RT-53N WAP" accuracy="87" line="6898">
+<osclass type="WAP" vendor="Asus" osfamily="embedded" accuracy="87"><cpe>cpe:/h:asus:rt-53n</cpe></osclass>
+</osmatch>
+<osmatch name="Microsoft Windows Server 2008 SP1" accuracy="87" line="58201">
+<osclass type="general purpose" vendor="Microsoft" osfamily="Windows" osgen="2008" accuracy="87"><cpe>cpe:/o:microsoft:windows_server_2008::sp1</cpe></osclass>
+</osmatch>
+<osmatch name="Cisco ASA 5510 firewall (PIX OS 8.2)" accuracy="86" line="16314">
+<osclass type="firewall" vendor="Cisco" osfamily="PIX OS" osgen="6.X" accuracy="86"><cpe>cpe:/o:cisco:pix_os:6</cpe></osclass>
+</osmatch>
+<osmatch name="Microsoft Windows 2000 Server SP4" accuracy="86" line="54087">
+<osclass type="general purpose" vendor="Microsoft" osfamily="Windows" osgen="2000" accuracy="86"><cpe>cpe:/o:microsoft:windows_2000::sp4:server</cpe></osclass>
+</osmatch>
+<osmatch name="Linux 2.6.11 - 2.6.18" accuracy="86" line="39245">
+<osclass type="general purpose" vendor="Linux" osfamily="Linux" osgen="2.6.X" accuracy="86"><cpe>cpe:/o:linux:linux_kernel:2.6</cpe></osclass>
+</osmatch>
+<osmatch name="HP HP-UX B.11.23" accuracy="85" line="29454">
+<osclass type="general purpose" vendor="HP" osfamily="HP-UX" osgen="11.X" accuracy="85"><cpe>cpe:/o:hp:hp-ux:11</cpe></osclass>
+</osmatch>
+</os>
+<uptime seconds="1152554" lastboot="Thu Dec  4 09:17:34 2014"/>
+<distance value="10"/>
+<tcpsequence index="260" difficulty="Good luck!" values="8DECAAE9,BE34E301,92CF4F7E,D06A8262,3854C31D,390B7E80"/>
+<ipidsequence class="Busy server or unknown class" values="B6A,B7F,B8E,B9D,BAC,BDC"/>
+<tcptssequence class="100HZ" values="6DE4F92,6DE4F9C,6DE4FA6,6DE4FB0,6DE4FBA,6DE4FC4"/>
+<hostscript><script id="samba-vuln-cve-2012-1182" output="SMB: Failed to receive bytes after 5 attempts: TIMEOUT">false</script><script id="smb-vuln-ms10-054" output="false">false</script><script id="smb-vuln-ms10-061" output="SMB: Failed to receive bytes after 5 attempts: TIMEOUT">false</script></hostscript><trace port="256" proto="tcp">
+<hop ttl="1" ipaddr="172.31.254.1" rtt="90.84"/>
+<hop ttl="10" ipaddr="12.16.20.104" rtt="110.75"/>
+</trace>
+<times srtt="78395" rttvar="27578" to="188707"/>
+</host>
+<host starttime="1418853991" endtime="1418854994"><status state="up" reason="syn-ack" reason_ttl="55"/>
+<address addr="12.16.20.105" addrtype="ipv4"/>
+<hostnames>
+</hostnames>
+<ports><extraports state="filtered" count="1000">
+<extrareasons reason="no-responses" count="1000"/>
+</extraports>
+</ports>
+<os></os>
+<distance value="9"/>
+<trace port="443" proto="tcp">
+<hop ttl="1" ipaddr="172.31.254.1" rtt="90.84"/>
+<hop ttl="9" ipaddr="12.16.20.105" rtt="90.48"/>
+</trace>
+<times srtt="85068" rttvar="23829" to="180384"/>
+</host>
+<runstats><finished time="1418855208" timestr="Wed Dec 17 17:26:48 2014" elapsed="1227.37" summary="Nmap done at Wed Dec 17 17:26:48 2014; 6 IP addresses (6 hosts up) scanned in 1227.37 seconds" exit="success"/><hosts up="6" down="0" total="6"/>
+</runstats>
+</nmaprun>

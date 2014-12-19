@@ -52,14 +52,17 @@ def main():
     parser.add_argument('--seed_parse', dest='seed_parse', action='store_true',
                         help='Use this io seed the database for inventory, if deeper analysis was already done on '
                         'these hosts, do not use this switch. It will destroy all services and re-parse.')
+    parser.add_argument('--update_parse', dest='update_parse', action='store_true',
+                        help='Use this io update the database for inventory hosts with further analysis.')
     parser.add_argument('--xlsx_export', dest='xlsx_export', action='store_true',
                         help='Export to XLSX after parsing.')
     parser.add_argument('--drop_all', dest='drop_all', action='store_true',
-                        help='Drop all the tables from the database.')
+                        help='Drop all tables from the database.')
 
     args = parser.parse_args()
     nmap_xml = args.nmap_xml
     seed_parse = args.seed_parse
+    update_parse = args.update_parse
     xlsx_export = args.xlsx_export
     drop_all = args.drop_all
 
@@ -71,22 +74,41 @@ def main():
             print('Dropped all tables.')
             exit()
 
-    #if nmap_xml is None:
-    #    print('You must specify a NMAP XML file: --nmap_xml')
-    #    return
-
     clear_screen()
 
     try:
         modules.db_connect.connect_and_create_db()
     except:
-        print('could not connect to the database')
+        print('could not create to the database')
 
     if seed_parse:
         try:
             modules.nmap_seed_parser.parse_nmap_xml(nmap_xml)
+            clear_screen()
+            print('Done.')
         except IsADirectoryError:
             print('I can not read an entire directory')
+            exit()
+
+        if xlsx_export:
+            clear_screen()
+            print('Generating report..')
+            modules.export_xlsx.reporter()
+            clear_screen()
+            print('Done.')
+            exit()
+        exit()
+
+    if update_parse:
+        print('update database')
+        if xlsx_export:
+            clear_screen()
+            print('Generating report..')
+            modules.export_xlsx.reporter()
+            clear_screen()
+            print('Done.')
+            exit()
+        exit()
 
     if xlsx_export:
         clear_screen()
@@ -98,7 +120,9 @@ def main():
 
     else:
         clear_screen()
-        print('Done.')
+        print('I need arguments.')
+        parser.print_help()
+        exit()
 
 
 def clear_screen():
