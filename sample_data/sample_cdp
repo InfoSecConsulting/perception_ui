@@ -1,0 +1,517 @@
+SW3850-HQ-CORE#sho cdp neighbors detail
+-------------------------
+Device ID: SW3560X-HQ-SERVER-01.ebworl.local
+Entry address(es):
+  IP address: 10.10.0.11
+Platform: cisco WS-C3560X-48P,  Capabilities: Router Switch IGMP
+Interface: GigabitEthernet2/0/2,  Port ID (outgoing port): GigabitEthernet0/2
+Holdtime : 152 sec
+
+Version :
+Cisco IOS Software, C3560E Software (C3560E-UNIVERSALK9-M), Version 15.2(1)E2, RELEASE SOFTWARE (fc1)
+Technical Support: http://www.cisco.com/techsupport
+Copyright (c) 1986-2014 by Cisco Systems, Inc.
+Compiled Tue 11-Mar-14 20:03 by prod_rel_team
+
+advertisement version: 2
+Protocol Hello:  OUI=0x00000C, Protocol ID=0x0112; payload len=27, value=00000000FFFFFFFF0102250100000000000070CA9B091B00FF0000
+VTP Management Domain: 'EBW-VTP'
+Native VLAN: 1
+Duplex: full
+Management address(es):
+  IP address: 10.10.0.11
+
+-------------------------
+Device ID: SW3560X-HQ-SERVER-01.ebworl.local
+Entry address(es):
+  IP address: 10.10.0.11
+Platform: cisco WS-C3560X-48P,  Capabilities: Router Switch IGMP
+Interface: GigabitEthernet1/0/2,  Port ID (outgoing port): GigabitEthernet0/1
+Holdtime : 152 sec
+
+Version :
+Cisco IOS Software, C3560E Software (C3560E-UNIVERSALK9-M), Version 15.2(1)E2, RELEASE SOFTWARE (fc1)
+Technical Support: http://www.cisco.com/techsupport
+Copyright (c) 1986-2014 by Cisco Systems, Inc.
+Compiled Tue 11-Mar-14 20:03 by prod_rel_team
+
+advertisement version: 2
+Protocol Hello:  OUI=0x00000C, Protocol ID=0x0112; payload len=27, value=00000000FFFFFFFF0102250100000000000070CA9B091B00FF0000
+VTP Management Domain: 'EBW-VTP'
+Native VLAN: 1
+Duplex: full
+Management address(es):
+  IP address: 10.10.0.11
+
+-------------------------
+Device ID: SW3560X-HQ-SERVER-02.ebworl.local
+Entry address(es):
+  IP address: 10.10.0.12
+Platform: cisco WS-C3560X-48P,  Capabilities: Router Switch IGMP
+Interface: GigabitEthernet2/0/8,  Port ID (outgoing port): GigabitEthernet0/1
+Holdtime : 129 sec
+
+Version :
+Cisco IOS Software, C3560E Software (C3560E-UNIVERSALK9-M), Version 15.2(1)E2, RELEASE SOFTWARE (fc1)
+Technical Support: http://www.cisco.com/techsupport
+Copyright (c) 1986-2014 by Cisco Systems, Inc.
+Compiled Tue 11-Mar-14 20:03 by prod_rel_team
+
+advertisement version: 2
+Protocol Hello:  OUI=0x00000C, Protocol ID=0x0112; payload len=27, value=00000000FFFFFFFF0102250A00000000000070CA9B0E2B80FF0000
+VTP Management Domain: 'EBW-VTP'
+Native VLAN: 1
+Duplex: full
+Management address(es):
+  IP address: 10.10.0.12
+
+-------------------------
+Device ID: SW3560X-HQ-SERVER-02.ebworl.local
+Entry address(es):
+  IP address: 10.10.0.12
+Platform: cisco WS-C3560X-48P,  Capabilities: Router Switch IGMP
+Interface: GigabitEthernet1/0/8,  Port ID (outgoing port): GigabitEthernet0/2
+Holdtime : 128 sec
+
+Version :
+Cisco IOS Software, C3560E Software (C3560E-UNIVERSALK9-M), Version 15.2(1)E2, RELEASE SOFTWARE (fc1)
+Technical Support: http://www.cisco.com/techsupport
+Copyright (c) 1986-2014 by Cisco Systems, Inc.
+Compiled Tue 11-Mar-14 20:03 by prod_rel_team
+
+advertisement version: 2
+Protocol Hello:  OUI=0x00000C, Protocol ID=0x0112; payload len=27, value=00000000FFFFFFFF0102250A00000000000070CA9B0E2B80FF0000
+VTP Management Domain: 'EBW-VTP'
+Native VLAN: 1
+Duplex: full
+Management address(es):
+  IP address: 10.10.0.12
+
+-------------------------
+Device ID: SW2960X-HQ-01.ebworl.local
+Entry address(es):
+  IP address: 10.10.0.8
+Platform: cisco WS-C2960X-48TS-L,  Capabilities: Switch IGMP
+Interface: GigabitEthernet2/0/7,  Port ID (outgoing port): GigabitEthernet1/0/2
+Holdtime : 151 sec
+
+Version :
+Cisco IOS Software, C2960X Software (C2960X-UNIVERSALK9-M), Version 15.0(2)EX4, RELEASE SOFTWARE (fc1)
+Technical Support: http://www.cisco.com/techsupport
+Copyright (c) 1986-2013 by Cisco Systems, Inc.
+Compiled Thu 14-Nov-13 11:33 by prod_rel_team
+
+advertisement version: 2
+Protocol Hello:  OUI=0x00000C, Protocol ID=0x0112; payload len=27, value=00000000FFFFFFFF01022501000000000000B000B4C9A580FF0000
+VTP Management Domain: 'EBW-VTP'
+Native VLAN: 1
+Duplex: full
+Management address(es):
+  IP address: 10.10.0.8
+
+-------------------------
+Device ID: SW2960X-HQ-01.ebworl.local
+Entry address(es):
+  IP address: 10.10.0.8
+Platform: cisco WS-C2960X-48TS-L,  Capabilities: Switch IGMP
+Interface: GigabitEthernet1/0/7,  Port ID (outgoing port): GigabitEthernet1/0/1
+Holdtime : 150 sec
+
+Version :
+Cisco IOS Software, C2960X Software (C2960X-UNIVERSALK9-M), Version 15.0(2)EX4, RELEASE SOFTWARE (fc1)
+Technical Support: http://www.cisco.com/techsupport
+Copyright (c) 1986-2013 by Cisco Systems, Inc.
+Compiled Thu 14-Nov-13 11:33 by prod_rel_team
+
+advertisement version: 2
+Protocol Hello:  OUI=0x00000C, Protocol ID=0x0112; payload len=27, value=00000000FFFFFFFF01022501000000000000B000B4C9A580FF0000
+VTP Management Domain: 'EBW-VTP'
+Native VLAN: 1
+Duplex: full
+Management address(es):
+  IP address: 10.10.0.8
+
+-------------------------
+Device ID: SW2960X-HQ-02.ebworl.local
+Entry address(es):
+  IP address: 10.10.0.9
+Platform: cisco WS-C2960X-48TS-L,  Capabilities: Switch IGMP
+Interface: GigabitEthernet1/0/9,  Port ID (outgoing port): GigabitEthernet1/0/1
+Holdtime : 161 sec
+
+Version :
+Cisco IOS Software, C2960X Software (C2960X-UNIVERSALK9-M), Version 15.0(2)EX4, RELEASE SOFTWARE (fc1)
+Technical Support: http://www.cisco.com/techsupport
+Copyright (c) 1986-2013 by Cisco Systems, Inc.
+Compiled Thu 14-Nov-13 11:33 by prod_rel_team
+
+advertisement version: 2
+Protocol Hello:  OUI=0x00000C, Protocol ID=0x0112; payload len=27, value=00000000FFFFFFFF01022501000000000000B000B4C9A280FF0000
+VTP Management Domain: 'EBW-VTP'
+Native VLAN: 1
+Duplex: full
+Management address(es):
+  IP address: 10.10.0.9
+
+-------------------------
+Device ID: SW2960X-HQ-02.ebworl.local
+Entry address(es):
+  IP address: 10.10.0.9
+Platform: cisco WS-C2960X-48TS-L,  Capabilities: Switch IGMP
+Interface: GigabitEthernet2/0/9,  Port ID (outgoing port): GigabitEthernet1/0/2
+Holdtime : 161 sec
+
+Version :
+Cisco IOS Software, C2960X Software (C2960X-UNIVERSALK9-M), Version 15.0(2)EX4, RELEASE SOFTWARE (fc1)
+Technical Support: http://www.cisco.com/techsupport
+Copyright (c) 1986-2013 by Cisco Systems, Inc.
+Compiled Thu 14-Nov-13 11:33 by prod_rel_team
+
+advertisement version: 2
+Protocol Hello:  OUI=0x00000C, Protocol ID=0x0112; payload len=27, value=00000000FFFFFFFF01022501000000000000B000B4C9A280FF0000
+VTP Management Domain: 'EBW-VTP'
+Native VLAN: 1
+Duplex: full
+Management address(es):
+  IP address: 10.10.0.9
+
+-------------------------
+Device ID: SW3560X-HQ-03.ebworl.local
+Entry address(es):
+  IP address: 10.10.0.3
+Platform: cisco WS-C3560X-48P,  Capabilities: Router Switch IGMP
+Interface: GigabitEthernet1/0/10,  Port ID (outgoing port): GigabitEthernet0/4
+Holdtime : 147 sec
+
+Version :
+Cisco IOS Software, C3560E Software (C3560E-UNIVERSALK9-M), Version 15.2(1)E2, RELEASE SOFTWARE (fc1)
+Technical Support: http://www.cisco.com/techsupport
+Copyright (c) 1986-2014 by Cisco Systems, Inc.
+Compiled Tue 11-Mar-14 20:03 by prod_rel_team
+
+advertisement version: 2
+Protocol Hello:  OUI=0x00000C, Protocol ID=0x0112; payload len=27, value=00000000FFFFFFFF0102250100000000000070CA9BB0E800FF0000
+VTP Management Domain: 'EBW-VTP'
+Native VLAN: 1
+Duplex: full
+Management address(es):
+  IP address: 10.10.0.3
+
+-------------------------
+Device ID: SW3560X-HQ-03.ebworl.local
+Entry address(es):
+  IP address: 10.10.0.3
+Platform: cisco WS-C3560X-48P,  Capabilities: Router Switch IGMP
+Interface: GigabitEthernet2/0/10,  Port ID (outgoing port): GigabitEthernet0/3
+Holdtime : 146 sec
+
+Version :
+Cisco IOS Software, C3560E Software (C3560E-UNIVERSALK9-M), Version 15.2(1)E2, RELEASE SOFTWARE (fc1)
+Technical Support: http://www.cisco.com/techsupport
+Copyright (c) 1986-2014 by Cisco Systems, Inc.
+Compiled Tue 11-Mar-14 20:03 by prod_rel_team
+
+advertisement version: 2
+Protocol Hello:  OUI=0x00000C, Protocol ID=0x0112; payload len=27, value=00000000FFFFFFFF0102250100000000000070CA9BB0E800FF0000
+VTP Management Domain: 'EBW-VTP'
+Native VLAN: 1
+Duplex: full
+Management address(es):
+  IP address: 10.10.0.3
+
+-------------------------
+Device ID: SW3560X-HQ-05.ebworl.local
+Entry address(es):
+  IP address: 10.10.0.5
+Platform: cisco WS-C3560X-48P,  Capabilities: Router Switch IGMP
+Interface: GigabitEthernet2/0/15,  Port ID (outgoing port): GigabitEthernet0/1
+Holdtime : 155 sec
+
+Version :
+Cisco IOS Software, C3560E Software (C3560E-UNIVERSALK9-M), Version 15.2(1)E2, RELEASE SOFTWARE (fc1)
+Technical Support: http://www.cisco.com/techsupport
+Copyright (c) 1986-2014 by Cisco Systems, Inc.
+Compiled Tue 11-Mar-14 20:03 by prod_rel_team
+
+advertisement version: 2
+Protocol Hello:  OUI=0x00000C, Protocol ID=0x0112; payload len=27, value=00000000FFFFFFFF0102250100000000000030E4DB221300FF0000
+VTP Management Domain: ''
+Native VLAN: 1
+Duplex: full
+Management address(es):
+  IP address: 10.10.0.5
+
+-------------------------
+Device ID: SW3560X-HQ-05.ebworl.local
+Entry address(es):
+  IP address: 10.10.0.5
+Platform: cisco WS-C3560X-48P,  Capabilities: Router Switch IGMP
+Interface: GigabitEthernet1/0/15,  Port ID (outgoing port): GigabitEthernet0/2
+Holdtime : 155 sec
+
+Version :
+Cisco IOS Software, C3560E Software (C3560E-UNIVERSALK9-M), Version 15.2(1)E2, RELEASE SOFTWARE (fc1)
+Technical Support: http://www.cisco.com/techsupport
+Copyright (c) 1986-2014 by Cisco Systems, Inc.
+Compiled Tue 11-Mar-14 20:03 by prod_rel_team
+
+advertisement version: 2
+Protocol Hello:  OUI=0x00000C, Protocol ID=0x0112; payload len=27, value=00000000FFFFFFFF0102250100000000000030E4DB221300FF0000
+VTP Management Domain: ''
+Native VLAN: 1
+Duplex: full
+Management address(es):
+  IP address: 10.10.0.5
+
+-------------------------
+Device ID: SW3560X-HQ-04.ebworl.local
+Entry address(es):
+  IP address: 10.10.0.4
+Platform: cisco WS-C3560X-48P,  Capabilities: Router Switch IGMP
+Interface: GigabitEthernet2/0/14,  Port ID (outgoing port): GigabitEthernet0/46
+Holdtime : 172 sec
+
+Version :
+Cisco IOS Software, C3560E Software (C3560E-UNIVERSALK9-M), Version 15.2(1)E2, RELEASE SOFTWARE (fc1)
+Technical Support: http://www.cisco.com/techsupport
+Copyright (c) 1986-2014 by Cisco Systems, Inc.
+Compiled Tue 11-Mar-14 20:03 by prod_rel_team
+
+advertisement version: 2
+Protocol Hello:  OUI=0x00000C, Protocol ID=0x0112; payload len=27, value=00000000FFFFFFFF0102250100000000000070CA9BB32400FF0000
+VTP Management Domain: 'EBW-VTP'
+Native VLAN: 1
+Duplex: full
+Management address(es):
+  IP address: 10.10.0.4
+
+-------------------------
+Device ID: SW3560X-HQ-04.ebworl.local
+Entry address(es):
+  IP address: 10.10.0.4
+Platform: cisco WS-C3560X-48P,  Capabilities: Router Switch IGMP
+Interface: GigabitEthernet1/0/14,  Port ID (outgoing port): GigabitEthernet0/45
+Holdtime : 172 sec
+
+Version :
+Cisco IOS Software, C3560E Software (C3560E-UNIVERSALK9-M), Version 15.2(1)E2, RELEASE SOFTWARE (fc1)
+Technical Support: http://www.cisco.com/techsupport
+Copyright (c) 1986-2014 by Cisco Systems, Inc.
+Compiled Tue 11-Mar-14 20:03 by prod_rel_team
+
+advertisement version: 2
+Protocol Hello:  OUI=0x00000C, Protocol ID=0x0112; payload len=27, value=00000000FFFFFFFF0102250100000000000070CA9BB32400FF0000
+VTP Management Domain: 'EBW-VTP'
+Native VLAN: 1
+Duplex: full
+Management address(es):
+  IP address: 10.10.0.4
+
+-------------------------
+Device ID: SW3560X-HQ-06.ebworl.local
+Entry address(es):
+  IP address: 10.10.0.6
+Platform: cisco WS-C3560X-48,  Capabilities: Switch IGMP
+Interface: GigabitEthernet2/0/11,  Port ID (outgoing port): GigabitEthernet0/2
+Holdtime : 120 sec
+
+Version :
+Cisco IOS Software, C3560E Software (C3560E-UNIVERSALK9-M), Version 15.2(1)E2, RELEASE SOFTWARE (fc1)
+Technical Support: http://www.cisco.com/techsupport
+Copyright (c) 1986-2014 by Cisco Systems, Inc.
+Compiled Tue 11-Mar-14 20:03 by prod_rel_team
+
+advertisement version: 2
+Protocol Hello:  OUI=0x00000C, Protocol ID=0x0112; payload len=27, value=00000000FFFFFFFF0102250100000000000060735C85BA00FF0000
+VTP Management Domain: ''
+Native VLAN: 1
+Duplex: full
+Management address(es):
+  IP address: 10.10.0.6
+
+-------------------------
+Device ID: SW3560X-HQ-06.ebworl.local
+Entry address(es):
+  IP address: 10.10.0.6
+Platform: cisco WS-C3560X-48,  Capabilities: Switch IGMP
+Interface: GigabitEthernet1/0/11,  Port ID (outgoing port): GigabitEthernet0/1
+Holdtime : 120 sec
+
+Version :
+Cisco IOS Software, C3560E Software (C3560E-UNIVERSALK9-M), Version 15.2(1)E2, RELEASE SOFTWARE (fc1)
+Technical Support: http://www.cisco.com/techsupport
+Copyright (c) 1986-2014 by Cisco Systems, Inc.
+Compiled Tue 11-Mar-14 20:03 by prod_rel_team
+
+advertisement version: 2
+Protocol Hello:  OUI=0x00000C, Protocol ID=0x0112; payload len=27, value=00000000FFFFFFFF0102250100000000000060735C85BA00FF0000
+VTP Management Domain: ''
+Native VLAN: 1
+Duplex: full
+Management address(es):
+  IP address: 10.10.0.6
+
+-------------------------
+Device ID: vpn2-orl1.nw.local
+Entry address(es):
+  IP address: 172.31.254.111
+Platform: Cisco 2811,  Capabilities: Router Switch IGMP
+Interface: GigabitEthernet2/0/12,  Port ID (outgoing port): FastEthernet0/0
+Holdtime : 120 sec
+
+Version :
+Cisco IOS Software, 2800 Software (C2800NM-ADVIPSERVICESK9-M), Version 12.4(15)T1, RELEASE SOFTWARE (fc2)
+Technical Support: http://www.cisco.com/techsupport
+Copyright (c) 1986-2007 by Cisco Systems, Inc.
+Compiled Wed 18-Jul-07 06:21 by prod_rel_team
+
+advertisement version: 2
+VTP Management Domain: ''
+Duplex: full
+Management address(es):
+
+-------------------------
+Device ID: wlc-hq00
+Entry address(es):
+  IP address: 10.10.0.20
+Platform: AIR-CT5508-K9,  Capabilities: Host
+Interface: GigabitEthernet1/0/45,  Port ID (outgoing port): GigabitEthernet0/0/1
+Holdtime : 142 sec
+
+Version :
+Manufacturer's Name: Cisco Systems Inc.  Product Name: Cisco Controller  Product Version: 7.6.120.0  RTOS Version: Erro  Bootloader Version: 1.0.20  Build Type: DATA + WPS
+
+advertisement version: 2
+Duplex: full
+Management address(es):
+
+-------------------------
+Device ID: wlc-hq00
+Entry address(es):
+  IP address: 10.10.0.20
+Platform: AIR-CT5508-K9,  Capabilities: Host
+Interface: GigabitEthernet2/0/45,  Port ID (outgoing port): GigabitEthernet0/0/2
+Holdtime : 142 sec
+
+Version :
+Manufacturer's Name: Cisco Systems Inc.  Product Name: Cisco Controller  Product Version: 7.6.120.0  RTOS Version: Erro  Bootloader Version: 1.0.20  Build Type: DATA + WPS
+
+advertisement version: 2
+Duplex: full
+Management address(es):
+
+-------------------------
+Device ID: wlc-hq00
+Entry address(es):
+  IP address: 10.10.0.20
+Platform: AIR-CT5508-K9,  Capabilities: Host
+Interface: GigabitEthernet1/0/45,  Port ID (outgoing port): LAGInterface0/3/1
+Holdtime : 142 sec
+
+Version :
+Manufacturer's Name: Cisco Systems Inc.  Product Name: Cisco Controller  Product Version: 7.6.120.0  RTOS Version: Erro  Bootloader Version: 1.0.20  Build Type: DATA + WPS
+
+advertisement version: 2
+Duplex: full
+Management address(es):
+
+-------------------------
+Device ID: vpn-orl1.nw.local
+Entry address(es):
+  IP address: 207.59.144.22
+Platform: Cisco 881,  Capabilities: Router Source-Route-Bridge Switch IGMP
+Interface: GigabitEthernet2/0/24,  Port ID (outgoing port): FastEthernet4
+Holdtime : 161 sec
+
+Version :
+Cisco IOS Software, C880 Software (C880DATA-UNIVERSALK9-M), Version 15.3(3)M2, RELEASE SOFTWARE (fc1)
+Technical Support: http://www.cisco.com/techsupport
+Copyright (c) 1986-2014 by Cisco Systems, Inc.
+Compiled Thu 30-Jan-14 02:35 by prod_rel_team
+
+advertisement version: 2
+Duplex: full
+Management address(es):
+  IP address: 207.59.144.22
+
+-------------------------
+Device ID: vpn-orl1.nw.local
+Entry address(es):
+  IP address: 172.31.254.5
+Platform: Cisco 881,  Capabilities: Router Source-Route-Bridge Switch IGMP
+Interface: GigabitEthernet2/0/23,  Port ID (outgoing port): FastEthernet0
+Holdtime : 153 sec
+
+Version :
+Cisco IOS Software, C880 Software (C880DATA-UNIVERSALK9-M), Version 15.3(3)M2, RELEASE SOFTWARE (fc1)
+Technical Support: http://www.cisco.com/techsupport
+Copyright (c) 1986-2014 by Cisco Systems, Inc.
+Compiled Thu 30-Jan-14 02:35 by prod_rel_team
+
+advertisement version: 2
+Native VLAN: 1
+Duplex: full
+Management address(es):
+  IP address: 172.31.254.5
+-------------------------
+Device ID: SEP0004f2417d5a
+Entry address(es):
+  IP address: 10.17.6.90
+Platform: Polycom SoundPoint IP 550,  Capabilities: Host Phone
+Interface: FastEthernet0/13,  Port ID (outgoing port): Port 1
+Holdtime : 164 sec
+
+Version :
+BootROM: 4.2.1, App: 3.2.4
+
+advertisement version: 2
+Duplex: full
+Power drawn: 6.000 Watts
+Management address(es):
+
+-------------------------
+Device ID: SEP0004f23c0d70
+Entry address(es):
+  IP address: 10.17.6.86
+Platform: Polycom SoundPoint IP 550,  Capabilities: Host Phone
+Interface: FastEthernet0/19,  Port ID (outgoing port): Port 1
+Holdtime : 164 sec
+
+Version :
+Updater: 4.4.0, App: 4.0.4
+
+advertisement version: 2
+Duplex: full
+Power drawn: 5.900 Watts
+Management address(es):
+
+-------------------------
+Device ID: SEP0004f240515f
+Entry address(es):
+  IP address: 10.17.6.21
+Platform: Polycom SoundPoint IP 550,  Capabilities: Host Phone
+Interface: FastEthernet0/18,  Port ID (outgoing port): Port 1
+Holdtime : 121 sec
+
+Version :
+Updater: 4.4.0, App: 4.0.4
+
+advertisement version: 2
+Duplex: full
+Power drawn: 5.900 Watts
+Management address(es):
+
+-------------------------
+Device ID: 005056a03992
+Entry address(es):
+  IP address: 10.17.3.60
+Platform: Cisco-VM-SPID,  Capabilities: Host
+Interface: GigabitEthernet5/1,  Port ID (outgoing port): eth0
+Holdtime : 153 sec
+
+Version :
+Cisco Application Deployment Engine OS version: 2.0.2.057 Copyright (c) 2014 Cisco Systems.
+
+advertisement version: 2
+Management address(es):
+

@@ -40,7 +40,7 @@ limitations under the License.
 __author__ = 'Avery Rozar'
 
 
-class BuildProduct():
+class BuildProduct:
 
     def __init__(self):
 

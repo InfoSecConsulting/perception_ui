@@ -43,90 +43,60 @@ import os
 import argparse
 import modules.nmap_seed_parser
 import modules.db_connect
-import modules.export_xlsx
-
+import modules.seed_inventory
 
 def main():
-    parser = argparse.ArgumentParser('--nmap_xml, , --seed_parse, --xlsx_export, --drop_all')
-    parser.add_argument('--nmap_xml', dest='nmap_xml', type=str, help='What XML scan results should I parse?')
-    parser.add_argument('--seed_parse', dest='seed_parse', action='store_true',
-                        help='Use this io seed the database for inventory, if deeper analysis was already done on '
-                        'these hosts, do not use this switch. It will destroy all services and re-parse.')
-    parser.add_argument('--update_parse', dest='update_parse', action='store_true',
-                        help='Use this io update the database for inventory hosts with further analysis.')
-    parser.add_argument('--xlsx_export', dest='xlsx_export', action='store_true',
-                        help='Export to XLSX after parsing.')
-    parser.add_argument('--drop_all', dest='drop_all', action='store_true',
-                        help='Drop all tables from the database.')
+  parser = argparse.ArgumentParser('--nmap_xml,'
+                                   '--seed_base,'
+                                   '--update_parse')
+  parser.add_argument('--seed_base',
+                      dest='seed_base',
+                      action='store_true',
+                      help='Use this to seed the database for inventory, if deeper analysis was already done on '
+                      'these hosts, do not use this switch. It will destroy all services and re-seed.')
 
-    args = parser.parse_args()
-    nmap_xml = args.nmap_xml
-    seed_parse = args.seed_parse
-    update_parse = args.update_parse
-    xlsx_export = args.xlsx_export
-    drop_all = args.drop_all
+  parser.add_argument('--update_parse',
+                      dest='update_parse',
+                      action='store_true',
+                      help='Use this io update the database for inventory hosts with further analysis.')
 
-    if drop_all:
-        clear_screen()
-        if input('Are you sure?: ') == 'yes':
-            modules.db_connect.connect_and_drop_all()
-            clear_screen()
-            print('Dropped all tables.')
-            exit()
+  args = parser.parse_args()
+  seed_base = args.seed_base
+  update_parse = args.update_parse
 
+  clear_screen()
+
+  if seed_base:
+    #try:
+    #  modules.seed_inventory.get_network_info()
+    #  clear_screen()
+    #  print('Done getting network info')
+    #except IsADirectoryError:
+    #  print('I can not read an entire directory')
+    #  exit()
+    #try:
+    #modules.seed_inventory.build_net_base()
+    #print('Done building base')
+
+    modules.seed_inventory.parse_cdp_detail()
+    print('done with cdp detail')
+    exit()
+    #except:
+    #  print('Could not build list')
+    #  exit()
+
+  if update_parse:
+    print('update database')
+
+  else:
     clear_screen()
-
-    try:
-        modules.db_connect.connect_and_create_db()
-    except:
-        print('could not create to the database')
-
-    if seed_parse:
-        try:
-            modules.nmap_seed_parser.parse_nmap_xml(nmap_xml)
-            clear_screen()
-            print('Done.')
-        except IsADirectoryError:
-            print('I can not read an entire directory')
-            exit()
-
-        if xlsx_export:
-            clear_screen()
-            print('Generating report..')
-            modules.export_xlsx.reporter()
-            clear_screen()
-            print('Done.')
-            exit()
-        exit()
-
-    if update_parse:
-        print('update database')
-        if xlsx_export:
-            clear_screen()
-            print('Generating report..')
-            modules.export_xlsx.reporter()
-            clear_screen()
-            print('Done.')
-            exit()
-        exit()
-
-    if xlsx_export:
-        clear_screen()
-        print('Generating report..')
-        modules.export_xlsx.reporter()
-        clear_screen()
-        print('Done.')
-        exit()
-
-    else:
-        clear_screen()
-        print('I need arguments.')
-        parser.print_help()
-        exit()
+    print('I need arguments')
+    parser.print_help()
+    exit()
 
 
 def clear_screen():
-    os.system('clear')
+  os.system('clear')
 
 if __name__ == '__main__':
-    main()
+  main()

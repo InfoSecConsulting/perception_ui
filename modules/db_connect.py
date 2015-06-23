@@ -42,20 +42,8 @@ __author__ = 'Avery Rozar'
 import os
 import sys
 import classes.db_tables
+import modules.parse_yml as parse_yml
 
-try:
-    import yaml
-except ImportError:
-    print('Installing PyYmal..')
-    os.system('cd packages/PyYAML-3.11/ && python3 setup.py install')
-    import yaml
-
-try:
-    import psycopg2
-except ImportError:
-    print('Installing PyYmal..')
-    os.system('cd packages/psycopg2-2.5.4/ && python3 setup.py install')
-    import psycopg2
 
 try:
     import sqlalchemy
@@ -65,7 +53,7 @@ try:
     from sqlalchemy.engine.url import URL
 except ImportError:
     print('Installing SQLAlchemy..')
-    os.system('cd packages/SQLAlchemy-0.9.8/ && python3 setup.py install')
+    os.system('pip3 install SQLAlchemy')
     import sqlalchemy
     from sqlalchemy import Column, String, Text, Integer, ForeignKey, Sequence, create_engine, MetaData
     from sqlalchemy.orm import relationship, sessionmaker
@@ -76,57 +64,19 @@ Session = sessionmaker()
 
 
 def connect():
+  db_yml = 'config/database.yml'
+  db_info = parse_yml.db_info(db_yml)
+  cursor = None
+  print(db_info)
 
-    db_yml = open('config/database.yml', 'r')
-    db_info = yaml.safe_load(db_yml)
-    cursor = None
-
-    try:
-        Session = sessionmaker()
-        engine = create_engine(URL(**db_info), pool_size=20)
-        Session.configure(bind=engine)
-        return Session
-    except sqlalchemy.exc.OperationalError as e:
-        print(e)
-        sys.exit(1)
-    finally:
-        if cursor:
-            cursor.close()
-
-
-def connect_and_create_db():
-
-    db_yml = open('config/database.yml', 'r')
-    db_info = yaml.safe_load(db_yml)
-    cursor = None
-
-    try:
-        engine = create_engine(URL(**db_info))
-        Session.configure(bind=engine)
-        classes.db_tables.Base.metadata.create_all(engine)
-        return Session
-    except sqlalchemy.exc.OperationalError as e:
-        print(e)
-        sys.exit(1)
-    finally:
-        if cursor:
-            cursor.close()
-
-
-def connect_and_drop_all():
-
-    db_yml = open('config/database.yml', 'r')
-    db_info = yaml.safe_load(db_yml)
-    cursor = None
-
-    try:
-        engine = create_engine(URL(**db_info))
-        Session.configure(bind=engine)
-        classes.db_tables.Base.metadata.drop_all(engine)
-        return Session
-    except sqlalchemy.exc.OperationalError as e:
-        print(e)
-        sys.exit(1)
-    finally:
-        if cursor:
-            cursor.close()
+  try:
+    Session = sessionmaker()
+    engine = create_engine(URL(**db_info), pool_size=20)
+    Session.configure(bind=engine)
+    return Session
+  except sqlalchemy.exc.OperationalError as e:
+    print(e)
+    sys.exit(1)
+  finally:
+    if cursor:
+      cursor.close()
