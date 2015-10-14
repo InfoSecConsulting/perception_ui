@@ -18,7 +18,7 @@ import sqlalchemy as sa
 
 def upgrade():
   op.create_table('svc_nse_scripts',
-                  sa.Column('id', sa.Integer, sa.Sequence('svc_nse_scripts_id_seq'), primary_key=True, nullable=False),
+                  sa.Column('id', sa.Integer, primary_key=True, nullable=False),
                   sa.Column('svc_id', sa.Integer, sa.ForeignKey('inventory_svcs.id', ondelete='cascade')),
                   sa.Column('name', sa.Text, nullable=False),
                   sa.Column('output', sa.Text, nullable=False))

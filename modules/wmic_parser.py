@@ -1,7 +1,7 @@
-#!/usr/bin/python
+#!/usr/local/bin/python3
 # -*- coding: utf-8 -*-
 """
-(C) Copyright [2014] InfoSec Consulting, Inc.
+(C) Copyright [2015] InfoSec Consulting, Inc.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -36,12 +36,27 @@ limitations under the License.
         ::::::
           ::
 """
+
 __author__ = 'Avery Rozar'
 
-from modules.pormpts import *
+from locale import getdefaultlocale
+from subprocess import PIPE, Popen
 
 
-def send_command(child, cmd):
-    child.sendline(cmd)
-    child.expect(PROMPT)
-    print(child.before)
+def wmic_query(domain, username, password, host, query):
+  try:
+    encoding = getdefaultlocale()[1]
+    wmi_query = Popen(['wmic',
+                       '-U',
+                       '%s/%s%%%s' % (domain, username, password),
+                       '//%s' % host,
+                       '%s' % query], stdout=PIPE)
+    wmi_reply = wmi_query.communicate()[0]
+    wmi_reply_list = wmi_reply.decode(encoding).split('\n')
+    keys = wmi_reply_list[1].split('|')
+    values = wmi_reply_list[2].split('|')
+    wmi_op_dict = dict(zip(keys, values))
+    return wmi_op_dict
+  except IndexError:
+    print('Something went horribly wrong, try a different query.')
+    return 1

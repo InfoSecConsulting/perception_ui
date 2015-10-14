@@ -41,8 +41,7 @@ __author__ = 'Avery Rozar'
 
 import os
 import sys
-import classes.db_tables
-import modules.parse_yml as parse_yml
+import modules.yml_parser as parse_yml
 
 
 try:
@@ -67,7 +66,6 @@ def connect():
   db_yml = 'config/database.yml'
   db_info = parse_yml.db_info(db_yml)
   cursor = None
-  print(db_info)
 
   try:
     Session = sessionmaker()

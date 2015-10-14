@@ -41,52 +41,108 @@ __author__ = 'Avery Rozar'
 
 import os
 import argparse
-import modules.nmap_seed_parser
-import modules.db_connect
-import modules.seed_inventory
+import re
+from modules.seed_information import get_network_info, get_hosts_to_scan, remove_inventory_hosts
+from modules.ios_output_parser import local_hosts, local_connections, cdp_neighbors_detail, ios_fqdn_detail
+from modules.nmap_scanner import nmap_seed_scan
+from modules.nmap_output_parser import parse_seed_nmap_xml
+from modules.host_profiler import profile_windows_hosts
+from shutil import rmtree as rmtree
+
+tmp_dir = '/tmp/perception'
+ios_show_hosts_file = '%s/ios_show_hosts.txt' % tmp_dir
+ios_show_local_conn_file = '%s/show_local_conn.txt' % tmp_dir
+ios_show_cdp_detail_file = '%s/show_cdp_detail.txt' % tmp_dir
+ios_show_fqdn_file = '%s/ios_show_fqdn.txt' % tmp_dir
+
+def clear_screen():
+  os.system('clear')
+
 
 def main():
-  parser = argparse.ArgumentParser('--nmap_xml,'
-                                   '--seed_base,'
-                                   '--update_parse')
+  parser = argparse.ArgumentParser('--seed_base,\n'
+                                   '\t--seed_scan,\n'
+                                   '\t--update_parse,\n'
+                                   '\t--profile_windows_hosts,\n')
+
   parser.add_argument('--seed_base',
                       dest='seed_base',
                       action='store_true',
-                      help='Use this to seed the database for inventory, if deeper analysis was already done on '
-                      'these hosts, do not use this switch. It will destroy all services and re-seed.')
+                      help='Use this to seed the database for networks and cdp info from the network core.')
+
+  parser.add_argument('--seed_scan',
+                      dest='seed_scan',
+                      action='store_true',
+                      help='Used to scan from seed_base info.')
 
   parser.add_argument('--update_parse',
                       dest='update_parse',
                       action='store_true',
-                      help='Use this io update the database for inventory hosts with further analysis.')
+                      help='Use this to update the database for inventory hosts with further analysis.')
+
+  parser.add_argument('--profile_windows_hosts',
+                      dest='profile_windows_hosts',
+                      action='store_true',
+                      help='Use this analyze Microsoft AD servers from the database.')
 
   args = parser.parse_args()
   seed_base = args.seed_base
+  seed_scan = args.seed_scan
   update_parse = args.update_parse
+  profile_windows_hosts = args.profile_windows_hosts
 
   clear_screen()
 
   if seed_base:
-    #try:
-    #  modules.seed_inventory.get_network_info()
-    #  clear_screen()
-    #  print('Done getting network info')
-    #except IsADirectoryError:
-    #  print('I can not read an entire directory')
-    #  exit()
-    #try:
-    #modules.seed_inventory.build_net_base()
-    #print('Done building base')
+    get_network_info(tmp_dir,
+                     ios_show_hosts_file,
+                     ios_show_local_conn_file,
+                     ios_show_cdp_detail_file,
+                     ios_show_fqdn_file)
+    # parse the local hosts file
+    local_hosts(ios_show_hosts_file)
 
-    modules.seed_inventory.parse_cdp_detail()
-    print('done with cdp detail')
+    # parse the local connections file
+    local_connections(ios_show_local_conn_file)
+
+    # parse the ios fqdn file
+    ios_fqdn = ios_fqdn_detail(ios_show_fqdn_file)
+
+    # parse the cdp detail file
+    cdp_neighbors_detail(ios_show_cdp_detail_file, ios_fqdn)
+
+    rmtree(tmp_dir)
+    if seed_scan:
+      print('move to scanning')
+    else:
+      print('done seeding')
+      exit()
+
+  if seed_scan:
+    remove_inventory_hosts()
+    hosts_to_scan = get_hosts_to_scan()
+    nmap_seed_scan(tmp_dir, hosts_to_scan)
+    for root, dirs, files in os.walk(tmp_dir):
+      for name in files:
+        nmap_xml = re.match(r'(^(.*?).nmap.xml)', name)
+        if nmap_xml:
+          parse_seed_nmap_xml(str('%s/%s' % (tmp_dir, nmap_xml.group(0))))
+    rmtree(tmp_dir)
+
+    if profile_windows_hosts:
+      print('moving to Windows host profiling')
+    else:
+      print('done scanning hosts')
+      exit()
+
+  if profile_windows_hosts:
+    print('looking for Windows hosts..')
+    profile_windows_hosts()
     exit()
-    #except:
-    #  print('Could not build list')
-    #  exit()
 
   if update_parse:
     print('update database')
+    exit()
 
   else:
     clear_screen()
@@ -95,8 +151,10 @@ def main():
     exit()
 
 
-def clear_screen():
-  os.system('clear')
-
 if __name__ == '__main__':
-  main()
+  try:
+    main()
+  except (IOError, SystemExit):
+    raise
+  except KeyboardInterrupt:
+    print('Crtl+C Pressed. Shutting down.')

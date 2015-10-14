@@ -195,7 +195,7 @@ class HostNseScript(Base):
   id = Column(Integer, Sequence('host_nse_scripts_id_seq'), primary_key=True, nullable=False)
 
   """Relation to host"""
-  host_id = Column(Integer, ForeignKey('inventory_hosts.id'))
+  host_id = Column(Integer, ForeignKey('inventory_hosts.id', ondelete='cascade'))
   host = relationship('InventoryHost', backref='host_nse_scripts', order_by=id)
 
   name = Column(Text, nullable=False)
@@ -208,7 +208,7 @@ class InventorySvc(Base):
   id = Column(Integer, Sequence('inventory_svcs_id_seq'), primary_key=True, nullable=False)
 
   """Relation to inventory hosts"""
-  host_id = Column(Integer, ForeignKey('inventory_hosts.id'))
+  host_id = Column(Integer, ForeignKey('inventory_hosts.id', ondelete='cascade'))
   host = relationship('InventoryHost', backref='inventory_svcs', order_by=id)
 
   protocol = Column(Text)
@@ -243,11 +243,31 @@ class LocalNet(Base):
   id = Column(Integer, primary_key=True, nullable=False)
   subnet = Column(postgresql.CIDR, unique=True)
   created_at = Column(TIMESTAMP(timezone=False), default=_get_date)
-  updated_at = Column(TIMESTAMP(timezone=False), onupdate=_get_date)
 
 
-class NetInfrastructureBase(Base):
-  __tablename__ = 'net_infrastructure_base'
+class DiscoveryProtocolFindings(Base):
+  __tablename__ = 'discovery_protocol_findings'
 
   id = Column(Integer, primary_key=True, nullable=False)
-  subnet = Column(postgresql.INET, unique=True)
+  local_device_id = Column(Text, nullable=False)
+  remote_device_id = Column(Text, nullable=False)
+  ip_addr = Column(postgresql.INET)
+  platform = Column(Text)
+  capabilities = Column(Text)
+  interface = Column(Text)
+  port_id = Column(Text)
+  discovery_version = Column(Integer)
+  protocol_hello = Column(Text)
+  vtp_domain = Column(Text)
+  native_vlan = Column(Integer)
+  duplex = Column(Text)
+  power_draw = Column(Text)
+  created_at = Column(TIMESTAMP(timezone=False), default=_get_date)
+
+
+class LocalHosts(Base):
+  __tablename__ = 'local_hosts'
+
+  id = Column(Integer, primary_key=True, nullable=False)
+  ip_addr = Column(postgresql.INET, unique=True, nullable=False)
+  created_at = Column(TIMESTAMP(timezone=False), default=_get_date)

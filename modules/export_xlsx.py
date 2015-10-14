@@ -41,7 +41,7 @@ __author__ = 'Avery Rozar'
 
 import os
 import modules.db_connect
-from classes.db_tables import InventoryHost
+from models.db_tables import InventoryHost
 
 try:
     import xlsxwriter

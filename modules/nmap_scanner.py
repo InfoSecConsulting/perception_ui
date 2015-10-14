@@ -39,52 +39,62 @@ limitations under the License.
 
 __author__ = 'Avery Rozar'
 
+import subprocess
 import os
-import modules.nmap_scans
-
-try:
-    import nmap
-
-except:
-    ImportError
-    print('Installing Python Nmap..')
-    os.system('cd packages/python-nmap-0.3.4/ && python3 setup.py install')
-    import nmap
-
-import argparse
+from time import sleep
+import re
 
 
-def main():
-    parser = argparse.ArgumentParser('usage%prog ' +
-                                     '--host_file < --host_file=hosts.txt >')
-    parser.add_argument('--host_file', dest='dst_hosts', type=file, help='specify a target host file')
+def nmap_seed_scan(tmp_dir, scan_targets):
+  try:
+    os.mkdir(tmp_dir)
+  except FileExistsError:
+    """moving on.."""
 
-    args = parser.parse_args()
-    dst_hosts = args.dst_hosts
+  # Find nmap
+  p = subprocess.Popen(['which', 'nmap'],
+                       shell=False,
+                       stdout=subprocess.PIPE)
 
-    if dst_hosts is None:
-        print('I need to know what host[s] to scan')
-        print(parser.usage)
-        exit(0)
-    else:
-        for line in dst_hosts:
-            dst_host = line.rstrip()
-            nmscan = nmap.PortScanner()
-            nmscan.scan(dst_host, arguments='-sS -A -v')
-            for host in nmscan.all_hosts():
-                print('---------------------------')
-                print('Host : %s (%s)' % (host, nmscan[host].hostname()))
-                print('State : %s' % nmscan[host].state())
+  nmap = p.stdout.read().strip().decode("utf-8")
 
-                for protocol in nmscan[host].all_protocols():
-                    print('---------------------------')
-                    print('Protocol : %s' % protocol)
+  # Kick off the nmap scan
+  for element in scan_targets:
+    ip_addr = re.match(r'\b(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.'
+                        r'(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.'
+                        r'(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.'
+                        r'(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\b', element)
 
-                    lport = list(nmscan[host][protocol].keys())
-                    lport.sort()
-                    for port in lport:
-                        print('port : %s\tstate : %s' % (port, nmscan[host][protocol][port]['state']))
+    subnet = re.match(r'((?:[0-9]{1,3}\.){3}[0-9]{1,3}/\d+)', element)
 
+    if ip_addr:
+      subprocess.Popen([nmap, '-sS', '-A', element, '-Pn', '-oX', '%s/%s.nmap.xml' % (tmp_dir, element)])
 
-if __name__ == '__main__':
-    main()
+    if subnet:
+      subprocess.Popen([nmap, '-sS', '-A', element, '-oX' '%s/%s.nmap.xml' % (tmp_dir, element[:-3])])
+
+  # Check to see if nmap is still running
+  ps_ef = subprocess.Popen(['ps', '-ef'],
+                           shell=False,
+                           stdout=subprocess.PIPE)
+
+  look_for_nmap = subprocess.Popen(['grep', 'nm\\ap'],
+                                   shell=False,
+                                   stdin=ps_ef.stdout,
+                                   stdout=subprocess.PIPE)
+
+  while len(look_for_nmap.communicate()[0]) is not 0:
+    print('nmap is still running...')
+
+    # Check to see if nmap is still running
+    sleep(5)
+    ps_ef = subprocess.Popen(['ps', '-ef'],
+                             shell=False,
+                             stdout=subprocess.PIPE)
+
+    look_for_nmap = subprocess.Popen(['grep', 'nm\\ap'],
+                                     shell=False,
+                                     stdin=ps_ef.stdout,
+                                     stdout=subprocess.PIPE)
+  else:
+    print('no nmap processes')

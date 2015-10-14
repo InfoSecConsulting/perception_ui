@@ -18,7 +18,7 @@ import sqlalchemy as sa
 
 def upgrade():
     op.create_table('nvd_vulns',
-                    sa.Column('id', sa.Integer, sa.Sequence('nvd_vulns_id_seq'), primary_key=True, nullable=False),
+                    sa.Column('id', sa.Integer, primary_key=True, nullable=False),
                     sa.Column('name', sa.Text, unique=True, nullable=False),
                     sa.Column('product_id', sa.Integer, sa.ForeignKey('products.id'), nullable=False),
                     sa.Column('cveid', sa.Text, nullable=False),

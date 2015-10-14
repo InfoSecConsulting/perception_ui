@@ -23,7 +23,7 @@ def _get_date():
 
 def upgrade():
     op.create_table('inventory_hosts',
-                    sa.Column('id', sa.Integer, sa.Sequence('inventory_hosts_id_seq'), primary_key=True, nullable=False),
+                    sa.Column('id', sa.Integer, primary_key=True, nullable=False),
                     sa.Column('ipv4_addr', postgresql.INET, unique=True),
                     sa.Column('ipv6_addr', postgresql.INET),
                     sa.Column('macaddr', postgresql.MACADDR),

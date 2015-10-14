@@ -18,7 +18,7 @@ import sqlalchemy as sa
 
 def upgrade():
     op.create_table('nvd_vuln_references',
-                    sa.Column('id', sa.Integer, sa.Sequence('nvd_vuln_references_id_seq'), primary_key=True, nullable=False),
+                    sa.Column('id', sa.Integer, primary_key=True, nullable=False),
                     sa.Column('nvd_vuln_source_id', sa.Integer, sa.ForeignKey('nvd_vuln_sources.id'), nullable=False),
                     sa.Column('nvd_ref_type', sa.Text),
                     sa.Column('href', sa.Text))

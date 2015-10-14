@@ -18,7 +18,7 @@ import sqlalchemy as sa
 
 def upgrade():
   op.create_table('mac_vendors',
-                  sa.Column('id', sa.Integer, sa.Sequence('mac_vendors_id_seq'), primary_key=True, nullable=False),
+                  sa.Column('id', sa.Integer, primary_key=True, nullable=False),
                   sa.Column('name', sa.Text, unique=True))
 
 

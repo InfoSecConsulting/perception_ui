@@ -43,10 +43,10 @@ import xml.etree.ElementTree as ET
 import modules.db_connect
 import sqlalchemy
 from sqlalchemy import update
-from classes.db_tables import InventoryHost, MACVendor, Product, Vendor, InventorySvc, HostNseScript, SvcNseScript
+from models.db_tables import InventoryHost,MACVendor, Product, Vendor, InventorySvc, HostNseScript, SvcNseScript
 
 
-def parse_nmap_xml(nmap_xml):
+def parse_seed_nmap_xml(nmap_xml):
     """Build the global list of variables to be called throughout this script"""
     global v4_addr, mac_addr, v6_addr, os_cpe, ports_info, mac_vendor, host_name, cpe, ex_info, \
         svc_nse_script_id, svc_nse_script_output, product_type, product_vendor, product_name, product_version,\
@@ -60,8 +60,12 @@ def parse_nmap_xml(nmap_xml):
     session = Session()
 
     """Parse the nmap xml files from this directory, and build the tree"""
-    tree = ET.parse(nmap_xml)
-    root = tree.getroot()
+    try:
+      tree = ET.parse(nmap_xml)
+      root = tree.getroot()
+    except ET.ParseError:
+      print('could not parse xml')
+      return
 
     """Find all the hosts in the nmap scan"""
     for host in root.findall('host'):
@@ -171,11 +175,13 @@ def parse_nmap_xml(nmap_xml):
                             mac_vendor_id=None,
                             state='down',
                             product_id=None))
+
             try:
-                session.execute(stmt)
-                session.commit()
+              session.execute(stmt)
+
+              session.commit()
             except sqlalchemy.exc.IntegrityError:
-                session.rollback()
+              session.rollback()
 
             """Find Vendor for MAC address"""
             add_mac_vendor = MACVendor(name=m_vendor)

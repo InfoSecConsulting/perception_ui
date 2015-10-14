@@ -33,7 +33,7 @@ Drop all tables from the database.
 
 Parse an NMAP scan.
 
-     python3 perception.py --nmap_xml nmap_scans/example.nmap_scan.xml --seed_parse
+     python3 perception.py --nmap_xml nmap_scans/example.nmap_seed_scan.xml --seed_parse
 
 =====================================================================================
 
