@@ -39,9 +39,20 @@ limitations under the License.
 
 __author__ = 'Avery Rozar'
 
-from sqlalchemy import Column, Integer, Text, ForeignKey, Sequence, TIMESTAMP, String
-from sqlalchemy.orm import relationship
-from sqlalchemy.dialects import postgresql
+from os import system
+try:
+  from sqlalchemy import Column, Integer, Text, ForeignKey, Sequence, TIMESTAMP, String
+  from sqlalchemy.orm import relationship
+  from sqlalchemy.dialects import postgresql
+except ImportError:
+  print('Installing Sqlalchemy, psycopg2, and alembic using PIP3')
+  system('pip3 install sqlalchemy')
+  system('pip3 install psycopg2')
+  system('pip3 install alembic')
+  from sqlalchemy import Column, Integer, Text, ForeignKey, Sequence, TIMESTAMP, String
+  from sqlalchemy.orm import relationship
+  from sqlalchemy.dialects import postgresql
+
 from base.Base import Base
 import datetime
 
@@ -195,8 +206,8 @@ class HostNseScript(Base):
   id = Column(Integer, Sequence('host_nse_scripts_id_seq'), primary_key=True, nullable=False)
 
   """Relation to host"""
-  host_id = Column(Integer, ForeignKey('inventory_hosts.id', ondelete='cascade'))
-  host = relationship('InventoryHost', backref='host_nse_scripts', order_by=id)
+  inventory_host_id = Column(Integer, ForeignKey('inventory_hosts.id', ondelete='cascade'))
+  inventory_host = relationship('InventoryHost', backref='host_nse_scripts', order_by=id)
 
   name = Column(Text, nullable=False)
   output = Column(Text, nullable=False)
@@ -207,9 +218,9 @@ class InventorySvc(Base):
 
   id = Column(Integer, Sequence('inventory_svcs_id_seq'), primary_key=True, nullable=False)
 
-  """Relation to inventory hosts"""
-  host_id = Column(Integer, ForeignKey('inventory_hosts.id', ondelete='cascade'))
-  host = relationship('InventoryHost', backref='inventory_svcs', order_by=id)
+  """Relation to inventory inventory_host"""
+  inventory_host_id = Column(Integer, ForeignKey('inventory_hosts.id', ondelete='cascade'))
+  inventory_host = relationship('InventoryHost', backref='inventory_svcs', order_by=id)
 
   protocol = Column(Text)
   portid = Column(Integer)
@@ -229,9 +240,9 @@ class SvcNseScript(Base):
 
   id = Column(Integer, Sequence('svc_nse_scripts_id_seq'), primary_key=True, nullable=False)
 
-  """Relation to host"""
-  svc_id = Column(Integer, ForeignKey('inventory_svcs.id', ondelete='cascade'))
-  svc = relationship('InventorySvc', backref='svc_nse_scripts', order_by=id)
+  """Relation to inventory_svc"""
+  inventory_svc_id = Column(Integer, ForeignKey('inventory_svcs.id', ondelete='cascade'))
+  inventory_svc = relationship('InventorySvc', backref='svc_nse_scripts', order_by=id)
 
   name = Column(Text, nullable=False)
   output = Column(Text, nullable=False)
@@ -270,4 +281,5 @@ class LocalHosts(Base):
 
   id = Column(Integer, primary_key=True, nullable=False)
   ip_addr = Column(postgresql.INET, unique=True, nullable=False)
+  mac_addr = Column(postgresql.MACADDR, unique=True, nullable=False)
   created_at = Column(TIMESTAMP(timezone=False), default=_get_date)

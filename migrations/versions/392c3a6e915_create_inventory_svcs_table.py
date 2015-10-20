@@ -24,7 +24,7 @@ def _get_date():
 def upgrade():
   op.create_table('inventory_svcs',
                   sa.Column('id', sa.Integer, primary_key=True, nullable=False),
-                  sa.Column('host_id', sa.Integer, sa.ForeignKey('inventory_hosts.id', ondelete='cascade')),
+                  sa.Column('inventory_host_id', sa.Integer, sa.ForeignKey('inventory_hosts.id', ondelete='cascade')),
                   sa.Column('protocol', sa.Text),
                   sa.Column('portid', sa.Integer),
                   sa.Column('name', sa.Text),

@@ -17,16 +17,16 @@ import sqlalchemy as sa
 
 
 def upgrade():
-    op.create_table('products',
-                    sa.Column('id', sa.Integer, primary_key=True, nullable=False),
-                    sa.Column('product_type', sa.Text, nullable=False),
-                    sa.Column('vendor_id', sa.Integer, sa.ForeignKey('vendors.id'), nullable=False),
-                    sa.Column('name', sa.Text, nullable=False),
-                    sa.Column('version', sa.Text),
-                    sa.Column('product_update', sa.Text),
-                    sa.Column('edition', sa.Text),
-                    sa.Column('language', sa.Text))
+  op.create_table('products',
+                  sa.Column('id', sa.Integer, primary_key=True, nullable=False),
+                  sa.Column('product_type', sa.Text, nullable=False),
+                  sa.Column('vendor_id', sa.Integer, sa.ForeignKey('vendors.id'), nullable=False),
+                  sa.Column('name', sa.Text, nullable=False),
+                  sa.Column('version', sa.Text),
+                  sa.Column('product_update', sa.Text),
+                  sa.Column('edition', sa.Text),
+                  sa.Column('language', sa.Text))
 
 
 def downgrade():
-    op.drop_table('products')
+  op.drop_table('products')

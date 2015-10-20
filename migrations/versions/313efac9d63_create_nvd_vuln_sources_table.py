@@ -17,11 +17,11 @@ import sqlalchemy as sa
 
 
 def upgrade():
-    op.create_table('nvd_vuln_sources',
-                    sa.Column('id', sa.Integer, primary_key=True, nullable=False),
-                    sa.Column('name', sa.Text))
+  op.create_table('nvd_vuln_sources',
+                  sa.Column('id', sa.Integer, primary_key=True, nullable=False),
+                  sa.Column('name', sa.Text))
 
 
 def downgrade():
-    op.create_drop('nvd_vuln_sources')
+  op.create_drop('nvd_vuln_sources')
 

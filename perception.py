@@ -42,11 +42,11 @@ __author__ = 'Avery Rozar'
 import os
 import argparse
 import re
-from modules.seed_information import get_network_info, get_hosts_to_scan, remove_inventory_hosts
-from modules.ios_output_parser import local_hosts, local_connections, cdp_neighbors_detail, ios_fqdn_detail
-from modules.nmap_scanner import nmap_seed_scan
-from modules.nmap_output_parser import parse_seed_nmap_xml
-from modules.host_profiler import profile_windows_hosts
+from lib.seed_information import get_network_info, get_hosts_to_scan, remove_inventory_hosts
+from lib.ios_output_parser import local_hosts, local_connections, cdp_neighbors_detail, ios_fqdn_detail
+from lib.nmap_scanner import nmap_seed_scan
+from lib.nmap_output_parser import parse_seed_nmap_xml
+from lib.host_profiler import profile_windows_hosts
 from shutil import rmtree as rmtree
 
 tmp_dir = '/tmp/perception'
@@ -63,7 +63,7 @@ def main():
   parser = argparse.ArgumentParser('--seed_base,\n'
                                    '\t--seed_scan,\n'
                                    '\t--update_parse,\n'
-                                   '\t--profile_windows_hosts,\n')
+                                   '\t--profile_windows,\n')
 
   parser.add_argument('--seed_base',
                       dest='seed_base',
@@ -80,8 +80,8 @@ def main():
                       action='store_true',
                       help='Use this to update the database for inventory hosts with further analysis.')
 
-  parser.add_argument('--profile_windows_hosts',
-                      dest='profile_windows_hosts',
+  parser.add_argument('--profile_windows',
+                      dest='profile_windows',
                       action='store_true',
                       help='Use this analyze Microsoft AD servers from the database.')
 
@@ -89,7 +89,7 @@ def main():
   seed_base = args.seed_base
   seed_scan = args.seed_scan
   update_parse = args.update_parse
-  profile_windows_hosts = args.profile_windows_hosts
+  profile_windows = args.profile_windows
 
   clear_screen()
 
@@ -129,13 +129,13 @@ def main():
           parse_seed_nmap_xml(str('%s/%s' % (tmp_dir, nmap_xml.group(0))))
     rmtree(tmp_dir)
 
-    if profile_windows_hosts:
+    if profile_windows:
       print('moving to Windows host profiling')
     else:
       print('done scanning hosts')
       exit()
 
-  if profile_windows_hosts:
+  if profile_windows:
     print('looking for Windows hosts..')
     profile_windows_hosts()
     exit()

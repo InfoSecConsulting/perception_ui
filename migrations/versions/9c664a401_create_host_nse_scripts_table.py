@@ -19,7 +19,7 @@ import sqlalchemy as sa
 def upgrade():
   op.create_table('host_nse_scripts',
                   sa.Column('id', sa.Integer, primary_key=True, nullable=False),
-                  sa.Column('host_id', sa.Integer, sa.ForeignKey('inventory_hosts.id', ondelete='cascade')),
+                  sa.Column('inventory_host_id', sa.Integer, sa.ForeignKey('inventory_hosts.id', ondelete='cascade')),
                   sa.Column('name', sa.Text, nullable=False),
                   sa.Column('output', sa.Text, nullable=False))
 

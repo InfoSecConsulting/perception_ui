@@ -23,11 +23,12 @@ def _get_date():
 
 
 def upgrade():
-    op.create_table('local_hosts',
-                    sa.Column('id', sa.Integer, primary_key=True, nullable=False),
-                    sa.Column('ip_addr', postgresql.INET, unique=True),
-                    sa.Column('created_at', sa.TIMESTAMP(timezone=False), default=_get_date))
+  op.create_table('local_hosts',
+                  sa.Column('id', sa.Integer, primary_key=True, nullable=False),
+                  sa.Column('ip_addr', postgresql.INET, unique=True, nullable=False),
+                  sa.Column('mac_addr', postgresql.MACADDR, unique=True),
+                  sa.Column('created_at', sa.TIMESTAMP(timezone=False), default=_get_date))
 
 
 def downgrade():
-    op.drop_table('local_hosts')
+  op.drop_table('local_hosts')

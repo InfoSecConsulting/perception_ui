@@ -1,0 +1,560 @@
+{% extends "base.html" %}
+
+{% block head %}
+
+{% block title %}Overview{% endblock %}
+
+{% endblock %}
+
+{% block content %}
+
+<!-- Page Content BEGIN -->
+<div class="page-content">
+
+	<!-- BEGIN BREADCRUMBS -->
+	<div class="breadcrumbs">
+		<h1>Overview</h1>
+		<ol class="breadcrumb">
+			<li><a href="#">Home</a></li>
+			<li><a href="#">Dashboard</a></li>
+			<li class="active">Overview</li>
+		</ol>
+	</div>
+	<!-- END BREADCRUMBS -->
+
+	<!-- BEGIN Portlet PORTLET-->
+	<div class="row">
+
+		<div class="col-md-4">
+			<div class="dashboard-stat2">
+				<div class="display">
+					<div class="number"><h3>120</h3><small>New Systems Detected</small></div>
+					<div class="icon"><i class="fa fa-warning"></i></div>
+				</div>
+				<div class="progress-info">
+					<div class="progress"><span style="width: 76%;" class="progress-bar progress-bar-warning"></span></div>
+					<div class="status">
+						<div class="status-title">warning</div>
+						<div class="status-number">76%</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="col-md-4">
+			<div class="dashboard-stat2">
+				<div class="display">
+					<div class="number"><h3>34</h3><small>Systems in Compliance</small></div>
+					<div class="icon"><i class="fa fa-check"></i></div>
+				</div>
+				<div class="progress-info">
+					<div class="progress"><span style="width: 85%;" class="progress-bar progress-bar-success"></span></div>
+					<div class="status">
+						<div class="status-title">Compliant</div>
+						<div class="status-number">85%</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!--
+		<div class="col-md-3">
+			<div class="dashboard-stat2">
+				<div class="display">
+					<div class="number"><h3>3</h3><small>Some Standard Name Here</small></div>
+					<div class="icon"><i class="fa fa-gears"></i></div>
+				</div>
+				<div class="progress-info">
+					<div class="progress"><span style="width: 56%;" class="progress-bar progress-bar"></span></div>
+					<div class="status">
+						<div class="status-title">standard</div>
+						<div class="status-number">56%</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		//-->
+
+		<div class="col-md-4">
+			<div class="dashboard-stat2">
+				<div class="display">
+					<div class="number"><h3>5</h3><small>Exploitable Systems</small></div>
+					<div class="icon"><i class="fa fa-bug"></i></div>
+				</div>
+				<div class="progress-info">
+					<div class="progress"><span style="width: 15%;" class="progress-bar progress-bar-danger"></span></div>
+					<div class="status">
+						<div class="status-title">Danger</div>
+						<div class="status-number">15%</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!--end row-->
+
+	<div class="row">
+		<div class="col-md-6 ">
+
+			<!-- BEGIN PORTLET-->
+			<div class="portlet light bordered">
+				<div class="portlet-title">
+					<div class="caption caption-md"><span class="caption-subject bold uppercase">Operating System Summary</span>
+						<span class="caption-helper hide">stats</span>
+					</div>
+					<div class="actions">
+						<div class="btn-group btn-group-devided" data-toggle="buttons">
+							<label class="btn btn-transparent light-grey btn-circle btn-sm active">
+								<input type="radio" name="options" class="toggle" id="option1">Today</label>
+							<label class="btn btn-transparent light-grey btn-circle btn-sm">
+								<input type="radio" name="options" class="toggle" id="option2">Week</label>
+							<label class="btn btn-transparent light-grey btn-circle btn-sm">
+								<input type="radio" name="options" class="toggle" id="option3">Month</label>
+						</div>
+					</div>
+				</div>
+				<div class="portlet-body">
+					<div class="row list-separated">
+						<div class="col-md-3">
+							<div class="font-sm">Windows 7</div>
+							<div class="uppercase font-hg font-red">50 <span class="font-lg "><i class="fa fa-windows"></i></span></div>
+						</div>
+						<div class="col-md-3">
+							<div class=" font-sm">Windows 8</div>
+							<div class="uppercase font-hg font-green">8 <span class="font-lg"><i class="fa fa-windows"></i></span></div>
+						</div>
+						<div class="col-md-3">
+							<div class=" font-sm">Server 12</div>
+							<div class="uppercase font-hg font-purple">18 <span class="font-lg"><i class="fa fa-windows"></i></span></div>
+						</div>
+						<div class="col-md-3">
+							<div class=" font-sm">Linux</div>
+							<div class="uppercase font-hg font-blue">3 <span class="font-lg"><i class="fa fa-linux"></i></span></div>
+						</div>
+					</div>
+					<div id="statistics" class="portlet-body-morris-fit morris-chart" style="height: 260px"></div>
+				</div>
+			</div>
+			<!-- END PORTLET-->
+		</div>
+
+		<div class="col-md-6">
+			<!-- BEGIN PORTLET-->
+			<div class="portlet light bordered">
+				<div class="portlet-title">
+					<div class="caption caption-md"><span class="caption-subject  bold uppercase">New Vulnerabilities</span>
+						<span class="caption-helper hide"> stats...</span>
+					</div>
+					<div class="actions">
+						<div class="btn-group btn-group-devided" data-toggle="buttons">
+							<label class="btn btn-transparent light-grey btn-circle btn-sm active">
+								<input type="radio" name="options" class="toggle" id="option4">Today</label>
+							<label class="btn btn-transparent  light-grey btn-circle btn-sm">
+								<input type="radio" name="options" class="toggle" id="option5">Week</label>
+							<label class="btn btn-transparent  light-grey btn-circle btn-sm">
+								<input type="radio" name="options" class="toggle" id="option6">Month</label>
+						</div>
+					</div>
+				</div>
+				<div class="portlet-body">
+					<div class="row number-stats margin-bottom-30">
+						<div class="col-md-6 ">
+							<div class="stat-left">
+								<div class="stat-chart"><div id="sparkline_bar"></div></div>
+								<div class="stat-number"><div class="title">Total</div><div class="number">52</div></div>
+							</div>
+						</div>
+						<div class="col-md-6 ">
+							<div class="stat-right">
+								<div class="stat-chart">
+									<div id="sparkline_bar2">
+									</div>
+								</div>
+								<div class="stat-number"><div class="title">New</div><div class="number">5</div></div>
+							</div>
+						</div>
+					</div>
+					<div class="table-scrollable table-scrollable-borderless">
+						<table class="table table-hover table-light">
+							<thead>
+							<tr class="uppercase">
+								<th>Title</th>
+								<th>Severity</th>
+								<th>CVSS</th>
+								<th>Published</th>
+								<th>Modified</th>
+							</tr>
+							</thead>
+							<tr>
+								<td><a href="javascript:" class="primary-link">Database Open Access</a></td>
+								<td>5</td>
+								<td>5 (AV:N/AC:L/Au:N/C:P/I:N/A:N)</td>
+								<td>December 31, 2009</td>
+								<td>October 12, 2015</td>
+							</tr>
+							<tr>
+								<td><a href="javascript:" class="primary-link">APSB15-24</a></td>
+								<td>4</td>
+								<td>4 (AV:L/AC:M/Au:N/C:P/I:P/A:P)</td>
+								<td>October 12, 2015</td>
+								<td>October 12, 2015</td>
+							</tr>
+							<tr>
+								<td>
+									<a href="javascript:" class="primary-link">HP iLO Lockup</a></td>
+								<td>8</td>
+								<td>8 (AV:N/AC:L/Au:N/C:N/I:N/A:C)</td>
+								<td>April 23, 2014</td>
+								<td>May 12, 2014</td>
+							</tr>
+							<tr>
+								<td>
+									<a href="javascript:" class="primary-link">OpenSSL Heartbleed Vulnerability</a></td>
+								<td>5</td>
+								<td>5 (AV:N/AC:L/Au:N/C:P/I:N/A:N)</td>
+								<td>April 07, 2014</td>
+								<td>February 12, 2015</td>
+							</tr>
+							<tr>
+								<td>
+									<a href="javascript:" class="primary-link">Shell Shock</a></td>
+								<td>10</td>
+								<td>10 (AV:N/AC:L/Au:N/C:C/I:C/A:C)</td>
+								<td>September 25, 2014</td>
+								<td>September 30, 2014</td>
+							</tr>
+						</table>
+					</div>
+				</div>
+			</div>
+
+			<!-- END PORTLET-->
+		</div>
+	</div>
+	<!--end row-->
+	<div class="row">
+		<div class="col-md-6">
+			<!-- BEGIN PORTLET-->
+			<div class="portlet light bordered">
+				<div class="portlet-title tabbable-line">
+					<div class="caption caption-md">
+						<div class="label label-sm label-rss">
+							<i class="fa fa-rss"></i>
+						</div>
+						<span class="caption-subject bold uppercase"> News Feeds</span>
+					</div>
+					<ul class="nav nav-tabs">
+						<li class="active"><a href="#tab_1_1" data-toggle="tab">SANS Institute</a></li>
+						<li><a href="#tab_1_2" data-toggle="tab">SecurityFocus</a></li>
+					</ul>
+				</div>
+				<div class="portlet-body">
+
+					<!--BEGIN TABS-->
+					<div class="tab-content">
+						<div class="tab-pane active" id="tab_1_1">
+							<div class="scroller" style="height: 337px;" data-always-visible="1" data-rail-visible1="0" data-handle-color="#D7DCE2">
+								<ul class="feeds">
+									<li>
+										<a href="#">
+										<div class="col1">
+											<div class="cont">
+												<div class="desc"> American Library Association Opposes Cybersecurity Information Sharing Act
+												</div>
+											</div>
+										</div>
+										<div class="col2">
+											<div class="date">October 14, 2015</div>
+										</div>
+										</a>
+									</li>
+									<li>
+										<a href="#">
+											<div class="col1">
+												<div class="cont">
+													<div class="desc"> Dridex Botnet Takedown
+													</div>
+												</div>
+											</div>
+											<div class="col2">
+												<div class="date">October 14, 2015</div>
+											</div>
+										</a>
+									</li>
+									<li>
+										<a href="#">
+											<div class="col1">
+												<div class="cont">
+													<div class="desc"> Some IRS Servers are Still Running Windows Server 2003
+													</div>
+												</div>
+											</div>
+											<div class="col2">
+												<div class="date">October 14, 2015
+												</div>
+											</div>
+										</a>
+									</li>
+									<li>
+										<a href="#">
+											<div class="col1">
+												<div class="cont">
+													<div class="desc"> Zero-Day Vulnerability in Magento Magmi Plug-in
+													</div>
+												</div>
+											</div>
+											<div class="col2"><div class="date">October 14, 2015
+											</div>
+											</div>
+										</a>
+									</li>
+									<li>
+										<a href="#">
+											<div class="col1">
+												<div class="cont">
+													<div class="desc">Google Releases Chrome 46
+													</div>
+												</div>
+											</div>
+											<div class="col2"><div class="date">October 14, 2015
+											</div>
+											</div>
+										</a>
+									</li>
+									<li>
+										<a href="#">
+											<div class="col1">
+												<div class="cont">
+													<div class="desc">US Naval Academy Teaching Celestial Navigation</div>
+												</div>
+											</div>
+											<div class="col2">
+												<div class="date">October 14, 2015
+												</div>
+											</div>
+										</a>
+									</li>
+									<li>
+										<a href="#">
+											<div class="col1">
+												<div class="cont">
+													<div class="desc">Experts Lay Out Security Plan for Wi-Fi Routers in Letter to FCC
+														</div>
+												</div>
+											</div>
+											<div class="col2">
+												<div class="date">October 14, 2015
+												</div>
+											</div>
+										</a>
+									</li>
+									<li>
+										<a href="#">
+											<div class="col1">
+												<div class="cont">
+													<div class="desc">Microsoft and Adobe Patch Tuesday: October
+													</div>
+												</div>
+											</div>
+											<div class="col2">
+												<div class="date">October 14, 2015
+												</div>
+											</div>
+										</a>
+									</li>
+									<li>
+										<a href="#">
+											<div class="col1">
+												<div class="cont">
+													<div class="desc">Former Software Company Executive Sued for Cyberattacks on Clients
+													</div>
+												</div>
+											</div>
+											<div class="col2">
+												<div class="date">October 14 and 15, 2015
+												</div>
+											</div>
+										</a>
+									</li>
+									<li>
+										<a href="#">
+											<div class="col1">
+												<div class="cont">
+													<div class="cont-col2"><div class="desc">WordPress Akismet Plug-in Vulnerability
+													</div>
+													</div>
+												</div>
+											</div>
+											<div class="col2">
+												<div class="date">October 15, 2015
+												</div>
+											</div>
+										</a>
+									</li>
+								</ul>
+							</div>
+						</div>
+
+						<!--Second Tab-->
+						<div class="tab-pane" id="tab_1_2">
+							<div class="scroller" style="height: 337px;" data-always-visible="1" data-rail-visible1="0" data-handle-color="#D7DCE2">
+								<ul class="feeds">
+									<li>
+										<a href="#">
+											<div class="col1">
+												<div class="cont">
+													<div class="desc"> Bugtraq: [SECURITY] [DSA 3375-1] wordpress security update
+													</div>
+												</div>
+											</div>
+											<div class="col2">
+												<div class="date">October 14, 2015
+												</div>
+											</div>
+										</a>
+									</li>
+									<li>
+										<a href="#">
+											<div class="col1">
+												<div class="cont">
+													<div class="desc"> Bugtraq: [SECURITY] [DSA 3374-1] postgresql-9.4 security update
+													</div>
+												</div>
+											</div>
+											<div class="col2">
+												<div class="date">October 14, 2015
+												</div>
+											</div>
+										</a>
+									</li>
+									<li>
+										<a href="#">
+											<div class="col1">
+												<div class="cont">
+													<div class="desc"> Bugtraq: [SECURITY] [DSA 3373-1] owncloud security update
+													</div>
+												</div>
+											</div>
+											<div class="col2">
+												<div class="date">October 14, 2015
+												</div>
+											</div>
+										</a>
+									</li>
+									<li>
+										<a href="#">
+											<div class="col1">
+												<div class="cont">
+													<div class="desc"> Bugtraq: Events Made Easy WordPress plugin CSRF + Persistent XSS
+													</div>
+												</div>
+											</div>
+											<div class="col2">
+												<div class="date">October 14, 2015
+												</div>
+											</div>
+										</a>
+									</li>
+
+								</ul>
+							</div>
+						</div>
+					</div>
+					<!--END TABS-->
+				</div>
+			</div>
+			<!-- END PORTLET-->
+		</div>
+
+		<div class="col-md-6">
+			<div class="portlet light bordered">
+				<div class="portlet-title">
+					<div class="caption"><span class="caption-subject bold uppercase">General Stats</span>
+					</div>
+					<div class="actions">
+						<a href="javascript:" class="btn btn-sm btn-circle btn-default easy-pie-chart-reload">
+							<i class="fa fa-repeat"></i> Reload </a>
+					</div>
+				</div>
+				<div class="portlet-body">
+					<div class="row">
+						<div class="col-md-4">
+							<div class="easy-pie-chart">
+								<div class="number transactions" data-percent="55"><span>+55 </span>%
+								</div>
+								<a class="title" href="javascript:">Transactions
+									<i class="fa fa-arrow-right"></i></a>
+							</div>
+						</div>
+						<div class="margin-bottom-10 visible-sm">
+						</div>
+						<div class="col-md-4">
+							<div class="easy-pie-chart">
+								<div class="number visits" data-percent="85"><span>+85 </span>%
+								</div>
+								<a class="title" href="javascript:">New
+									<i class="fa fa-arrow-right"></i></a>
+							</div>
+						</div>
+						<div class="margin-bottom-10 visible-sm">
+						</div>
+						<div class="col-md-4">
+							<div class="easy-pie-chart">
+								<div class="number bounce" data-percent="46"><span>-46 </span>%</div>
+								<a class="title" href="javascript:">Other
+									<i class="fa fa-arrow-right"></i></a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="col-md-6">
+			<div class="portlet light bordered">
+				<div class="portlet-title">
+					<div class="caption"><span class="caption-subject bold uppercase">Server Stats</span>
+					</div>
+					<div class="tools">
+						<a href="" class="collapse"></a>
+						<a href="#" data-toggle="modal" class="config"></a>
+						<a href="" class="reload"></a>
+						<a href="" class="remove"></a>
+					</div>
+				</div>
+				<div class="portlet-body">
+					<div class="row">
+						<div class="col-md-4">
+							<div class="sparkline-chart">
+								<div class="number" id="sparkline_bar3"></div>
+								<a class="title" href="javascript:">Network
+									<i class="fa fa-arrow-right"></i></a>
+							</div>
+						</div>
+						<div class="margin-bottom-10 visible-sm">
+						</div>
+						<div class="col-md-4">
+							<div class="sparkline-chart">
+								<div class="number" id="sparkline_bar4"></div>
+								<a class="title" href="javascript:">CPU Load
+									<i class="fa fa-arrow-right"></i></a>
+							</div>
+						</div>
+						<div class="margin-bottom-10 visible-sm">
+						</div>
+						<div class="col-md-4">
+							<div class="sparkline-chart">
+								<div class="number" id="sparkline_line">
+								</div>
+								<a class="title" href="javascript:">Load Rate
+									<i class="fa fa-arrow-right"></i></a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!--end row-->
+</div>
+<!-- Page Content END -->
+{% endblock %}

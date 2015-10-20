@@ -23,7 +23,7 @@ def _get_date():
 def upgrade():
   op.create_table('local_nets',
                   sa.Column('id', sa.Integer, primary_key=True, nullable=False),
-                  sa.Column('subnet', postgresql.CIDR, unique=True),
+                  sa.Column('subnet', postgresql.CIDR, nullable=False, unique=True),
                   sa.Column('created_at', sa.TIMESTAMP(timezone=False), default=_get_date))
 
 

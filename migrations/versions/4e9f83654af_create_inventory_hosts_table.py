@@ -24,8 +24,8 @@ def _get_date():
 def upgrade():
     op.create_table('inventory_hosts',
                     sa.Column('id', sa.Integer, primary_key=True, nullable=False),
-                    sa.Column('ipv4_addr', postgresql.INET, unique=True),
-                    sa.Column('ipv6_addr', postgresql.INET),
+                    sa.Column('ipv4_addr', postgresql.INET, unique=True, nullable=False),
+                    sa.Column('ipv6_addr', postgresql.INET, unique=True),
                     sa.Column('macaddr', postgresql.MACADDR),
                     sa.Column('host_type', sa.Text),
                     sa.Column('mac_vendor_id', sa.Integer, sa.ForeignKey('mac_vendors.id')),

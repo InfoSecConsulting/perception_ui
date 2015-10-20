@@ -18,17 +18,17 @@ import sqlalchemy as sa
 import datetime
 
 def _get_date():
-    return datetime.datetime.now()
+  return datetime.datetime.now()
 
 
 def upgrade():
-    op.create_table('smb_users',
-                    sa.Column('id', sa.Integer, primary_key=True, nullable=False),
-                    sa.Column('username', sa.String),
-                    sa.Column('encrypted_password', sa.String),
-                    sa.Column('created_at', sa.TIMESTAMP(timezone=False), default=_get_date),
-                    sa.Column('updated_at', sa.TIMESTAMP(timezone=False), onupdate=_get_date))
+  op.create_table('smb_users',
+                  sa.Column('id', sa.Integer, primary_key=True, nullable=False),
+                  sa.Column('username', sa.String),
+                  sa.Column('encrypted_password', sa.String),
+                  sa.Column('created_at', sa.TIMESTAMP(timezone=False), default=_get_date),
+                  sa.Column('updated_at', sa.TIMESTAMP(timezone=False), onupdate=_get_date))
 
 
 def downgrade():
-    op.drop_table('smb_users')
+  op.drop_table('smb_users')

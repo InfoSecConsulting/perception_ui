@@ -21,13 +21,13 @@ def _get_date():
 
 
 def upgrade():
-    op.create_table('linux_users',
-                    sa.Column('id', sa.Integer, primary_key=True, nullable=False),
-                    sa.Column('username', sa.String),
-                    sa.Column('encrypted_password', sa.String),
-                    sa.Column('encrypted_enable_password', sa.String),
-                    sa.Column('created_at', sa.TIMESTAMP(timezone=False), default=_get_date),
-                    sa.Column('updated_at', sa.TIMESTAMP(timezone=False), onupdate=_get_date)),
+  op.create_table('linux_users',
+                  sa.Column('id', sa.Integer, primary_key=True, nullable=False),
+                  sa.Column('username', sa.String),
+                  sa.Column('encrypted_password', sa.String),
+                  sa.Column('encrypted_enable_password', sa.String),
+                  sa.Column('created_at', sa.TIMESTAMP(timezone=False), default=_get_date),
+                  sa.Column('updated_at', sa.TIMESTAMP(timezone=False), onupdate=_get_date)),
 
 
 def downgrade():
