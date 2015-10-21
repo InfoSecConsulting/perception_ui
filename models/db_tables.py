@@ -39,6 +39,7 @@ limitations under the License.
 
 __author__ = 'Avery Rozar'
 
+
 from os import system
 try:
   from sqlalchemy import Column, Integer, Text, ForeignKey, Sequence, TIMESTAMP, String
@@ -53,233 +54,234 @@ except ImportError:
   from sqlalchemy.orm import relationship
   from sqlalchemy.dialects import postgresql
 
-from base.Base import Base
+# from base.Base import Base
+from main import db
 import datetime
 
 def _get_date():
     return datetime.datetime.now()
 
 
-class Vendor(Base):
+class Vendor(db.Model):
   __tablename__ = 'vendors'
 
-  id = Column(Integer, Sequence('vendors_id_seq'), primary_key=True, nullable=False)
-  name = Column(Text, unique=True, nullable=False)
+  id = db.Column(db.Integer, db.Sequence('vendors_id_seq'), primary_key=True, nullable=False)
+  name = db.Column(db.Text, unique=True, nullable=False)
 
 
-class Product(Base):
+class Product(db.Model):
   __tablename__ = 'products'
 
-  id = Column(Integer, Sequence('products_id_seq'), primary_key=True, nullable=False)
+  id = db.Column(db.Integer, db.Sequence('products_id_seq'), primary_key=True, nullable=False)
 
-  product_type = Column(Text, nullable=False)
+  product_type = db.Column(Text, nullable=False)
 
   """Relation to tie vendors to products"""
-  vendor_id = Column(Integer, ForeignKey('vendors.id'), nullable=False)
-  vendor = relationship('Vendor', backref='products', order_by=id)
+  vendor_id = db.Column(db.Integer, db.ForeignKey('vendors.id'), nullable=False)
+  vendor = db.relationship('Vendor', backref='products', order_by=id)
 
-  name = Column(Text, nullable=False)
-  version = Column(Text)
-  product_update = Column(Text)
-  edition = Column(Text)
-  language = Column(Text)
+  name = db.Column(db.Text, nullable=False)
+  version = db.Column(db.Text)
+  product_update = db.Column(db.Text)
+  edition = db.Column(db.Text)
+  language = db.Column(db.Text)
 
 
-class NvdVulnSource(Base):
+class NvdVulnSource(db.Model):
   __tablename__ = 'nvd_vuln_sources'
 
-  id = Column(Integer, Sequence('nvd_vuln_sources_id_seq'), primary_key=True, nullable=False)
-  name = Column(Text)
+  id = db.Column(db.Integer, db.Sequence('nvd_vuln_sources_id_seq'), primary_key=True, nullable=False)
+  name = db.Column(db.Text)
 
 
-class NvdVulnReference(Base):
+class NvdVulnReference(db.Model):
   __tablename__ = 'nvd_vuln_references'
 
-  id = Column(Integer, Sequence('nvd_vuln_references_id_seq'), primary_key=True, nullable=False)
+  id = db.Column(db.Integer, db.Sequence('nvd_vuln_references_id_seq'), primary_key=True, nullable=False)
 
   """Relation to tie vulnerability source disclosure to NVD vulnerabilities"""
-  nvd_vuln_source_id = Column(Integer, ForeignKey('nvd_vuln_sources.id'), nullable=False)
-  nvd_vuln_source = relationship('NvdVulnSource', backref='nvd_vuln_references', order_by=id)
+  nvd_vuln_source_id = db.Column(db.Integer, db.ForeignKey('nvd_vuln_sources.id'), nullable=False)
+  nvd_vuln_source = db.relationship('NvdVulnSource', backref='nvd_vuln_references', order_by=id)
 
-  nvd_ref_type = Column(Text)
-  href = Column(Text)
+  nvd_ref_type = db.Column(db.Text)
+  href = db.Column(db.Text)
 
 
-class NvdVuln(Base):
+class NvdVuln(db.Model):
   __tablename__ = 'nvd_vulns'
 
-  id = Column(Integer, Sequence('nvd_vulns_id_seq'), primary_key=True, nullable=False)
-  name = Column(Text, unique=True, nullable=False)
+  id = db.Column(db.Integer, db.Sequence('nvd_vulns_id_seq'), primary_key=True, nullable=False)
+  name = db.Column(db.Text, unique=True, nullable=False)
 
   """Relation to tie products to vulnerabilities from the NVD"""
-  product_id = Column(Integer, ForeignKey('products.id'), nullable=False)
-  product = relationship('Product', backref='nvd_vulns', order_by=id)
+  product_id = db.Column(db.Integer, db.ForeignKey('products.id'), nullable=False)
+  product = db.relationship('Product', backref='nvd_vulns', order_by=id)
 
-  cveid = Column(Text, nullable=False)
-  vuln_published = Column(Text)
-  vuln_updated = Column(Text)
-  cvss = Column(Text)
-  cweid = Column(Text)
+  cveid = db.Column(db.Text, nullable=False)
+  vuln_published = db.Column(db.Text)
+  vuln_updated = db.Column(db.Text)
+  cvss = db.Column(db.Text)
+  cweid = db.Column(db.Text)
 
   """Relation to tie references to vulnerabilities from the NVD"""
-  nvd_vuln_reference_id = Column(Integer, ForeignKey('nvd_vuln_references.id'))
-  nvd_vuln_reference = relationship('NvdVulnReference', backref='nvd_vulns', order_by=id)
+  nvd_vuln_reference_id = db.Column(db.Integer, db.ForeignKey('nvd_vuln_references.id'))
+  nvd_vuln_reference = db.relationship('NvdVulnReference', backref='nvd_vulns', order_by=id)
 
-  summary = Column(Text)
-  created_at = Column(TIMESTAMP(timezone=False))
-  updated_at = Column(TIMESTAMP(timezone=False))
+  summary = db.Column(db.Text)
+  created_at = db.Column(db.TIMESTAMP(timezone=False))
+  updated_at = db.Column(db.TIMESTAMP(timezone=False))
 
 
-class MACVendor(Base):
+class MACVendor(db.Model):
   __tablename__ = 'mac_vendors'
 
-  id = Column(Integer, Sequence('mac_vendors_id_seq'), primary_key=True, nullable=False)
-  name = Column(Text, unique=True)
+  id = db.Column(db.Integer, db.Sequence('mac_vendors_id_seq'), primary_key=True, nullable=False)
+  name = db.Column(db.Text, unique=True)
 
 
-class SmbUser(Base):
+class SmbUser(db.Model):
   __tablename__ = 'smb_users'
 
-  id = Column(Integer, primary_key=True, nullable=False)
-  username = Column(String)
-  encrypted_password = Column(String)
+  id = db.Column(db.Integer, primary_key=True, nullable=False)
+  username = db.Column(db.String)
+  encrypted_password = db.Column(db.String)
 
-  created_at = Column(TIMESTAMP(timezone=False), default=_get_date)
-  updated_at = Column(TIMESTAMP(timezone=False), onupdate=_get_date)
+  created_at = db.Column(db.TIMESTAMP(timezone=False), default=_get_date)
+  updated_at = db.Column(db.TIMESTAMP(timezone=False), onupdate=_get_date)
 
 
-class LinuxUser(Base):
+class LinuxUser(db.Model):
   __tablename__ = 'linux_users'
 
-  id = Column(Integer, primary_key=True, nullable=False)
-  username = Column(String)
-  encrypted_password = Column(String)
-  encrypted_enable_password = Column(String)
+  id = db.Column(db.Integer, primary_key=True, nullable=False)
+  username = db.Column(db.String)
+  encrypted_password = db.Column(db.String)
+  encrypted_enable_password = db.Column(db.String)
 
-  created_at = Column(TIMESTAMP(timezone=False), default=_get_date)
-  updated_at = Column(TIMESTAMP(timezone=False), onupdate=_get_date)
+  created_at = db.Column(db.TIMESTAMP(timezone=False), default=_get_date)
+  updated_at = db.Column(db.TIMESTAMP(timezone=False), onupdate=_get_date)
 
 
-class InventoryHost(Base):
+class InventoryHost(db.Model):
   __tablename__ = 'inventory_hosts'
 
-  id = Column(Integer, Sequence('inventory_hosts_id_seq'), primary_key=True, nullable=False)
-  ipv4_addr = Column(postgresql.INET, unique=True)
-  ipv6_addr = Column(postgresql.INET)
-  macaddr = Column(postgresql.MACADDR)
-  host_type = Column(Text)
+  id = db.Column(db.Integer, db.Sequence('inventory_hosts_id_seq'), primary_key=True, nullable=False)
+  ipv4_addr = db.Column(postgresql.INET, unique=True)
+  ipv6_addr = db.Column(postgresql.INET)
+  macaddr = db.Column(postgresql.MACADDR)
+  host_type = db.Column(db.Text)
 
   """Relation to tie mac address vendors to inventory hosts"""
-  mac_vendor_id = Column(Integer, ForeignKey('mac_vendors.id'))
-  mac_vendor = relationship('MACVendor', backref='inventory_hosts', order_by=id)
+  mac_vendor_id = db.Column(db.Integer, db.ForeignKey('mac_vendors.id'))
+  mac_vendor = db.relationship('MACVendor', backref='inventory_hosts', order_by=id)
 
-  state = Column(Text)
-  host_name = Column(Text)
+  state = db.Column(db.Text)
+  host_name = db.Column(db.Text)
 
   """Relation to tie an OS inventory hosts"""
-  product_id = Column(Integer, ForeignKey('products.id'))
-  product = relationship('Product', backref='inventory_hosts', order_by=id)
+  product_id = db.Column(db.Integer, db.ForeignKey('products.id'))
+  product = db.relationship('Product', backref='inventory_hosts', order_by=id)
 
-  arch = Column(Text)
+  arch = db.Column(Text)
 
   """Relation to tie users to inventory hosts"""
-  smb_user_id = Column(Integer, ForeignKey('smb_users.id'))
-  smb_user = relationship('SmbUser', backref='inventory_hosts', order_by=id)
+  smb_user_id = db.Column(db.Integer, db.ForeignKey('smb_users.id'))
+  smb_user = db.relationship('SmbUser', backref='inventory_hosts', order_by=id)
 
-  linux_user_id = Column(Integer, ForeignKey('linux_users.id'))
-  linux_user = relationship('LinuxUser', backref='inventory_hosts', order_by=id)
+  linux_user_id = db.Column(db.Integer, db.ForeignKey('linux_users.id'))
+  linux_user = db.relationship('LinuxUser', backref='inventory_hosts', order_by=id)
 
-  info = Column(Text)
-  comments = Column(Text)
+  info = db.Column(db.Text)
+  comments = db.Column(db.Text)
 
   """Relation to tie NVD vulnerabilities to inventory hosts"""
-  nvd_vuln_id = Column(Integer, ForeignKey('nvd_vulns.id'))
-  nvd_vuln = relationship('NvdVuln', backref='inventory_hosts', order_by=id)
+  nvd_vuln_id = db.Column(db.Integer, db.ForeignKey('nvd_vulns.id'))
+  nvd_vuln = db.relationship('NvdVuln', backref='inventory_hosts', order_by=id)
 
-  created_at = Column(TIMESTAMP(timezone=False), default=_get_date)
-  updated_at = Column(TIMESTAMP(timezone=False), onupdate=_get_date)
+  created_at = db.Column(db.TIMESTAMP(timezone=False), default=_get_date)
+  updated_at = db.Column(db.TIMESTAMP(timezone=False), onupdate=_get_date)
 
 
-class HostNseScript(Base):
+class HostNseScript(db.Model):
   __tablename__ = 'host_nse_scripts'
 
-  id = Column(Integer, Sequence('host_nse_scripts_id_seq'), primary_key=True, nullable=False)
+  id = db.Column(db.Integer, db.Sequence('host_nse_scripts_id_seq'), primary_key=True, nullable=False)
 
   """Relation to host"""
-  inventory_host_id = Column(Integer, ForeignKey('inventory_hosts.id', ondelete='cascade'))
-  inventory_host = relationship('InventoryHost', backref='host_nse_scripts', order_by=id)
+  inventory_host_id = db.Column(db.Integer, db.ForeignKey('inventory_hosts.id', ondelete='cascade'))
+  inventory_host = db.relationship('InventoryHost', backref='host_nse_scripts', order_by=id)
 
-  name = Column(Text, nullable=False)
-  output = Column(Text, nullable=False)
+  name = db.Column(db.Text, nullable=False)
+  output = db.Column(db.Text, nullable=False)
 
 
-class InventorySvc(Base):
+class InventorySvc(db.Model):
   __tablename__ = 'inventory_svcs'
 
-  id = Column(Integer, Sequence('inventory_svcs_id_seq'), primary_key=True, nullable=False)
+  id = db.Column(db.Integer, db.Sequence('inventory_svcs_id_seq'), primary_key=True, nullable=False)
 
   """Relation to inventory inventory_host"""
-  inventory_host_id = Column(Integer, ForeignKey('inventory_hosts.id', ondelete='cascade'))
-  inventory_host = relationship('InventoryHost', backref='inventory_svcs', order_by=id)
+  inventory_host_id = db.Column(db.Integer, db.ForeignKey('inventory_hosts.id', ondelete='cascade'))
+  inventory_host = db.relationship('InventoryHost', backref='inventory_svcs', order_by=id)
 
-  protocol = Column(Text)
-  portid = Column(Integer)
-  name = Column(Text)
-  svc_product = Column(Text)
-  extra_info = Column(Text)
+  protocol = db.Column(db.Text)
+  portid = db.Column(db.Integer)
+  name = db.Column(db.Text)
+  svc_product = db.Column(db.Text)
+  extra_info = db.Column(db.Text)
 
   """Relation to tie products to inventory services"""
-  product_id = Column(Integer, ForeignKey('products.id'))
-  product = relationship('Product', backref='inventory_svcs', order_by=id)
+  product_id = db.Column(db.Integer, db.ForeignKey('products.id'))
+  product = db.relationship('Product', backref='inventory_svcs', order_by=id)
 
-  created_at = Column(TIMESTAMP(timezone=False), default=_get_date)
+  created_at = db.Column(db.TIMESTAMP(timezone=False), default=_get_date)
 
 
-class SvcNseScript(Base):
+class SvcNseScript(db.Model):
   __tablename__ = 'svc_nse_scripts'
 
-  id = Column(Integer, Sequence('svc_nse_scripts_id_seq'), primary_key=True, nullable=False)
+  id = db.Column(db.Integer, db.Sequence('svc_nse_scripts_id_seq'), primary_key=True, nullable=False)
 
   """Relation to inventory_svc"""
-  inventory_svc_id = Column(Integer, ForeignKey('inventory_svcs.id', ondelete='cascade'))
-  inventory_svc = relationship('InventorySvc', backref='svc_nse_scripts', order_by=id)
+  inventory_svc_id = db.Column(db.Integer, db.ForeignKey('inventory_svcs.id', ondelete='cascade'))
+  inventory_svc = db.relationship('InventorySvc', backref='svc_nse_scripts', order_by=id)
 
-  name = Column(Text, nullable=False)
-  output = Column(Text, nullable=False)
+  name = db.Column(db.Text, nullable=False)
+  output = db.Column(db.Text, nullable=False)
 
 
-class LocalNet(Base):
+class LocalNet(db.Model):
   __tablename__ = 'local_nets'
 
-  id = Column(Integer, primary_key=True, nullable=False)
-  subnet = Column(postgresql.CIDR, unique=True)
-  created_at = Column(TIMESTAMP(timezone=False), default=_get_date)
+  id = db.Column(db.Integer, primary_key=True, nullable=False)
+  subnet = db.Column(postgresql.CIDR, unique=True)
+  created_at = db.Column(db.TIMESTAMP(timezone=False), default=_get_date)
 
 
-class DiscoveryProtocolFindings(Base):
+class DiscoveryProtocolFindings(db.Model):
   __tablename__ = 'discovery_protocol_findings'
 
-  id = Column(Integer, primary_key=True, nullable=False)
-  local_device_id = Column(Text, nullable=False)
-  remote_device_id = Column(Text, nullable=False)
-  ip_addr = Column(postgresql.INET)
-  platform = Column(Text)
-  capabilities = Column(Text)
-  interface = Column(Text)
-  port_id = Column(Text)
-  discovery_version = Column(Integer)
-  protocol_hello = Column(Text)
-  vtp_domain = Column(Text)
-  native_vlan = Column(Integer)
-  duplex = Column(Text)
-  power_draw = Column(Text)
-  created_at = Column(TIMESTAMP(timezone=False), default=_get_date)
+  id = Column(db.Integer, primary_key=True, nullable=False)
+  local_device_id = db.Column(db.Text, nullable=False)
+  remote_device_id = db.Column(db.Text, nullable=False)
+  ip_addr = db.Column(postgresql.INET)
+  platform = db.Column(db.Text)
+  capabilities = db.Column(db.Text)
+  interface = db.Column(db.Text)
+  port_id = db.Column(db.Text)
+  discovery_version = db.Column(db.Integer)
+  protocol_hello = db.Column(db.Text)
+  vtp_domain = db.Column(db.Text)
+  native_vlan = db.Column(db.Integer)
+  duplex = db.Column(db.Text)
+  power_draw = db.Column(db.Text)
+  created_at = db.Column(db.TIMESTAMP(timezone=False), default=_get_date)
 
 
-class LocalHosts(Base):
+class LocalHosts(db.Model):
   __tablename__ = 'local_hosts'
 
-  id = Column(Integer, primary_key=True, nullable=False)
-  ip_addr = Column(postgresql.INET, unique=True, nullable=False)
-  mac_addr = Column(postgresql.MACADDR, unique=True, nullable=False)
-  created_at = Column(TIMESTAMP(timezone=False), default=_get_date)
+  id = db.Column(db.Integer, primary_key=True, nullable=False)
+  ip_addr = db.Column(postgresql.INET, unique=True, nullable=False)
+  mac_addr = db.Column(postgresql.MACADDR, unique=True, nullable=False)
+  created_at = db.Column(db.TIMESTAMP(timezone=False), default=_get_date)

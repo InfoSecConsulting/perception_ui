@@ -43,7 +43,7 @@ import xml.etree.ElementTree as ET
 import lib.db_connect
 import sqlalchemy
 from sqlalchemy import update
-from models.db_tables import InventoryHost,MACVendor, Product, Vendor, InventorySvc, HostNseScript, SvcNseScript
+from models.db_tables import InventoryHost, MACVendor, Product, Vendor, InventorySvc, HostNseScript, SvcNseScript
 
 
 def parse_seed_nmap_xml(nmap_xml):
@@ -314,7 +314,7 @@ def parse_seed_nmap_xml(nmap_xml):
             inventory_hosts = session.query(InventoryHost).filter_by(ipv4_addr=ipv4).first()
 
             """Clean out the old HostNseScript"""
-            session.query(HostNseScript).filter(HostNseScript.host_id == inventory_hosts.id).delete()
+            session.query(HostNseScript).filter(HostNseScript.inventory_host_id == inventory_hosts.id).delete()
             session.commit()
 
             """Add the new HostNseScripts"""
@@ -324,7 +324,7 @@ def parse_seed_nmap_xml(nmap_xml):
             host_nse_scripts_dict = dict(zip(host_nse_script_keys, host_nse_script_values))
 
             for k, v in host_nse_scripts_dict.items():
-                add_nse_script_op = HostNseScript(host_id=inventory_hosts.id,
+                add_nse_script_op = HostNseScript(inventory_host_id=inventory_hosts.id,
                                                   name=k,
                                                   output=v)
                 session.add(add_nse_script_op)
@@ -334,7 +334,7 @@ def parse_seed_nmap_xml(nmap_xml):
             port_info = host.findall('ports')
 
             """Clean out the old Inventory_svcs"""
-            session.query(InventorySvc).filter(InventorySvc.host_id == inventory_hosts.id).delete()
+            session.query(InventorySvc).filter(InventorySvc.inventory_host_id == inventory_hosts.id).delete()
             session.commit()
             for ports in port_info:
                 inventory_svcs_id_list = []
@@ -474,7 +474,7 @@ def parse_seed_nmap_xml(nmap_xml):
                                 session.rollback()
 
                         """Add the new inventory_svc"""
-                        add_inventory_svcs = InventorySvc(host_id=inventory_hosts.id,
+                        add_inventory_svcs = InventorySvc(inventory_host_id=inventory_hosts.id,
                                                           protocol=protocol,
                                                           portid=portid,
                                                           name=service_name,
@@ -487,7 +487,7 @@ def parse_seed_nmap_xml(nmap_xml):
                             session.commit()
 
                             """Get the inventory_svcs.id"""
-                            svc = session.query(InventorySvc).filter_by(host_id=inventory_hosts.id,
+                            svc = session.query(InventorySvc).filter_by(inventory_host_id=inventory_hosts.id,
                                                                         protocol=protocol,
                                                                         portid=portid,
                                                                         name=service_name,
@@ -503,7 +503,7 @@ def parse_seed_nmap_xml(nmap_xml):
                             svc_nse_scripts_dict = dict(zip(svc_nse_script_keys, svc_nse_script_values))
 
                             for k, v in svc_nse_scripts_dict.items():
-                                add_nse_script_op = SvcNseScript(svc_id=svc.id,
+                                add_nse_script_op = SvcNseScript(inventory_svc_id=svc.id,
                                                                  name=k,
                                                                  output=v)
                                 session.add(add_nse_script_op)
@@ -554,7 +554,7 @@ def parse_seed_nmap_xml(nmap_xml):
 
                         """Add SVC only info to database"""
                     else:
-                        add_inventory_svcs = InventorySvc(host_id=inventory_hosts.id,
+                        add_inventory_svcs = InventorySvc(inventory_host_id=inventory_hosts.id,
                                                           protocol=protocol,
                                                           portid=portid,
                                                           name=service_name,
@@ -565,7 +565,7 @@ def parse_seed_nmap_xml(nmap_xml):
                             session.commit()
 
                             """Get the inventory_svcs.id"""
-                            inventory_svcs = session.query(InventorySvc).filter_by(host_id=inventory_hosts.id,
+                            inventory_svcs = session.query(InventorySvc).filter_by(inventory_host_id=inventory_hosts.id,
                                                                                    protocol=protocol,
                                                                                    portid=portid,
                                                                                    name=service_name,
@@ -585,7 +585,7 @@ def parse_seed_nmap_xml(nmap_xml):
                         svc_nse_scripts_dict = dict(zip(svc_nse_script_keys, svc_nse_script_values))
 
                         for k, v in svc_nse_scripts_dict.items():
-                            add_nse_script_op = SvcNseScript(svc_id=inventory_svcs.id,
+                            add_nse_script_op = SvcNseScript(inventory_svc_id=inventory_svcs.id,
                                                              name=k,
                                                              output=v)
                             session.add(add_nse_script_op)
