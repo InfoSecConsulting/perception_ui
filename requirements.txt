@@ -1,0 +1,6 @@
+xlsxwriter
+pexpect
+alembic
+sqlalchemy
+wtforms
+flask

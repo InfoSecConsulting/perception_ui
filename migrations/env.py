@@ -36,7 +36,7 @@ target_metadata = None
 # ... etc.
 
 # database yaml file for connectivity info
-db_yml = 'config/database.yml'
+db_yml = 'app/config/database.yml'
 new_list = []
 reg_clean = re.compile(r'[:]')
 with open(db_yml, 'r') as f:

@@ -1,53 +1,12 @@
-#!/usr/local/bin/python3
-# -*- coding: utf-8 -*-
-"""
-(C) Copyright [2015] InfoSec Consulting, Inc.
-
-Licensed under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at
- 
-http://www.apache.org/licenses/LICENSE-2.0
- 
-Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
-limitations under the License.
-
-         ...
-    .:::|#:#|::::.
- .:::::|##|##|::::::.
- .::::|##|:|##|:::::.
-  ::::|#|:::|#|:::::
-  ::::|#|:::|#|:::::
-  ::::|##|:|##|:::::
-  ::::.|#|:|#|.:::::
-  ::|####|::|####|::
-  :|###|:|##|:|###|:
-  |###|::|##|::|###|
-  |#|::|##||##|::|#|
-  |#|:|##|::|##|:|#|
-  |#|##|::::::|##|#|
-   |#|::::::::::|#|
-    ::::::::::::::
-      ::::::::::
-       ::::::::
-        ::::::
-          ::
-"""
-
-__author__ = 'Avery Rozar'
-
 import os
 import argparse
 import re
-from lib.seed_information import get_network_info, get_hosts_to_scan, remove_inventory_hosts
-from lib.ios_output_parser import local_hosts, local_connections, cdp_neighbors_detail, ios_fqdn_detail
-from lib.nmap_scanner import nmap_seed_scan
-from lib.nmap_output_parser import parse_seed_nmap_xml
-from lib.host_profiler import profile_windows_hosts
 from shutil import rmtree as rmtree
+from app.lib.seed_information import get_network_info, get_hosts_to_scan, remove_inventory_hosts
+from app.lib.ios_output_parser import local_hosts, local_connections, cdp_neighbors_detail, ios_fqdn_detail
+from app.lib.nmap_scanner import nmap_seed_scan
+from app.lib.nmap_output_parser import parse_seed_nmap_xml
+from app.lib.host_profiler import profile_windows_hosts
 
 tmp_dir = '/tmp/perception'
 ios_show_hosts_file = '%s/ios_show_hosts.txt' % tmp_dir
