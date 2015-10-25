@@ -19,7 +19,7 @@ def create_app(config_name):
   app = Flask(__name__)
 
   # Configurations
-  app.config.from_object(config[config_name])  # ('config')
+  app.config.from_object(config[config_name])
   config[config_name].init_app(app)
   db.init_app(app)
   login_manager.init_app(app)
@@ -29,24 +29,18 @@ def create_app(config_name):
   def not_found(error):
     return render_template('404.html'), 404
 
-  @app.route('/index')
-  @login_required
-  def index():
-    return render_template('index.html')
-
-  @app.route('/assets')
-  @login_required
-  def assets():
-    return render_template('assets.html')
-
   # Import a module / component using its blueprint handler variable (auth)
   # from app.main.controllers import main as main_module
   from app.main.controllers import main as main_module
   from app.auth.controllers import auth as auth_module
+  from app.dashboards.controllers import dashboards as dashboard_module
+  from app.settings.controllers import settings as settings_module
 
   # Register blueprint(s)
   app.register_blueprint(main_module)
   app.register_blueprint(auth_module)
+  app.register_blueprint(dashboard_module)
+  app.register_blueprint(settings_module)
   # app.register_blueprint(xyz_module)
 
   # Build the database:

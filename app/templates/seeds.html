@@ -1,0 +1,109 @@
+{% extends "base.html" %}
+
+{% block head %}
+
+{% block title %}{{request.path}}{% endblock %}
+
+{% endblock %}
+
+{% block content %}
+
+<!-- Page Content BEGIN -->
+<div class="page-content">
+
+  <!-- BEGIN BREADCRUMBS -->
+  <div class="breadcrumbs">
+    <h1>{{request.path}}</h1>
+    <ol class="breadcrumb">
+      <li><a href="#">/Home</a></li>
+      <li><a href="#">/Dashboard </a></li>
+      <li class="active">{{request.path}}</li>
+    </ol>
+  </div>
+  <!-- END BREADCRUMBS -->
+
+  <!-- BEGIN PORTLET-->
+  <div class="row">
+    <div class="col-md-12">
+      <div class="portlet light bordered"><div class="portlet-title">
+        <div class="caption">
+          <span class="caption-subject bold uppercase">Enter your seeding information</span>
+        </div>
+
+        <div class="actions">
+          <div class="btn-group">
+            <a class="btn btn-sm default dropdown-toggle"
+               href="javascript:"
+               data-toggle="dropdown">Settings <i class="fa fa-angle-down"></i>
+            </a>
+            <ul class="dropdown-menu pull-right">
+              <li>
+                <a href="javascript:">
+                  <i class="fa fa-pencil"></i> Edit </a>
+              </li>
+              <li>
+                <a href="javascript:">
+                  <i class="fa fa-trash-o"></i> Delete </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+        <div class="portlet-body form">
+          <form role="form">
+            <div class="form-body">
+              <div class="row">
+                <div class="col-md-3">
+                  <div class="form-group form-md-line-input form-md-floating-label">
+                    <input type="text" class="form-control" >
+                    <label>Core Router</label>
+                    <span class="help-block">Enter the IP address or hostname of your core router (or layer 3 switch)</span>
+                  </div>
+                </div>
+                <!--end col-->
+
+                <div class="col-md-3">
+                  <div class="form-group form-md-line-input form-md-floating-label">
+                    <input type="text" class="form-control" >
+                    <label >Username</label>
+                    <span class="help-block">Enter the username for the core router</span>
+                  </div>
+                </div>
+                <!--end col-->
+
+                <div class="col-md-3">
+                  <div class="form-group form-md-line-input form-md-floating-label has-success">
+                    <input type="password" class="form-control">
+                    <label >Password</label>
+                    <span class="help-block">Enter the password for the core router</span>
+                  </div>
+                </div>
+                <!--end col-->
+
+                <div class="col-md-3">
+                  <div class="form-group form-md-line-input form-md-floating-label has-success">
+                    <input type="password" class="form-control">
+                    <label>Enable Password</label>
+                    <span class="help-block">Enter the enable password for the core router</span>
+                  </div>
+                </div>
+                <!--end col-->
+
+              </div>
+              <!--end row-->
+
+            </div>
+
+            <div class="form-actions noborder">
+              <button type="button" class="btn blue">Submit</button>
+              <button type="button" class="btn default">Cancel</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    <!--end col-->
+  </div>
+</div>
+<!-- Page Content END -->
+{% endblock %}

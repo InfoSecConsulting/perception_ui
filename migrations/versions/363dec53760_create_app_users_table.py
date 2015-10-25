@@ -1,14 +1,14 @@
-"""creaete app users table
+"""create app_users table
 
-Revision ID: 535cd32409d
-Revises: f5e18e930c
-Create Date: 2015-10-21 16:09:57.103976
+Revision ID: 363dec53760
+Revises: 2634028c6b8
+Create Date: 2015-10-25 14:22:41.435025
 
 """
 
 # revision identifiers, used by Alembic.
-revision = '535cd32409d'
-down_revision = 'f5e18e930c'
+revision = '363dec53760'
+down_revision = '2634028c6b8'
 branch_labels = None
 depends_on = None
 
@@ -28,10 +28,10 @@ def upgrade():
                   sa.Column('email', sa.String(128), nullable=False),
                   sa.Column('phone', sa.VARCHAR(12)),
                   sa.Column('company', sa.String(32)),
-                  sa.Column('password_hash', sa.String(255), nullable=False),
+                  sa.Column('password_hash', sa.String(128), nullable=False),
+                  sa.Column('time_zone_id', sa.Integer, sa.ForeignKey('time_zones.id')),
                   sa.Column('created_at', sa.TIMESTAMP(timezone=False), default=_get_date),
                   sa.Column('updated_at', sa.TIMESTAMP(timezone=False), onupdate=_get_date))
-
 
 def downgrade():
   op.drop_table('app_users')

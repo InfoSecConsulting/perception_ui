@@ -2,7 +2,7 @@
 
 {% block head %}
 
-{% block title %}Assets{% endblock %}
+{% block title %}{{request.path}}{% endblock %}
 
 {% endblock %}
 
@@ -13,16 +13,65 @@
 
 	<!-- BEGIN BREADCRUMBS -->
 	<div class="breadcrumbs">
-		<h1>Assets</h1>
+		<h1>{{request.path}}</h1>
 		<ol class="breadcrumb">
-			<li><a href="#">Home</a></li>
-			<li><a href="#">Dashboard</a></li>
-			<li class="active">Assets</li>
+			<li><a href="#">/Home</a></li>
+			<li><a href="#">/Dashboard</a></li>
+			<li class="active">{{request.path}}</li>
 		</ol>
 	</div>
 	<!-- END BREADCRUMBS -->
 
-</div>
+  <div class="row">
+    <div class="col-md-12 col-sm-12">
+      <!-- BEGIN  TABLE PORTLET-->
+      <div class="portlet box grey">
+        <div class="portlet-title">
+          <div class="caption">Inventory Assets</div>
+          <div class="actions">
+            <a href="javascript:"
+               class="btn btn-default btn-sm">
+              <i class="fa fa-print"></i> Print </a>
+          </div>
+        </div>
 
+        <div class="portlet-body">
+          <table class="table table-striped table-bordered table-hover" id="sample_3">
+            <thead>
+            <tr>
+              <th>Hostname</th>
+              <th>IP address</th>
+              <th>MAC Vendor</th>
+              <th>Host Type</th>
+              <th>OS</th>
+              <th>Arch</th>
+              <th>Info</th>
+              <th>Comments</th>
+            </tr>
+            </thead>
+
+            {% for host in inventory_hosts%}
+            <tbody>
+            <tr class="odd gradeX">
+              <td>{{ host.host_name }}</td>
+              <td>{{ host.ipv4_addr }}</td>
+              <td>{{ host.mac_vendor_id }}</td>
+              <td>{{ host.host_type }}</td>
+              <td>{{ host.product_id }}<i class="fa fa-linux"></i></td>
+              <td>{{ host.arch }}</td>
+              <td>{{ host.info }}</td>
+              <td>{{ host.comments }}</td>
+            </tr>
+            </tbody>
+            {% endfor %}
+          </table>
+        </div>
+      </div>
+      <!-- END TABLE -->
+    </div>
+    <!--END COl-->
+  </div>
+  <!--END ROW-->
+</div>
 
 {% endblock %}

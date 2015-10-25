@@ -52,7 +52,7 @@
         <!-- End Toggle Button -->
 
         <!-- BEGIN LOGO -->
-        <a id="index" class="page-logo" href="index">
+        <a id="index" class="page-logo" href="overview">
           <img src="../static/img/logo.png" alt="Logo"></a>
         <!-- END LOGO -->
 
@@ -111,9 +111,9 @@
         <!--BEGIN NAV-->
         <div class="nav-collapse collapse navbar-collapse navbar-responsive-collapse">
           <ul class="nav navbar-nav text-uppercase">
-            <li class="dropdown dropdown-fw open selected"> <a href="javascript:;">Dashboards</a>
+            <li class="dropdown dropdown-fw {% if request.path == '/' or request.path == '/overview' or request.path == '/assets' %} open selected {% endif %}"><a href="javascript:">Dashboards</a>
               <ul class="dropdown-menu dropdown-menu-fw">
-                <li><a href="index">Overview</a></li>
+                <li><a href="overview">Overview</a></li>
                 <li><a href="assets">Assets</a></li>
                 <li><a href="#">Vulnerabilities</a></li>
                 <li><a href="#">Products</a></li>
@@ -122,17 +122,17 @@
                 <li><a href="#">Exploitation Maps</a></li>
               </ul>
             </li>
-            <li class="dropdown dropdown-fw"> <a href="javascript:">Reports</a>
+            <li class="dropdown dropdown-fw {% if request.path == '/generic' %} open selected {% endif %}"><a href="javascript:">Reports</a>
               <ul class="dropdown-menu dropdown-menu-fw">
-                <li class="active"><a href="#">Overview</a></li>
+                <li class="active"><a href="#">Generic</a></li>
                 <li><a href="#">PCI</a></li>
                 <li><a href="#">HIPAA</a></li>
                 <li><a href="#">ISO/IEC 27001</a></li>
               </ul>
             </li>
-            <li class="dropdown dropdown-fw"> <a href="javascript:;">Settings</a>
+            <li class="dropdown dropdown-fw {% if request.path == '/seeds' %} open selected {% endif %}"><a href="javascript:">Settings</a>
               <ul class="dropdown-menu dropdown-menu-fw">
-                <li><a href="#">Seeds</a></li>
+                <li><a href="seeds">Seeds</a></li>
                 <li><a href="#">Service Accounts</a></li>
                 <li><a href="#">Policies</a></li>
                 <li><a href="#">Schedules</a></li>

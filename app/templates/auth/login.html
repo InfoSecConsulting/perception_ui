@@ -52,7 +52,7 @@
 	{% endwith %}
 
 	<form class="login-form" action="{{ url_for('auth.login') }}" method="post">
-		{{ form.hidden_tag() }}
+		{{ logon_form.hidden_tag() }}
 
 		<h3 class="form-title">Log In</h3>
 		<div class="alert alert-danger display-hide">
@@ -60,7 +60,7 @@
 			<span>Enter a username and password</span>
 		</div>
 		<div class="form-group">
-			<label class="control-label visible-ie8 visible-ie9">{{ form.username.label }}</label>
+			<label class="control-label visible-ie8 visible-ie9">{{ logon_form.username.label }}</label>
 			<input class="form-control form-control-solid placeholder-no-fix"
 						 type="text"
 						 autocomplete="off"
@@ -70,7 +70,7 @@
 		</div>
 
 		<div class="form-group">
-			<label class="control-label visible-ie8 visible-ie9">{{ form.password.label }}</label>
+			<label class="control-label visible-ie8 visible-ie9">{{ logon_form.password.label }}</label>
 			<input class="form-control form-control-solid placeholder-no-fix"
 						 type="password"
 						 autocomplete="off"
@@ -82,7 +82,7 @@
 		<div class="form-actions">
 			<button type="submit"
 							class="btn blue uppercase"
-							value="{{ request.form.submit }}">{{ form.submit.label }}</button>
+							value="{{ request.form.submit }}">Log In</button>
 			<label class="rememberme check">
 			<input type="checkbox"
 						 name="remember"
@@ -98,7 +98,102 @@
 	</form>
 	<!-- END LOGIN FORM -->
 
-
+	<!-- BEGIN REGISTRATION FORM -->
+	<form class="register-form" action="{{ url_for('auth.register') }}" method="post">
+    {{ logon_form.hidden_tag() }}
+		<h3>Sign Up</h3>
+		<p class="hint">
+			 Enter your personal details below:
+		</p>
+		<div class="form-group">
+			<label class="control-label visible-ie8 visible-ie9">{{ reg_form.firstname.label }}</label>
+			<input class="form-control placeholder-no-fix"
+						 type="text"
+						 placeholder="First Name"
+						 name="firstname"
+						 value="{{ request.form.firstname }}">
+		</div>
+		<div class="form-group">
+			<label class="control-label visible-ie8 visible-ie9">{{ reg_form.lastname.label }}</label>
+			<input class="form-control placeholder-no-fix"
+						 type="text"
+						 placeholder="Last Name"
+						 name="lastname"
+						 value="{{ request.form.lastname }}">
+		</div>
+		<div class="form-group">
+			<!--ie8, ie9 does not support html5 placeholder, so we just show field title for that-->
+			<label class="control-label visible-ie8 visible-ie9">{{ reg_form.email.label }}</label>
+			<input class="form-control placeholder-no-fix"
+						 type="text"
+						 placeholder="Email"
+						 name="email"
+						 value="{{ request.form.email }}">
+		</div>
+		<div class="form-group">
+			<label class="control-label visible-ie8 visible-ie9">{{ reg_form.phone.label }}</label>
+			<input class="form-control placeholder-no-fix"
+						 type="text"
+						 placeholder="Phone Number"
+						 name="phone"
+						 value="{{ request.form.phone }}">
+		</div>
+		<div class="form-group">
+			<label class="control-label visible-ie8 visible-ie9">{{ reg_form.company.label }}</label>
+			<input class="form-control placeholder-no-fix"
+						 type="text"
+						 placeholder="Company"
+						 name="company"
+						 value="{{ request.form.company }}">
+		</div>
+		<p class="hint">
+			 Enter your account details below:
+		</p>
+		<div class="form-group">
+			<label class="control-label visible-ie8 visible-ie9">{{ reg_form.username.label }}</label>
+			<input class="form-control placeholder-no-fix"
+						 type="text"
+						 autocomplete="off"
+						 placeholder="Username"
+						 name="username"
+						 value="{{ request.form.username }}">
+		</div>
+		<div class="form-group">
+			<label class="control-label visible-ie8 visible-ie9">{{ reg_form.password.label }}</label>
+			<input class="form-control placeholder-no-fix"
+						 type="password"
+						 autocomplete="off"
+						 id="register_password"
+						 placeholder="Password"
+						 name="password"
+						 value="{{ request.form.password }}">
+		</div>
+		<div class="form-group">
+			<label class="control-label visible-ie8 visible-ie9">{{ reg_form.password2.label }}</label>
+			<input class="form-control placeholder-no-fix"
+						 type="password"
+						 autocomplete="off"
+						 placeholder="Re-type Your Password"
+						 name="confirmpassword"
+						 value="{{ request.form.password2 }}">
+		</div>
+		<div class="form-group margin-top-20 margin-bottom-20">
+			<label class="check">
+			<input type="checkbox"
+						 name="tnc"/> I agree to the <a href="javascript:">Terms of Service </a>& <a href="javascript:">Privacy Policy </a>
+			</label>
+			<div id="register_tnc_error">
+			</div>
+		</div>
+		<div class="form-actions">
+			<button type="button" id="register-back-btn" class="btn btn-default">Back</button>
+			<button type="submit"
+							id="register-submit-btn"
+							class="btn blue uppercase pull-right"
+							value="{{ request.form.submit }}">Register</button>
+		</div>
+	</form>
+	<!-- END REGISTRATION FORM -->
 
 
 </div>

@@ -33,46 +33,25 @@ class LoginForm(Form):
 
 class RegistrationForm(Form):
 
-  username = StringField('Username',
-                         [InputRequired,
-                          Length(1, 64),
-                          Regexp('^[A-Za-z][A-Za-z0-9!@#$%^&*_.]*$', 0,
-                          'Usernames can not contain () or <>.')])
+  username = StringField('Username', [InputRequired(message='Forgot your username?'),
+                                      Length(1, 64),
+                                      Regexp('^[A-Za-z][A-Za-z0-9!@#$%^&*_.]*$', 0,
+                                             'Usernames can not contain () or <>.')])
 
-  password = PasswordField('Password',
-                           [InputRequired,
-                            EqualTo('password2',
-                                    'Passwords must match'),
-                            Length(12, 64,
-                                   'Passwords must be at least 12 characters in length')])
+  password = PasswordField('Password', [InputRequired(message='Must provide a password. ;-)'),
+                                        Length(1, 64)])
 
-  password2 = PasswordField('Confirm Password',
-                            InputRequired)
+  password2 = PasswordField('Confirm Password')
 
-  email = StringField('Email',
-                      [InputRequired(),
-                       Length(1, 64),
-                       Email()])
+  email = StringField('Email')
 
-  firstname = StringField('First Name',
-                          [Length(1, 64),
-                           Regexp('^[A-Za-z][A-Za-z0-9!@#$%^&*_.]*$', 0,
-                                  'Names can not contain () or <>.')],)
+  firstname = StringField('First Name')
 
-  lastname = StringField('Last Name',
-                         [Length(1, 64),
-                          Regexp('^[A-Za-z][A-Za-z0-9!@#$%^&*_.]*$', 0,
-                                 'Names can not contain () or <>.')],)
+  lastname = StringField('Last Name')
 
-  company = StringField('Company Name',
-                        [Length(1, 64),
-                         Regexp('^[A-Za-z][A-Za-z0-9!@#$%^&*_.]*$', 0,
-                                'Names can not contain () or <>.')],)
+  company = StringField('Company Name')
 
-  phone = StringField('First Name',
-                      [Length(1, 12),
-                       Regexp('^[0-9\-.]*$', 0,
-                              'Phone numbers can only numbers dots and dashes ')],)
+  phone = StringField('First Name')
 
   submit = SubmitField('Register')
 

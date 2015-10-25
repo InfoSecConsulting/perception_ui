@@ -2,7 +2,7 @@
 
 {% block head %}
 
-{% block title %}Overview{% endblock %}
+{% block title %}{{request.path}}{% endblock %}
 
 {% endblock %}
 
@@ -13,11 +13,11 @@
 
 	<!-- BEGIN BREADCRUMBS -->
 	<div class="breadcrumbs">
-		<h1>Overview</h1>
+		<h1>{{request.path}}</h1>
 		<ol class="breadcrumb">
-			<li><a href="#">Home</a></li>
-			<li><a href="#">Dashboard</a></li>
-			<li class="active">Overview</li>
+			<li><a href="#">/Home</a></li>
+			<li><a href="#">/Dashboard</a></li>
+			<li class="active">{{request.path}}</li>
 		</ol>
 	</div>
 	<!-- END BREADCRUMBS -->

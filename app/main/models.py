@@ -7,6 +7,13 @@ def _get_date():
     return datetime.datetime.now()
 
 
+class Base(db.Model):
+  __abstract__ = True
+
+  created_at = db.Column(db.TIMESTAMP, default=db.func.current_timestamp())
+  updated_at = db.Column(db.TIMESTAMP, default=db.func.current_timestamp(), onupdate=db.func.current_timestamp())
+
+
 class Vendor(db.Model):
   __tablename__ = 'vendors'
 
@@ -230,3 +237,23 @@ class LocalHosts(db.Model):
   ip_addr = db.Column(postgresql.INET, unique=True, nullable=False)
   mac_addr = db.Column(postgresql.MACADDR, unique=True, nullable=False)
   created_at = db.Column(db.TIMESTAMP(timezone=False), default=_get_date)
+
+
+class CoreRouter(Base):
+  __table_name__ = 'core_routers'
+
+  id = db.Column(db.Integer, db.Sequence('core_routers_id_seq'), primary_key=True, nullable=False)
+  ip_addr = db.Column(postgresql.INET, unique=True, nullable=False)
+  host_name = db.Column(db.Text)
+
+  def __init__(self, ip_addr, host_name):
+    self.ip_addr = ip_addr
+    self.host_name = host_name
+
+class SnmpStrings(Base):
+  __table_name__ = 'snmp_strings'
+
+  id = db.Column(db.Integer, db.Sequence('snmp_strings_id_seq'), primary_key=True, nullable=False)
+  community_string_encrypted = db.Column(db.String)
+  snmp_user_encrypted = db.Column(db.String)
+  snmp_group_encrypted = db.Column(db.String)

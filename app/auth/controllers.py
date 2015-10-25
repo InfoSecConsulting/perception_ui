@@ -21,44 +21,46 @@ def login():
 
   # If sign in form is submitted
 
-  form = LoginForm(request.form)
+  logon_form = LoginForm(request.form)
 
   if request.method == 'POST':
 
     # Verify the sign in form
-    if form.validate_on_submit():
-      user = AppUser.query.filter_by(username=form.username.data).first()
-      if user and check_password_hash(user.password_hash, form.password.data):
-        session['username'] = form.username.data
-        login_user(user, form.remember_me.data)
+    if logon_form.validate_on_submit():
+      user = AppUser.query.filter_by(username=logon_form.username.data).first()
+      if user and check_password_hash(user.password_hash, logon_form.password.data):
+        session['username'] = logon_form.username.data
+        login_user(user, logon_form.remember_me.data)
         flash('Welcome %s' % user.username)
-        return redirect(url_for('index'))
+        return redirect(url_for('dashboards.overview'))
       flash('Wrong username or password', 'error-message')
 
-  return render_template("auth/login.html", form=form)
+  return render_template("auth/login.html",
+                         logon_form=logon_form,
+                         reg_form=RegistrationForm)
 
 @auth.route('/logout')
 @login_required
 def logout():
   logout_user()
   flash('You are now logged out')
-  return redirect(url_for('index'))
+  return redirect(url_for('dashboards.overview'))
 
 @auth.route('/register', methods=['GET', 'POST'])
 def register():
 
-  form = RegistrationForm()
+  reg_form = RegistrationForm(request.form)
 
   if request.method == 'POST':
 
-    if form.validate_on_submit():
-      user = AppUser(username=form.username.data,
-                     password=form.password.data,
-                     email=form.email.data,
-                     firstname=form.firstname.data,
-                     lastname=form.lastname.data,
-                     phone=form.phone.data,
-                     company=form.company.data)
+    if reg_form.validate_on_submit():
+      user = AppUser(username=reg_form.username.data,
+                     password=reg_form.password.data,
+                     email=reg_form.email.data,
+                     firstname=reg_form.firstname.data,
+                     lastname=reg_form.lastname.data,
+                     phone=reg_form.phone.data,
+                     company=reg_form.company.data)
       try:
         db.session.add(user)
         db.session.commit()
@@ -67,9 +69,11 @@ def register():
         flash('Some thing went horribly wrong, try again.', e)
         return redirect(url_for('auth.login'))
       flash('You are now registered')
-      session['username'] = form.username.data
+      session['username'] = reg_form.username.data
       login_user(user)
       flash('Welcome %s' % user.username)
-      return redirect(url_for('index'))
+      return redirect(url_for('dashboards.overview'))
 
-  return render_template("auth/login.html", form=form)
+  return render_template("auth/login.html",
+                         reg_form=reg_form,
+                         logon_form=LoginForm)
