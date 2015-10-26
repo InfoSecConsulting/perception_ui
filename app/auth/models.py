@@ -2,7 +2,6 @@ from app import db
 from app.main.models import Base
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask.ext.login import UserMixin
-from flask.ext.sqlalchemy import SQLAlchemy
 from app import login_manager
 
 

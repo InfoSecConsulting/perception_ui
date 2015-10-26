@@ -22,9 +22,12 @@ def _get_date():
 def upgrade():
   op.create_table('snmp_strings',
                   sa.Column('id', sa.Integer, primary_key=True, nullable=False),
-                  sa.Column('community_string_encrypted', sa.Text),
-                  sa.Column('snmp_user_encrypted', sa.Text),
-                  sa.Column('snmp_group_encrypted', sa.Text),
+                  sa.Column('community_string_encrypted', sa.String),
+                  sa.Column('community_string_encrypted_salt', sa.String),
+                  sa.Column('snmp_user_encrypted', sa.String),
+                  sa.Column('snmp_user_encrypted_salt', sa.String),
+                  sa.Column('snmp_group_encrypted', sa.String),
+                  sa.Column('snmp_group_encrypted_salt', sa.String),
                   sa.Column('created_at', sa.TIMESTAMP(timezone=False), default=_get_date),
                   sa.Column('updated_at', sa.TIMESTAMP(timezone=False), onupdate=_get_date))
 

@@ -7,3 +7,8 @@ from flask.ext.login import login_required
 @login_required
 def seeds():
   return render_template('seeds.html')
+
+@settings.route('/service_accounts')
+@login_required
+def service_accounts():
+  return render_template('service_accounts.html')

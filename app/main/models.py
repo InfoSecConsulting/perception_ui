@@ -1,5 +1,7 @@
 from app import db
 from sqlalchemy.dialects import postgresql
+from app.lib.crypt import encrypt_string
+
 import datetime
 
 
@@ -97,9 +99,18 @@ class SmbUser(db.Model):
   id = db.Column(db.Integer, primary_key=True, nullable=False)
   username = db.Column(db.String)
   encrypted_password = db.Column(db.String)
+  encrypted_password_salt = db.Column(db.String)
 
   created_at = db.Column(db.TIMESTAMP(timezone=False), default=_get_date)
   updated_at = db.Column(db.TIMESTAMP(timezone=False), onupdate=_get_date)
+
+  def __init__(self,
+               password=None):
+
+    if password:
+      password_tup = encrypt_string(password)
+      self.encrypted_password = password_tup[0].decode("utf-8")
+      self.encrypted_password_salt = password_tup[1].decode("utf-8")
 
 
 class LinuxUser(db.Model):
@@ -108,10 +119,26 @@ class LinuxUser(db.Model):
   id = db.Column(db.Integer, primary_key=True, nullable=False)
   username = db.Column(db.String)
   encrypted_password = db.Column(db.String)
+  encrypted_password_salt = db.Column(db.String)
   encrypted_enable_password = db.Column(db.String)
+  encrypted_enable_password_salt = db.Column(db.String)
 
   created_at = db.Column(db.TIMESTAMP(timezone=False), default=_get_date)
   updated_at = db.Column(db.TIMESTAMP(timezone=False), onupdate=_get_date)
+
+  def __init__(self,
+               password=None,
+               enable_password=None):
+
+    if password:
+      password_tup = encrypt_string(password)
+      self.encrypted_password = password_tup[0].decode("utf-8")
+      self.encrypted_password_salt = password_tup[1].decode("utf-8")
+
+    if enable_password:
+      enable_password_tup = encrypt_string(enable_password)
+      self.encrypted_enable_password = enable_password_tup[0].decode('utf-8')
+      self.encrypted_enable_password_salt = enable_password_tup[1].decode('utf-8')
 
 
 class InventoryHost(db.Model):
@@ -255,5 +282,28 @@ class SnmpStrings(Base):
 
   id = db.Column(db.Integer, db.Sequence('snmp_strings_id_seq'), primary_key=True, nullable=False)
   community_string_encrypted = db.Column(db.String)
+  community_string_encrypted_salt = db.Column(db.String)
   snmp_user_encrypted = db.Column(db.String)
+  snmp_user_encrypted_salt = db.Column(db.String)
   snmp_group_encrypted = db.Column(db.String)
+  snmp_group_encrypted_salt = db.Column(db.String)
+
+  def __init__(self,
+               community_string=None,
+               snmp_user=None,
+               snmp_group=None):
+
+    if community_string:
+      community_string_tup = encrypt_string(community_string)
+      self.community_string_encrypted = community_string_tup[0].decode("utf-8")
+      self.community_string_encrypted_salt = community_string_tup[1].decode("utf-8")
+
+    if snmp_user:
+      snmp_user_tup = encrypt_string(snmp_user)
+      self.snmp_user_encrypted = snmp_user_tup[0].decode('utf-8')
+      self.snmp_user_encrypted_salt = snmp_user_tup[1].decode('utf-8')
+
+    if snmp_group:
+      snmp_group_tup = encrypt_string(snmp_group)
+      self.snmp_group_encrypted = snmp_group_tup[0].decode('utf-8')
+      self.snmp_group_encrypted_salt = snmp_group_tup[1].decode('utf-8')

@@ -14,7 +14,7 @@ def seed():
 
   # Add seed data to the database
 
-  snmp_strings = ['public', 'private']
+  snmp_strings = [b'public', b'private']
 
   time_zones = ['International Date Line West',
                 'Midway Island',
@@ -181,7 +181,7 @@ def seed():
 
   for element in snmp_strings:
     try:
-      c = SnmpStrings(community_string_encrypted=element)
+      c = SnmpStrings(community_string=element)
       db.session.add(c)
       db.session.commit()
     except IntegrityError:
