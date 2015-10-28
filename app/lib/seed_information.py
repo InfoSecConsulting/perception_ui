@@ -1,11 +1,9 @@
 import sys
 from os import mkdir
 from flask.ext.sqlalchemy import SQLAlchemy
-
-from app.main.models import LocalNet,\
-  LocalHosts,\
-  InventoryHost
-from app import create_app
+from app import db
+from app.main.models import LocalNet, LocalHosts, InventoryHost, CoreRouters, LinuxUser
+#from app import create_app
 from app.lib.ssh_to_core import *
 from app.lib.send_cmd import send_command
 from app.lib.cisco_cmds import IOSTERMLEN0,\
@@ -14,10 +12,19 @@ from app.lib.cisco_cmds import IOSTERMLEN0,\
   SHOW_CDP_DETAIL,\
   IOS_SHOWHOSTNAME,\
   IOS_SHOWIPDOMAIN
-import app.config.seed_config as seed_info
+from app.lib.crypt import decrypt_string
 
-app = create_app('default')
-db = SQLAlchemy(app)
+#app = create_app('default')
+#db = SQLAlchemy(app)
+#db.init_app(app)
+
+# get core router user service account info
+core_router = CoreRouters.query.first()
+ip_addr = core_router.ip_addr
+username = core_router.linux_users.username
+password = decrypt_string(str.encode(core_router.linux_users.encrypted_password),
+                          str.encode(core_router.linux_users.encrypted_password_salt))
+enable_password = decrypt_string(str.encode(core_router.linux_users.encrypted_enable_password), str.encode(core_router.linux_users.encrypted_enable_password_salt))
 
 def get_network_info(tmp_dir,
                      show_hosts_file,
@@ -28,25 +35,25 @@ def get_network_info(tmp_dir,
     mkdir(tmp_dir)
   except FileExistsError:
     """moving on.."""
-  ssh_child1 = cisco_enable_mode(seed_info.l_username,
-                                 seed_info.seed_host,
-                                 seed_info.l_password,
-                                 seed_info.l_en_password)
+  ssh_child1 = cisco_enable_mode(username,
+                                 ip_addr,
+                                 password.decode("utf-8"),
+                                 enable_password.decode("utf-8"))
 
-  ssh_child2 = cisco_enable_mode(seed_info.l_username,
-                                 seed_info.seed_host,
-                                 seed_info.l_password,
-                                 seed_info.l_en_password)
+  ssh_child2 = cisco_enable_mode(username,
+                                 ip_addr,
+                                 password.decode("utf-8"),
+                                 enable_password.decode("utf-8"))
 
-  ssh_child3 = cisco_enable_mode(seed_info.l_username,
-                                 seed_info.seed_host,
-                                 seed_info.l_password,
-                                 seed_info.l_en_password)
+  ssh_child3 = cisco_enable_mode(username,
+                                 ip_addr,
+                                 password.decode("utf-8"),
+                                 enable_password.decode("utf-8"))
 
-  ssh_child4 = cisco_enable_mode(seed_info.l_username,
-                                 seed_info.seed_host,
-                                 seed_info.l_password,
-                                 seed_info.l_en_password)
+  ssh_child4 = cisco_enable_mode(username,
+                                 ip_addr,
+                                 password.decode("utf-8"),
+                                 enable_password.decode("utf-8"))
 
   if ssh_child1:
     sys.stdout = open(show_hosts_file, 'w+')

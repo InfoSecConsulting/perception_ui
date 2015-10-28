@@ -11,6 +11,14 @@
 <!-- Page Content BEGIN -->
 <div class="page-content">
 
+  {% with messages = get_flashed_messages() %}
+		{% if messages %}
+			{% for message in messages %}
+    		<div class="flash">{{ message }}</div>
+  		{% endfor %}
+		{% endif %}
+	{% endwith %}
+
   <!-- BEGIN BREADCRUMBS -->
   <div class="breadcrumbs">
     <h1>{{request.path}}</h1>
@@ -24,86 +32,89 @@
 
   <!-- BEGIN PORTLET-->
   <div class="row">
-    <div class="col-md-12">
-      <div class="portlet light bordered"><div class="portlet-title">
-        <div class="caption">
-          <span class="caption-subject bold uppercase">Enter your seeding information</span>
-        </div>
+    <div class="col-md-12 col-sm-12">
 
-        <div class="actions">
-          <div class="btn-group">
-            <a class="btn btn-sm default dropdown-toggle"
-               href="javascript:"
-               data-toggle="dropdown">Settings <i class="fa fa-angle-down"></i>
-            </a>
-            <ul class="dropdown-menu pull-right">
-              <li>
-                <a href="javascript:">
-                  <i class="fa fa-pencil"></i> Edit </a>
-              </li>
-              <li>
-                <a href="javascript:">
-                  <i class="fa fa-trash-o"></i> Delete </a>
-              </li>
-            </ul>
+      <!-- BEGIN  TABLE PORTLET-->
+      <div class="portlet box grey">
+        <div class="portlet-title">
+          <div class="caption">Enter your seeding information</div>
+          <div class="actions">
+            <a href="javascript:"
+               class="btn btn-default btn-sm"
+                id="add-svc-acc-btn">
+              <i class="fa fa-pencil"></i> Edit </a>
           </div>
         </div>
       </div>
-        <div class="portlet-body form">
-          <form role="form">
-            <div class="form-body">
-              <div class="row">
-                <div class="col-md-3">
-                  <div class="form-group form-md-line-input form-md-floating-label">
-                    <input type="text" class="form-control" >
-                    <label>Core Router</label>
-                    <span class="help-block">Enter the IP address or hostname of your core router (or layer 3 switch)</span>
-                  </div>
-                </div>
-                <!--end col-->
 
-                <div class="col-md-3">
-                  <div class="form-group form-md-line-input form-md-floating-label">
-                    <input type="text" class="form-control" >
-                    <label >Username</label>
-                    <span class="help-block">Enter the username for the core router</span>
-                  </div>
-                </div>
-                <!--end col-->
+      <form class="seeds-form portlet light bordered" action="{{ url_for('settings.seeds') }}" method="post">
 
-                <div class="col-md-3">
-                  <div class="form-group form-md-line-input form-md-floating-label has-success">
-                    <input type="password" class="form-control">
-                    <label >Password</label>
-                    <span class="help-block">Enter the password for the core router</span>
-                  </div>
-                </div>
-                <!--end col-->
-
-                <div class="col-md-3">
-                  <div class="form-group form-md-line-input form-md-floating-label has-success">
-                    <input type="password" class="form-control">
-                    <label>Enable Password</label>
-                    <span class="help-block">Enter the enable password for the core router</span>
-                  </div>
-                </div>
-                <!--end col-->
-
+          {{ seeds_form.hidden_tag() }}
+          <div class="row">
+            <div class="col-md-3">
+              <div class="form-group form-md-line-input form-md-floating-label">
+                <input type="text"
+                       class="form-control"
+                       name = "ip_addr"
+                       autocomplete="off"
+                       value="{{ request.form.ip_addr }}">
+                <label>{% if seed_router %} {{ seed_router.ip_addr }} {% else %}{{ seeds_form.ip_addr.label }}{% endif %}</label>
+                <span class="help-block">Enter the IP address or hostname of your core router (or layer 3 switch)</span>
               </div>
-              <!--end row-->
-
             </div>
+            <!--end col-->
 
-            <div class="form-actions noborder">
-              <button type="button" class="btn blue">Submit</button>
-              <button type="button" class="btn default">Cancel</button>
+            <div class="col-md-3">
+              <div class="form-group form-md-line-input form-md-floating-label">
+                <input type="text"
+                       class="form-control"
+                       autocomplete="off"
+                       name = "username"
+                       value="{{ request.form.username }}">
+                <label>{{ seeds_form.username.label }}</label>
+                <span class="help-block">Enter the username for the core router</span>
+              </div>
             </div>
-          </form>
-        </div>
+            <!--end col-->
+
+            <div class="col-md-3">
+              <div class="form-group form-md-line-input form-md-floating-label has-success">
+                <input type="password"
+                       class="form-control"
+                       autocomplete="off"
+                       name = "password"
+                       value="{{ request.form.password }}">
+                <label>{{ seeds_form.password.label }}</label>
+                <span class="help-block">Enter the password for the core router</span>
+              </div>
+            </div>
+            <!--end col-->
+
+            <div class="col-md-3">
+              <div class="form-group form-md-line-input form-md-floating-label has-success">
+                <input type="password"
+                       class="form-control"
+                       autocomplete="off"
+                       name = "enable_password"
+                       value="{{ request.form.enable_password }}">
+                <label>{{ seeds_form.enable_password.label }}</label>
+                <span class="help-block">Enter the enable password for the core router</span>
+              </div>
+            </div>
+            <!--end col-->
+          </div>
+          <!--end row-->
+
+          <div class="form-actions noborder">
+            <button {% if seed_router %} type="button" class="btn blue disabled" {% else %} type="submit" class="btn blue" {% endif %}
+                    value="{{ request.form.submit }}">{{ seeds_form.submit.label }}</button>
+            <button type="button"
+                    class="btn default">Cancel</button>
+          </div>
+        </form>
       </div>
     </div>
     <!--end col-->
   </div>
-</div>
 <!-- Page Content END -->
 {% endblock %}

@@ -5,16 +5,23 @@ from app.main.models import SnmpStrings
 from app.auth.models import TimeZones, AppUser
 from sqlalchemy.exc import IntegrityError
 
+tmp_dir = '/tmp/perception'
+ios_show_hosts_file = '%s/ios_show_hosts.txt' % tmp_dir
+ios_show_local_conn_file = '%s/show_local_conn.txt' % tmp_dir
+ios_show_cdp_detail_file = '%s/show_cdp_detail.txt' % tmp_dir
+ios_show_fqdn_file = '%s/ios_show_fqdn.txt' % tmp_dir
+
 app = create_app(os.getenv('FLASK_CONFIG') or 'default')
 
 manager = Manager(app)
 
 @manager.command
-def seed():
+def seed_db():
 
   # Add seed data to the database
 
-  snmp_strings = [b'public', b'private']
+  snmp_strings = ['public',
+                  'private']
 
   time_zones = ['International Date Line West',
                 'Midway Island',

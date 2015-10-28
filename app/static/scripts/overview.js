@@ -1,4 +1,4 @@
-var Index = function() {
+var Overview = function() {
 
     var dashboardMainChart = null;
 
@@ -13,14 +13,14 @@ var Index = function() {
                 });
             });
 
-            Index.initCharts();
-            Index.initMiniCharts();
+            Overview.initCharts();
+            Overview.initMiniCharts();
         },
 
 
         initCharts: function() {
             if (Morris.EventEmitter) {
-                // Morris.Area 
+                // Morris.Area
                 dashboardMainChart = Morris.Donut({
                     element: 'statistics',
                     padding: 0,

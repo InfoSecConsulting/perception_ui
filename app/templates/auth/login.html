@@ -36,10 +36,10 @@
 <div class="logo"><a href="/">	<img src="../../static/img/logon_logo.png" alt="Logon Logo" height="350"> </a></div>
 <!-- END LOGO -->
 
+{% block page_content %}
+
 <!-- BEGIN LOGIN -->
 <div class="content">
-
-	{% block page_content %}
 
 	<!-- BEGIN LOGIN FORM -->
 
@@ -186,7 +186,9 @@
 			</div>
 		</div>
 		<div class="form-actions">
-			<button type="button" id="register-back-btn" class="btn btn-default">Back</button>
+			<button type="button"
+							id="register-back-btn"
+							class="btn btn-default">Back</button>
 			<button type="submit"
 							id="register-submit-btn"
 							class="btn blue uppercase pull-right"
@@ -229,10 +231,9 @@
 <!-- END PAGE LEVEL SCRIPTS -->
 <script>
 jQuery(document).ready(function() {
-   	InfoSec.init();
-   	Layout.init();
-				Login.init();
-
+	InfoSec.init();
+	Layout.init();
+	Login.init();
 });
 </script>
 

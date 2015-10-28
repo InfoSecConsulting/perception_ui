@@ -71,6 +71,7 @@ def main():
     cdp_neighbors_detail(ios_show_cdp_detail_file, ios_fqdn)
 
     rmtree(tmp_dir)
+
     if seed_scan:
       print('move to scanning')
     else:

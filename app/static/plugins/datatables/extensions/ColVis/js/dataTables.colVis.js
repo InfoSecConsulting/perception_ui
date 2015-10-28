@@ -646,7 +646,7 @@ ColVis.prototype = {
 	 * Get the position in the DataTables instance array of the table for this
 	 * instance of ColVis
 	 *  @method  _fnDataTablesApiIndex
-	 *  @returns {int} Index
+	 *  @returns {int} Overview
 	 *  @private
 	 */
 	"_fnDataTablesApiIndex": function ()

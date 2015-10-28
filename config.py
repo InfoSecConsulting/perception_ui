@@ -43,6 +43,7 @@ class Config:
 
   # Secret key for signing cookies
   SECRET_KEY = "secret"
+
   @staticmethod
   def init_app(app):
     pass

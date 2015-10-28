@@ -97,18 +97,27 @@ class SmbUser(db.Model):
   __tablename__ = 'smb_users'
 
   id = db.Column(db.Integer, primary_key=True, nullable=False)
-  username = db.Column(db.String)
-  encrypted_password = db.Column(db.String)
-  encrypted_password_salt = db.Column(db.String)
+  username = db.Column(db.String, nullable=False, unique=True)
+  encrypted_password = db.Column(db.String, nullable=False)
+  encrypted_password_salt = db.Column(db.String, nullable=False)
+  description = db.Column(db.String)
 
   created_at = db.Column(db.TIMESTAMP(timezone=False), default=_get_date)
   updated_at = db.Column(db.TIMESTAMP(timezone=False), onupdate=_get_date)
 
   def __init__(self,
-               password=None):
+               username=None,
+               password=None,
+               description=None):
+
+    if description:
+      self.description = description
+
+    if username:
+      self.username = username
 
     if password:
-      password_tup = encrypt_string(password)
+      password_tup = encrypt_string(str.encode(password))
       self.encrypted_password = password_tup[0].decode("utf-8")
       self.encrypted_password_salt = password_tup[1].decode("utf-8")
 
@@ -117,26 +126,34 @@ class LinuxUser(db.Model):
   __tablename__ = 'linux_users'
 
   id = db.Column(db.Integer, primary_key=True, nullable=False)
-  username = db.Column(db.String)
-  encrypted_password = db.Column(db.String)
-  encrypted_password_salt = db.Column(db.String)
+  username = db.Column(db.String, nullable=False, unique=True)
+  encrypted_password = db.Column(db.String, nullable=False)
+  encrypted_password_salt = db.Column(db.String, nullable=False)
   encrypted_enable_password = db.Column(db.String)
   encrypted_enable_password_salt = db.Column(db.String)
+  description = db.Column(db.String)
 
   created_at = db.Column(db.TIMESTAMP(timezone=False), default=_get_date)
   updated_at = db.Column(db.TIMESTAMP(timezone=False), onupdate=_get_date)
 
   def __init__(self,
+               username=None,
                password=None,
-               enable_password=None):
+               enable_password=None,
+               description=None):
+    if description:
+      self.description = description
+
+    if username:
+      self.username = username
 
     if password:
-      password_tup = encrypt_string(password)
+      password_tup = encrypt_string(str.encode(password))
       self.encrypted_password = password_tup[0].decode("utf-8")
       self.encrypted_password_salt = password_tup[1].decode("utf-8")
 
     if enable_password:
-      enable_password_tup = encrypt_string(enable_password)
+      enable_password_tup = encrypt_string(str.encode(enable_password))
       self.encrypted_enable_password = enable_password_tup[0].decode('utf-8')
       self.encrypted_enable_password_salt = enable_password_tup[1].decode('utf-8')
 
@@ -266,16 +283,27 @@ class LocalHosts(db.Model):
   created_at = db.Column(db.TIMESTAMP(timezone=False), default=_get_date)
 
 
-class CoreRouter(Base):
+class CoreRouters(Base):
   __table_name__ = 'core_routers'
 
   id = db.Column(db.Integer, db.Sequence('core_routers_id_seq'), primary_key=True, nullable=False)
   ip_addr = db.Column(postgresql.INET, unique=True, nullable=False)
-  host_name = db.Column(db.Text)
+  host_name = db.Column(db.Text, unique=True)
 
-  def __init__(self, ip_addr, host_name):
+  """Relation to linux_user"""
+  linux_user_id = db.Column(db.Integer, db.ForeignKey('linux_users.id', ondelete='cascade'))
+  linux_users = db.relationship('LinuxUser', backref='core_routers', order_by=id)
+
+  def __init__(self, linux_user_id,
+               ip_addr,
+               host_name=None):
+
+    self.linux_user_id = linux_user_id
     self.ip_addr = ip_addr
-    self.host_name = host_name
+
+    if host_name:
+      self.host_name = host_name
+
 
 class SnmpStrings(Base):
   __table_name__ = 'snmp_strings'
@@ -294,16 +322,16 @@ class SnmpStrings(Base):
                snmp_group=None):
 
     if community_string:
-      community_string_tup = encrypt_string(community_string)
+      community_string_tup = encrypt_string(str.encode(community_string))
       self.community_string_encrypted = community_string_tup[0].decode("utf-8")
       self.community_string_encrypted_salt = community_string_tup[1].decode("utf-8")
 
     if snmp_user:
-      snmp_user_tup = encrypt_string(snmp_user)
+      snmp_user_tup = encrypt_string(str.encode(snmp_user))
       self.snmp_user_encrypted = snmp_user_tup[0].decode('utf-8')
       self.snmp_user_encrypted_salt = snmp_user_tup[1].decode('utf-8')
 
     if snmp_group:
-      snmp_group_tup = encrypt_string(snmp_group)
+      snmp_group_tup = encrypt_string(str.encode(snmp_group))
       self.snmp_group_encrypted = snmp_group_tup[0].decode('utf-8')
       self.snmp_group_encrypted_salt = snmp_group_tup[1].decode('utf-8')
