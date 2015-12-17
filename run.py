@@ -9,6 +9,7 @@ web_app = create_app(getenv('FLASK_CONFIG') or 'default')
 
 manager = Manager(web_app)
 
+# adding a random comment
 @manager.command
 def seed_db():
 
