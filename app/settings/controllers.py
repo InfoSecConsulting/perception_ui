@@ -1,5 +1,5 @@
 # Import flask dependencies
-from app.main.models import CoreRouters, LinuxUser, SmbUser, SnmpStrings
+from app.main.models import CoreRouter, LinuxUser, SmbUser, SnmpString
 from flask import request, render_template, flash, redirect, url_for
 from sqlalchemy.exc import IntegrityError
 from app import db
@@ -13,7 +13,7 @@ from ipaddress import ip_address
 @login_required
 def seeds():
   seeds_form = Seeds(request.form)
-  seed_router = CoreRouters.query.first()
+  seed_router = CoreRouter.query.first()
   if seed_router is None:
 
     if request.method == 'POST':
@@ -37,11 +37,11 @@ def seeds():
 
         try:
           if ip_address(seeds_form.ip_addr.data):
-            core_router = CoreRouters(ip_addr=seeds_form.ip_addr.data,
+            core_router = CoreRouter(ip_addr=seeds_form.ip_addr.data,
                                       linux_user_id=u.id)
 
         except ValueError:
-          core_router = CoreRouters(host_name=seeds_form.ip_addr.data,
+          core_router = CoreRouter(host_name=seeds_form.ip_addr.data,
                                     linux_user_id=u.id)
 
         try:
@@ -105,6 +105,7 @@ def service_accounts():
 
           smb_user = SmbUser(username=svc_accounts_form.username.data,
                              password=svc_accounts_form.password.data,
+                             domain_name=svc_accounts_form.domain_name.data,
                              description=svc_accounts_form.description.data)
           try:
             db.session.add(smb_user)

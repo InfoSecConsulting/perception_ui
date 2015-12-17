@@ -37,7 +37,8 @@ def upgrade():
                   sa.Column('native_vlan', sa.Integer),
                   sa.Column('duplex', sa.Text),
                   sa.Column('power_draw', sa.Text),
-                  sa.Column('created_at', sa.TIMESTAMP(timezone=False), default=_get_date))
+                  sa.Column('created_at', sa.TIMESTAMP(timezone=False), default=_get_date),
+                  sa.Column('updated_at', sa.TIMESTAMP(timezone=False), onupdate=_get_date))
 
 
 def downgrade():

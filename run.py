@@ -1,19 +1,13 @@
-import os
+from os import getenv
 from flask.ext.script import Manager
 from app import create_app, db
-from app.main.models import SnmpStrings
+from app.main.models import SnmpString
 from app.auth.models import TimeZones, AppUser
 from sqlalchemy.exc import IntegrityError
 
-tmp_dir = '/tmp/perception'
-ios_show_hosts_file = '%s/ios_show_hosts.txt' % tmp_dir
-ios_show_local_conn_file = '%s/show_local_conn.txt' % tmp_dir
-ios_show_cdp_detail_file = '%s/show_cdp_detail.txt' % tmp_dir
-ios_show_fqdn_file = '%s/ios_show_fqdn.txt' % tmp_dir
+web_app = create_app(getenv('FLASK_CONFIG') or 'default')
 
-app = create_app(os.getenv('FLASK_CONFIG') or 'default')
-
-manager = Manager(app)
+manager = Manager(web_app)
 
 @manager.command
 def seed_db():
@@ -188,7 +182,7 @@ def seed_db():
 
   for element in snmp_strings:
     try:
-      c = SnmpStrings(community_string=element)
+      c = SnmpString(community_string=element)
       db.session.add(c)
       db.session.commit()
     except IntegrityError:

@@ -44,7 +44,7 @@
               <th>MAC Vendor</th>
               <th>Host Type</th>
               <th>OS</th>
-              <th>Arch</th>
+              <th>OS Vendor</th>
               <th>Info</th>
               <th>Comments</th>
             </tr>
@@ -55,10 +55,10 @@
             <tr class="odd gradeX">
               <td>{{ host.host_name }}</td>
               <td>{{ host.ipv4_addr }}</td>
-              <td>{{ host.mac_vendor_id }}</td>
+              <td>{{ host.mac_vendor.name }}</td>
               <td>{{ host.host_type }}</td>
-              <td>{{ host.product_id }}<i class="fa fa-linux"></i></td>
-              <td>{{ host.arch }}</td>
+              <td>{{ host.product.name }}</td> <!-- <i class="fa fa-linux"></i> -->
+              <td>{{ host.product.vendor.name }}</td>
               <td>{{ host.info }}</td>
               <td>{{ host.comments }}</td>
             </tr>

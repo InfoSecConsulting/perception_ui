@@ -2,8 +2,8 @@
 # Database connection info
 
 host: dbsvr
-database: csdashboard
+database: perception
 pool: 5
 timeout: 5000
-username: csdashboard
-password: csdashboard
+username: perception
+password: perception

@@ -1,14 +1,14 @@
-"""create mac_vendors table
+"""create openvas admin table
 
-Revision ID: 42220a53132
-Revises: 49a27be2c86
-Create Date: 2015-06-23 16:30:39.218344
+Revision ID: 46942860847
+Revises: 363dec53760
+Create Date: 2015-12-14 08:12:27.329203
 
 """
 
 # revision identifiers, used by Alembic.
-revision = '42220a53132'
-down_revision = '4fc9479a07'
+revision = '46942860847'
+down_revision = '363dec53760'
 branch_labels = None
 depends_on = None
 
@@ -21,12 +21,13 @@ def _get_date():
     return datetime.datetime.now()
 
 def upgrade():
-  op.create_table('mac_vendors',
+  op.create_table('openvas_admin',
                   sa.Column('id', sa.Integer, primary_key=True, nullable=False),
-                  sa.Column('name', sa.Text, unique=True),
+                  sa.Column('username', sa.Text, nullable=False, unique=True),
+                  sa.Column('password', sa.Text, nullable=False),
                   sa.Column('created_at', sa.TIMESTAMP(timezone=False), default=_get_date),
                   sa.Column('updated_at', sa.TIMESTAMP(timezone=False), onupdate=_get_date))
 
 
 def downgrade():
-    op.drop_table('mac_vendors')
+  op.drop_table('openvas_admin')

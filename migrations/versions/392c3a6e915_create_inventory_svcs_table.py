@@ -31,7 +31,8 @@ def upgrade():
                   sa.Column('svc_product', sa.Text),
                   sa.Column('extra_info', sa.Text),
                   sa.Column('product_id', sa.Integer, sa.ForeignKey('products.id')),
-                  sa.Column('created_at', sa.TIMESTAMP(timezone=False), default=_get_date))
+                  sa.Column('created_at', sa.TIMESTAMP(timezone=False), default=_get_date),
+                  sa.Column('updated_at', sa.TIMESTAMP(timezone=False), onupdate=_get_date))
 
 
 def downgrade():

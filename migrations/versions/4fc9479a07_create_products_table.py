@@ -14,7 +14,10 @@ depends_on = None
 
 from alembic import op
 import sqlalchemy as sa
+import datetime
 
+def _get_date():
+  return datetime.datetime.now()
 
 def upgrade():
   op.create_table('products',
@@ -25,7 +28,9 @@ def upgrade():
                   sa.Column('version', sa.Text),
                   sa.Column('product_update', sa.Text),
                   sa.Column('edition', sa.Text),
-                  sa.Column('language', sa.Text))
+                  sa.Column('language', sa.Text),
+                  sa.Column('created_at', sa.TIMESTAMP(timezone=False), default=_get_date),
+                  sa.Column('updated_at', sa.TIMESTAMP(timezone=False), onupdate=_get_date))
 
 
 def downgrade():

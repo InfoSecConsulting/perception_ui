@@ -27,7 +27,8 @@ def upgrade():
                   sa.Column('id', sa.Integer, primary_key=True, nullable=False),
                   sa.Column('ip_addr', postgresql.INET, unique=True, nullable=False),
                   sa.Column('mac_addr', postgresql.MACADDR, unique=True),
-                  sa.Column('created_at', sa.TIMESTAMP(timezone=False), default=_get_date))
+                  sa.Column('created_at', sa.TIMESTAMP(timezone=False), default=_get_date),
+                  sa.Column('updated_at', sa.TIMESTAMP(timezone=False), onupdate=_get_date))
 
 
 def downgrade():

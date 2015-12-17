@@ -5,6 +5,7 @@ var ServiceAccount = function(){
 
   var handleAddSvcAccount = function(){
     jQuery('.svc-acc-form').hide();
+    jQuery('.form-domain-name').hide();
 
     /*
     $('.add-svc-account').validate({
@@ -69,6 +70,17 @@ var ServiceAccount = function(){
             jQuery('.portlet-body').show();
             jQuery('.svc-acc-form').hide();
         });
+
+    jQuery('#radio6').click(function(){
+            jQuery('.form-domain-name').show();
+
+    });
+
+    jQuery('#radio7').click(function(){
+            jQuery('.form-domain-name').hide();
+
+    });
+
   };
   return{
     init: function(){

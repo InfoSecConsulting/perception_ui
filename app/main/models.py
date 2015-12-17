@@ -21,6 +21,8 @@ class Vendor(db.Model):
 
   id = db.Column(db.Integer, db.Sequence('vendors_id_seq'), primary_key=True, nullable=False)
   name = db.Column(db.Text, unique=True, nullable=False)
+  created_at = db.Column(db.TIMESTAMP(timezone=False), default=_get_date)
+  updated_at = db.Column(db.TIMESTAMP(timezone=False), onupdate=_get_date)
 
 
 class Product(db.Model):
@@ -39,51 +41,18 @@ class Product(db.Model):
   product_update = db.Column(db.Text)
   edition = db.Column(db.Text)
   language = db.Column(db.Text)
+  created_at = db.Column(db.TIMESTAMP(timezone=False), default=_get_date)
+  updated_at = db.Column(db.TIMESTAMP(timezone=False), onupdate=_get_date)
 
 
-class NvdVulnSource(db.Model):
-  __tablename__ = 'nvd_vuln_sources'
+class OpenvasAdmin(db.Model):
+  __tablename__ = 'openvas_admin'
 
-  id = db.Column(db.Integer, db.Sequence('nvd_vuln_sources_id_seq'), primary_key=True, nullable=False)
-  name = db.Column(db.Text)
-
-
-class NvdVulnReference(db.Model):
-  __tablename__ = 'nvd_vuln_references'
-
-  id = db.Column(db.Integer, db.Sequence('nvd_vuln_references_id_seq'), primary_key=True, nullable=False)
-
-  """Relation to tie vulnerability source disclosure to NVD vulnerabilities"""
-  nvd_vuln_source_id = db.Column(db.Integer, db.ForeignKey('nvd_vuln_sources.id'), nullable=False)
-  nvd_vuln_source = db.relationship('NvdVulnSource', backref='nvd_vuln_references', order_by=id)
-
-  nvd_ref_type = db.Column(db.Text)
-  href = db.Column(db.Text)
-
-
-class NvdVuln(db.Model):
-  __tablename__ = 'nvd_vulns'
-
-  id = db.Column(db.Integer, db.Sequence('nvd_vulns_id_seq'), primary_key=True, nullable=False)
-  name = db.Column(db.Text, unique=True, nullable=False)
-
-  """Relation to tie products to vulnerabilities from the NVD"""
-  product_id = db.Column(db.Integer, db.ForeignKey('products.id'), nullable=False)
-  product = db.relationship('Product', backref='nvd_vulns', order_by=id)
-
-  cveid = db.Column(db.Text, nullable=False)
-  vuln_published = db.Column(db.Text)
-  vuln_updated = db.Column(db.Text)
-  cvss = db.Column(db.Text)
-  cweid = db.Column(db.Text)
-
-  """Relation to tie references to vulnerabilities from the NVD"""
-  nvd_vuln_reference_id = db.Column(db.Integer, db.ForeignKey('nvd_vuln_references.id'))
-  nvd_vuln_reference = db.relationship('NvdVulnReference', backref='nvd_vulns', order_by=id)
-
-  summary = db.Column(db.Text)
-  created_at = db.Column(db.TIMESTAMP(timezone=False))
-  updated_at = db.Column(db.TIMESTAMP(timezone=False))
+  id = db.Column(db.Integer, db.Sequence('openvas_admin_id_seq'), primary_key=True, nullable=False)
+  username = db.Column(db.Text, unique=True, nullable=False)
+  password = db.Column(db.TEXT, nullable=False)
+  created_at = db.Column(db.TIMESTAMP(timezone=False), default=_get_date)
+  updated_at = db.Column(db.TIMESTAMP(timezone=False), onupdate=_get_date)
 
 
 class MACVendor(db.Model):
@@ -91,6 +60,8 @@ class MACVendor(db.Model):
 
   id = db.Column(db.Integer, db.Sequence('mac_vendors_id_seq'), primary_key=True, nullable=False)
   name = db.Column(db.Text, unique=True)
+  created_at = db.Column(db.TIMESTAMP(timezone=False), default=_get_date)
+  updated_at = db.Column(db.TIMESTAMP(timezone=False), onupdate=_get_date)
 
 
 class SmbUser(db.Model):
@@ -100,6 +71,7 @@ class SmbUser(db.Model):
   username = db.Column(db.String, nullable=False, unique=True)
   encrypted_password = db.Column(db.String, nullable=False)
   encrypted_password_salt = db.Column(db.String, nullable=False)
+  domain_name = db.Column(db.String, nullable=False)
   description = db.Column(db.String)
 
   created_at = db.Column(db.TIMESTAMP(timezone=False), default=_get_date)
@@ -108,7 +80,11 @@ class SmbUser(db.Model):
   def __init__(self,
                username=None,
                password=None,
+               domain_name=None,
                description=None):
+
+    if domain_name:
+      self.domain_name = domain_name
 
     if description:
       self.description = description
@@ -190,9 +166,9 @@ class InventoryHost(db.Model):
   info = db.Column(db.Text)
   comments = db.Column(db.Text)
 
-  """Relation to tie NVD vulnerabilities to inventory hosts"""
-  nvd_vuln_id = db.Column(db.Integer, db.ForeignKey('nvd_vulns.id'))
-  nvd_vuln = db.relationship('NvdVuln', backref='inventory_hosts', order_by=id)
+#  """Relation to tie NVD vulnerabilities to inventory hosts"""
+#  nvd_vuln_id = db.Column(db.Integer, db.ForeignKey('nvd_vulns.id'))
+#  nvd_vuln = db.relationship('NvdVuln', backref='inventory_hosts', order_by=id)
 
   created_at = db.Column(db.TIMESTAMP(timezone=False), default=_get_date)
   updated_at = db.Column(db.TIMESTAMP(timezone=False), onupdate=_get_date)
@@ -209,6 +185,8 @@ class HostNseScript(db.Model):
 
   name = db.Column(db.Text, nullable=False)
   output = db.Column(db.Text, nullable=False)
+  created_at = db.Column(db.TIMESTAMP(timezone=False), default=_get_date)
+  updated_at = db.Column(db.TIMESTAMP(timezone=False), onupdate=_get_date)
 
 
 class InventorySvc(db.Model):
@@ -231,6 +209,7 @@ class InventorySvc(db.Model):
   product = db.relationship('Product', backref='inventory_svcs', order_by=id)
 
   created_at = db.Column(db.TIMESTAMP(timezone=False), default=_get_date)
+  updated_at = db.Column(db.TIMESTAMP(timezone=False), onupdate=_get_date)
 
 
 class SvcNseScript(db.Model):
@@ -244,6 +223,8 @@ class SvcNseScript(db.Model):
 
   name = db.Column(db.Text, nullable=False)
   output = db.Column(db.Text, nullable=False)
+  created_at = db.Column(db.TIMESTAMP(timezone=False), default=_get_date)
+  updated_at = db.Column(db.TIMESTAMP(timezone=False), onupdate=_get_date)
 
 
 class LocalNet(db.Model):
@@ -252,9 +233,10 @@ class LocalNet(db.Model):
   id = db.Column(db.Integer, primary_key=True, nullable=False)
   subnet = db.Column(postgresql.CIDR, unique=True)
   created_at = db.Column(db.TIMESTAMP(timezone=False), default=_get_date)
+  updated_at = db.Column(db.TIMESTAMP(timezone=False), onupdate=_get_date)
 
 
-class DiscoveryProtocolFindings(db.Model):
+class DiscoveryProtocolFinding(db.Model):
   __tablename__ = 'discovery_protocol_findings'
 
   id = db.Column(db.Integer, primary_key=True, nullable=False)
@@ -272,19 +254,21 @@ class DiscoveryProtocolFindings(db.Model):
   duplex = db.Column(db.Text)
   power_draw = db.Column(db.Text)
   created_at = db.Column(db.TIMESTAMP(timezone=False), default=_get_date)
+  updated_at = db.Column(db.TIMESTAMP(timezone=False), onupdate=_get_date)
 
 
-class LocalHosts(db.Model):
+class LocalHost(db.Model):
   __tablename__ = 'local_hosts'
 
   id = db.Column(db.Integer, primary_key=True, nullable=False)
   ip_addr = db.Column(postgresql.INET, unique=True, nullable=False)
   mac_addr = db.Column(postgresql.MACADDR, unique=True, nullable=False)
   created_at = db.Column(db.TIMESTAMP(timezone=False), default=_get_date)
+  updated_at = db.Column(db.TIMESTAMP(timezone=False), onupdate=_get_date)
 
 
-class CoreRouters(Base):
-  __table_name__ = 'core_routers'
+class CoreRouter(Base):
+  __tablename__ = 'core_routers'
 
   id = db.Column(db.Integer, db.Sequence('core_routers_id_seq'), primary_key=True, nullable=False)
   ip_addr = db.Column(postgresql.INET, unique=True, nullable=False)
@@ -305,8 +289,8 @@ class CoreRouters(Base):
       self.host_name = host_name
 
 
-class SnmpStrings(Base):
-  __table_name__ = 'snmp_strings'
+class SnmpString(Base):
+  __tablename__ = 'snmp_strings'
 
   id = db.Column(db.Integer, db.Sequence('snmp_strings_id_seq'), primary_key=True, nullable=False)
   community_string_encrypted = db.Column(db.String)

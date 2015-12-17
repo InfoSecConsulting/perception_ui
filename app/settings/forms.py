@@ -27,4 +27,5 @@ class ServiceAccounts(Form):
   submit = SubmitField('Submit')
   radio2 = StringField('radio2')
   #smb_user = BooleanField('smb_user')
+  domain_name = StringField('Domain Name')
   description = StringField('Description')

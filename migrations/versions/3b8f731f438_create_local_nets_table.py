@@ -24,8 +24,8 @@ def upgrade():
   op.create_table('local_nets',
                   sa.Column('id', sa.Integer, primary_key=True, nullable=False),
                   sa.Column('subnet', postgresql.CIDR, nullable=False, unique=True),
-                  sa.Column('created_at', sa.TIMESTAMP(timezone=False), default=_get_date))
-
+                  sa.Column('created_at', sa.TIMESTAMP(timezone=False), default=_get_date),
+                  sa.Column('updated_at', sa.TIMESTAMP(timezone=False), onupdate=_get_date))
 
 def downgrade():
   op.drop_table('local_nets')
