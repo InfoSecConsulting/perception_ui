@@ -58,7 +58,9 @@
               <td>{{ host.mac_vendor.name }}</td>
               <td>{{ host.host_type }}</td>
               <td>{{ host.product.name }}</td> <!-- <i class="fa fa-linux"></i> -->
-              <td>{{ host.product.vendor.name }}</td>
+              <td>{% if host.product != None %}
+                    {{host.product.vendor.name}}
+                  {% endif %} </td>
               <td>{{ host.info }}</td>
               <td>{{ host.comments }}</td>
             </tr>
