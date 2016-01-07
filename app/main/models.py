@@ -165,11 +165,8 @@ class InventoryHost(db.Model):
 
   info = db.Column(db.Text)
   comments = db.Column(db.Text)
-
-#  """Relation to tie NVD vulnerabilities to inventory hosts"""
-#  nvd_vuln_id = db.Column(db.Integer, db.ForeignKey('nvd_vulns.id'))
-#  nvd_vuln = db.relationship('NvdVuln', backref='inventory_hosts', order_by=id)
-
+  bad_ssh_key = db.Column(db.Boolean)
+  last_openvas_scan = db.Column(db.TIMESTAMP(timezone=False))
   created_at = db.Column(db.TIMESTAMP(timezone=False), default=_get_date)
   updated_at = db.Column(db.TIMESTAMP(timezone=False), onupdate=_get_date)
 
@@ -319,3 +316,10 @@ class SnmpString(Base):
       snmp_group_tup = encrypt_string(str.encode(snmp_group))
       self.snmp_group_encrypted = snmp_group_tup[0].decode('utf-8')
       self.snmp_group_encrypted_salt = snmp_group_tup[1].decode('utf-8')
+
+
+class OpenvasLastUpdate(db.Model):
+  __tablename__ = 'openvas_last_updates'
+
+  id = db.Column(db.Integer, db.Sequence('openvas_last_updates_id_seq'), primary_key=True, nullable=False)
+  updated_at = db.Column(db.TIMESTAMP(timezone=False), nullable=False)
