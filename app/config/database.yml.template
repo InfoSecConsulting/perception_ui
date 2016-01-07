@@ -2,6 +2,7 @@
 # Database connection info
 
 host: dbsvr
+drivername: postgresql
 database: perception
 pool: 5
 timeout: 5000
