@@ -37,7 +37,8 @@ def upgrade():
                     sa.Column('linux_user_id', sa.Integer, sa.ForeignKey('linux_users.id')),
                     sa.Column('info', sa.Text),
                     sa.Column('comments', sa.Text),
-                    # sa.Column('nvd_vuln_id', sa.Integer, sa.ForeignKey('nvd_vulns.id')),
+                    sa.Column('bad_ssh_key', sa.Boolean),
+                    sa.Column('last_openvas_scan', sa.TIMESTAMP(timezone=False)),
                     sa.Column('created_at', sa.TIMESTAMP(timezone=False), default=_get_date),
                     sa.Column('updated_at', sa.TIMESTAMP(timezone=False), onupdate=_get_date))
 
