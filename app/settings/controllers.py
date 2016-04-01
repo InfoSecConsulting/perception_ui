@@ -119,3 +119,8 @@ def service_accounts():
   return render_template('service_accounts.html',
                          service_accounts=accounts,
                          svc_accounts_form=svc_accounts_form)
+
+@settings.route('/schedules', methods=['GET', 'POST'])
+@login_required
+def schedules():
+  return render_template('schedules.html')

@@ -69,6 +69,7 @@ class SmbUser(db.Model):
 
   id = db.Column(db.Integer, primary_key=True, nullable=False)
   username = db.Column(db.String, nullable=False, unique=True)
+  openvas_lsc_id = db.Column(postgresql.UUID)
   encrypted_password = db.Column(db.String, nullable=False)
   encrypted_password_salt = db.Column(db.String, nullable=False)
   domain_name = db.Column(db.String, nullable=False)
@@ -81,7 +82,8 @@ class SmbUser(db.Model):
                username=None,
                password=None,
                domain_name=None,
-               description=None):
+               description=None,
+               openvas_lsc_id=None):
 
     if domain_name:
       self.domain_name = domain_name
@@ -97,12 +99,15 @@ class SmbUser(db.Model):
       self.encrypted_password = password_tup[0].decode("utf-8")
       self.encrypted_password_salt = password_tup[1].decode("utf-8")
 
+    if openvas_lsc_id:
+      self.openvas_lsc_id = openvas_lsc_id
 
 class LinuxUser(db.Model):
   __tablename__ = 'linux_users'
 
   id = db.Column(db.Integer, primary_key=True, nullable=False)
   username = db.Column(db.String, nullable=False, unique=True)
+  openvas_lsc_id = db.Column(postgresql.UUID)
   encrypted_password = db.Column(db.String, nullable=False)
   encrypted_password_salt = db.Column(db.String, nullable=False)
   encrypted_enable_password = db.Column(db.String)
@@ -116,7 +121,8 @@ class LinuxUser(db.Model):
                username=None,
                password=None,
                enable_password=None,
-               description=None):
+               description=None,
+               openvas_lsc_id=None):
     if description:
       self.description = description
 
@@ -132,6 +138,9 @@ class LinuxUser(db.Model):
       enable_password_tup = encrypt_string(str.encode(enable_password))
       self.encrypted_enable_password = enable_password_tup[0].decode('utf-8')
       self.encrypted_enable_password_salt = enable_password_tup[1].decode('utf-8')
+
+    if openvas_lsc_id:
+      self.openvas_lsc_id = openvas_lsc_id
 
 
 class InventoryHost(db.Model):

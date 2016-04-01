@@ -14,6 +14,7 @@ depends_on = None
 
 from alembic import op
 import sqlalchemy as sa
+from sqlalchemy.dialects import postgresql
 import datetime
 
 def _get_date():
@@ -24,6 +25,7 @@ def upgrade():
   op.create_table('linux_users',
                   sa.Column('id', sa.Integer, primary_key=True, nullable=False),
                   sa.Column('username', sa.String, nullable=False, unique=True),
+                  sa.Column('openvas_lsc_id', postgresql.UUID),
                   sa.Column('encrypted_password', sa.String, nullable=False),
                   sa.Column('encrypted_password_salt', sa.String, nullable=False),
                   sa.Column('encrypted_enable_password', sa.String),

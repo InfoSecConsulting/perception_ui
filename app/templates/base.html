@@ -130,13 +130,12 @@
                 <li><a href="#">ISO/IEC 27001</a></li>
               </ul>
             </li>
-            <li class="dropdown dropdown-fw {% if request.path == '/seeds' or request.path == '/service_accounts' %} open selected {% endif %}"><a href="javascript:">Settings</a>
+            <li class="dropdown dropdown-fw {% if request.path == '/seeds' or request.path == '/service_accounts' or request.path == '/schedules' %} open selected {% endif %}"><a href="javascript:">Settings</a>
               <ul class="dropdown-menu dropdown-menu-fw">
-                <li><a href="seeds">Seeds</a></li>
                 <li><a href="service_accounts">Service Accounts</a></li>
+                <li><a href="seeds">Seeds</a></li>
+                <li><a href="schedules">Schedules</a></li>
                 <li><a href="#">Policies</a></li>
-                <li><a href="#">Schedules</a></li>
-                <li><a href="#">NVD</a></li>
                 <li><a href="#">Database</a></li>
               </ul>
             </li>
@@ -207,10 +206,10 @@
 <!-- END PAGE LEVEL SCRIPTS -->
 <script>
 jQuery(document).ready(function() {
-   	InfoSec.init();
-   	Layout.init();
-    Overview.init(); // init index page
-    ServiceAccount.init();
+  InfoSec.init();
+  Layout.init();
+  ServiceAccount.init();
+  Overview.init();
 });
 </script>
 <!-- END JAVASCRIPTS -->

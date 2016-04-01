@@ -42,6 +42,5 @@ def upgrade():
                     sa.Column('created_at', sa.TIMESTAMP(timezone=False), default=_get_date),
                     sa.Column('updated_at', sa.TIMESTAMP(timezone=False), onupdate=_get_date))
 
-
 def downgrade():
     op.drop_table('inventory_hosts')
