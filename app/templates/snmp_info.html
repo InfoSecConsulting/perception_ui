@@ -1,0 +1,216 @@
+{% extends "base.html" %}
+
+{% block head %}
+
+{% block title %}{{request.path}}{% endblock %}
+
+{% endblock %}
+
+{% block content %}
+
+<!-- Page Content BEGIN -->
+<div class="page-content">
+
+  {% with messages = get_flashed_messages() %}
+		{% if messages %}
+			{% for message in messages %}
+    		<div class="flash">{{ message }}</div>
+  		{% endfor %}
+		{% endif %}
+	{% endwith %}
+
+  <!-- BEGIN BREADCRUMBS -->
+  <div class="breadcrumbs">
+    <h1>{{request.path}}</h1>
+    <ol class="breadcrumb">
+      <li><a href="#">/Home</a></li>
+      <li><a href="#">/Dashboard </a></li>
+      <li class="active">{{request.path}}</li>
+    </ol>
+  </div>
+  <!-- END BREADCRUMBS -->
+  <div class="row">
+    <div class="col-md-12 col-sm-12">
+
+          <!-- BEGIN  TABLE PORTLET-->
+      <div class="portlet box grey">
+        <div class="portlet-title">
+          <div class="caption">SNMP Info</div>
+          <div class="actions">
+            <a href="javascript:"
+               class="btn btn-default btn-sm"
+               id="add-snmp-info-btn">
+              <i class="fa fa-plus"></i> Add </a>
+          </div>
+        </div>
+
+        <div class="portlet-body">
+          <table class="table table-striped table-bordered table-hover" id="sample_3">
+            <thead>
+            <tr>
+              <th>Community String</th>
+              <th>SNMP User</th>
+              <th>SNMP Group</th>
+              <th>Edit</th>
+              <th>Delete</th>
+            </tr>
+            </thead>
+            {% for s in snmp_a %}
+            <tbody>
+            <tr class="odd gradeX">
+              <td>
+                {% if s.communitystring is not none: %}
+                  {{ s.community_string.decode() }}
+                {% endif %}
+              </td>
+              <td>
+                {% if s.snmp_user is not none: %}
+                  {{ s.snmp_user.decode() }}
+                {% endif %}
+              </td>
+              <td>
+                {% if s.snmp_group is not none: %}
+                  {{ s.snmp_group.decode() }}
+                {% endif %}
+              </td>
+              <td>
+                <div class="actions">
+                  <a href="javascript:"
+                     class="btn btn-default btn-sm"
+                     id="edit-snmp-info-btn"
+                     data-id="{{ s.id }}"
+                     data-cs="{% if s.community_string is not none %}{{s.community_string.decode()}}{%else %}none{%endif%}"
+                     data-v3user="{% if s.snmp_user is not none %}{{s.snmp_user.decode()}}{%else %}none{%endif%}"
+                     data-v3group="{% if s.snmp_group is not none %}{{ s.snmp_group.decode()}}{%else %}none{%endif%}">
+                    <i class="fa fa-pencil"></i> Edit </a>
+                </div>
+              </td>
+              <td>
+                <div class="actions">
+                  <a href="javascript:"
+                     class="btn btn-default btn-sm"
+                     id="delete-snmp-info-btn"
+                     data-id="{{ s.id }}">
+                    <i class="fa fa-remove"></i> Delete </a>
+                </div>
+              </td>
+            </tr>
+            </tbody>
+            {% endfor %}
+          </table>
+        </div>
+      </div>
+
+      <!-- form to add snmp info -->
+      <form class="snmp-info-form portlet light bordered" action="{{ url_for('settings.snmp_info') }}" method="post">
+        {{ snmp_info_form.hidden_tag() }}
+
+        <div class="form-body">
+
+          <h3 class="form-section">Add SNMP Community Strings</h3>
+          <div class="row">
+            <div class="col-md-12">
+              <div class="form-group">
+                <label class="control-label">Community Strings</label>
+                <input type="text" id="community-strings" name="strings" class="form-control" placeholder="public, private">
+                <span class="help-block">
+                  Add community strings separated by commas </span>
+              </div>
+            </div>
+          </div>
+
+          <h3 class="form-section">Add SNMP v3 Usernames and Groups</h3>
+          <div class="row">
+            <div class="col-md-12">
+              <div class="form-group">
+                <label class="control-label">SNMP v3 Users and Groups</label>
+                <input type="text" id="users-and-groups" name="users" class="form-control" placeholder="snmp_user1:snmp_group1, snmp_user2:snmp_group2">
+                <span class="help-block">
+                  Add SNMP v3 User and Group pairs separated by a colon, and multiple pairs separated by commas </span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="form-actions noborder">
+            <button type="submit" class="btn blue"
+                    value="{{ request.form.submit }}">{{ snmp_info_form.submit.label }}</button>
+
+            <button id="add-snmp-info-back-btn"
+                    type="button"
+                    class="btn default">Cancel</button>
+        </div>
+      </form>
+
+      <!-- form to add snmp info -->
+      <form class="edit-snmp-info-form portlet light bordered" action="{{ url_for('settings.snmp_info') }}" method="post">
+        {{ edit_snmp_info_form.hidden_tag() }}
+        <div class="form-body" id="dialog">
+          <table class="table table-striped table-bordered table-hover" id="dialog_table">
+            <thead>
+            <tr>
+              <th>Community String</th>
+              <th>SNMP User</th>
+              <th>SNMP Group</th>
+              <th>Cancel</th>
+              <th>Submit</th>
+            </tr>
+            </thead>
+
+            <tbody>
+            <tr class="odd gradeX">
+              <td>
+                <input type="text"
+                       id="community_string"
+                       name="community_string"
+                       class="form-control"
+                       placeholder="community_string">
+              </td>
+
+              <td>
+                <input type="text"
+                       id="user"
+                       name="user"
+                       class="form-control"
+                       placeholder="user">
+              </td>
+
+              <td>
+                <input type="text"
+                       id="group"
+                       name="group"
+                       class="form-control"
+                       placeholder="group">
+              </td>
+
+              <td>
+                <div class="form-actions noborder">
+
+                  <button id="edit-snmp-info-back-btn"
+                          type="button"
+                          class="btn default">Cancel</button>
+                </div>
+              </td>
+
+              <td>
+                <div class="form-actions noborder">
+                  <button type="submit"
+                          class="btn blue"
+                          id="submit-snmp-info-btn">Submit</button>
+                </div>
+              </td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+      </form>
+
+    </div>
+    <!--END COl-->
+  </div>
+  <!--END ROW-->
+</div>
+
+<!-- Page Content END -->
+{% endblock %}
