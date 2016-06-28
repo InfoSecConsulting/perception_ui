@@ -1,10 +1,8 @@
 #
 # Database connection info
 
-host: dbsvr
+host: localhost
 drivername: postgresql
 database: perception
-pool: 5
-timeout: 5000
 username: perception
 password: perception
