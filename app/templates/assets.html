@@ -47,13 +47,18 @@
               <th>OS Vendor</th>
               <th>Info</th>
               <th>Comments</th>
+              <th>Data Added</th>
+              <th>Data Updated</th>
             </tr>
             </thead>
 
             {% for host in inventory_hosts%}
             <tbody>
             <tr class="odd gradeX">
-              <td>{{ host.host_name }}</td>
+              <td>
+                <a href="individual_asset?data_id={{ host.id }}" id="show-individual-asset">
+                  {{ host.host_name }}
+                </a></td>
               <td>{{ host.ipv4_addr }}</td>
               <td>{{ host.mac_vendor.name }}</td>
               <td>{{ host.host_type }}</td>
@@ -63,6 +68,8 @@
                   {% endif %} </td>
               <td>{{ host.info }}</td>
               <td>{{ host.comments }}</td>
+              <td>{{ host.created_at.strftime('%b-%d-%Y %H:%M') }}</td>
+              <td>{{ host.updated_at.strftime('%b-%d-%Y %H:%M') }}</td>
             </tr>
             </tbody>
             {% endfor %}
