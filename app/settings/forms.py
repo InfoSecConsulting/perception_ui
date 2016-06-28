@@ -20,6 +20,7 @@ class Seeds(Form):
   #snmp_group = StringField('SNMP Group')
   submit = SubmitField('Submit')
 
+
 class ServiceAccounts(Form):
   username = StringField('Username')
   password = PasswordField('Password')
@@ -29,3 +30,21 @@ class ServiceAccounts(Form):
   #smb_user = BooleanField('smb_user')
   domain_name = StringField('Domain Name')
   description = StringField('Description')
+
+
+class Targets(Form):
+  ip_addr = StringField('Ip Address')
+  subnet = StringField('Subnet or CIDR')
+  submit = SubmitField('Submit')
+
+
+class SnmpInfo(Form):
+  strings = StringField('strings')
+  users = StringField('users')
+  submit = SubmitField('Submit')
+
+class EditSnmpInfo(Form):
+  string = StringField('string')
+  user = StringField('user')
+  group = StringField('group')
+  submit = SubmitField('Submit')
