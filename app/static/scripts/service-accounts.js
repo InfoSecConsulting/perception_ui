@@ -62,10 +62,19 @@ var ServiceAccount = function(){
     */
 
     jQuery('#add-svc-acc-btn').click(function() {
-              jQuery('.portlet-body').hide();
-              jQuery('.svc-acc-form').show();
+      jQuery('.portlet-body').hide();
+      jQuery('.svc-acc-form').show();
     });
-
+       
+    jQuery('#delete-svc-acc-btn').live('click', function() {
+      $.ajax({
+        url: '/delete_service_accounts?data_id='+$(this).data("id")+'&data_set='+$(this).data("set"),
+        type: 'POST',
+        //data: {data_id: },
+        success: function(result) {
+          location.reload();
+        }});
+    });
     jQuery('#add-svc-acc-back-btn').click(function() {
             jQuery('.portlet-body').show();
             jQuery('.svc-acc-form').hide();
@@ -73,11 +82,13 @@ var ServiceAccount = function(){
 
     jQuery('#radio6').click(function(){
             jQuery('.form-domain-name').show();
+            jQuery('.form-enable').hide();
 
     });
 
     jQuery('#radio7').click(function(){
             jQuery('.form-domain-name').hide();
+            jQuery('.form-enable').show();
 
     });
 
