@@ -1,7 +1,7 @@
 from os import getenv
 from flask.ext.script import Manager
 from app import create_app, db
-from app.main.models import SnmpString
+from app.main.models import SnmpString, DaysOfTheWeek, ScheduleTypes
 from app.auth.models import TimeZones, AppUser
 from sqlalchemy.exc import IntegrityError
 
@@ -14,6 +14,17 @@ manager = Manager(web_app)
 def seed_db():
 
   # Add seed data to the database
+
+  days_of_the_week = ['Sunday',
+                      'Monday',
+                      'Tuesday',
+                      'Wednesday',
+                      'Thursday',
+                      'Friday',
+                      'Saturday']
+
+  schedule_types = ['Discovery',
+                    'Vulnerability']
 
   snmp_strings = ['public',
                   'private']
@@ -180,6 +191,22 @@ def seed_db():
     db.session.commit()
   except IntegrityError:
     db.session.rollback()
+
+  for element in days_of_the_week:
+    try:
+      d = DaysOfTheWeek(name=element)
+      db.session.add(d)
+      db.session.commit()
+    except IntegrityError:
+      db.session.rollback()
+
+  for element in schedule_types:
+    try:
+      sch = ScheduleTypes(name=element)
+      db.session.add(sch)
+      db.session.commit()
+    except IntegrityError:
+      db.session.rollback()
 
   for element in snmp_strings:
     try:
