@@ -1,0 +1,104 @@
+{% extends "base.html" %}
+
+{% block head %}
+
+{% block title %}{{request.path}}{% endblock %}
+
+{% endblock %}
+
+{% block content %}
+
+<!-- Page Content BEGIN -->
+<div class="page-content">
+
+	<!-- BEGIN BREADCRUMBS -->
+	<div class="breadcrumbs">
+		<h1>{{request.path}}</h1>
+		<ol class="breadcrumb">
+			<li><a href="#">/Home</a></li>
+			<li><a href="#">/Dashboard</a></li>
+			<li class="active">{{request.path}}</li>
+		</ol>
+	</div>
+	<!-- END BREADCRUMBS -->
+
+  <div class="row">
+    <div class="col-md-12 col-sm-12">
+      <!-- BEGIN  TABLE PORTLET-->
+      <div class="portlet box grey">
+        <div class="portlet-title">
+          <div class="caption">Individual Asset</div>
+          <div class="actions">
+            <a href="javascript:"
+               class="btn btn-default btn-sm">
+              <i class="fa fa-print"></i> Print </a>
+          </div>
+        </div>
+
+        <div class="portlet-body">
+          <table class="table table-striped table-bordered table-hover" id="sample_3">
+            <thead>
+            <tr>
+              <th>Host</th>
+              <th>IP Address</th>
+              <th>Protocol</th>
+              <th>Port</th>
+              <th>Product</th>
+              <th>Vendor</th>
+              <th>Version</th>
+              <th>Update</th>
+              <th>Edition</th>
+              <th>Extra Info</th>
+              <th>Data Updated</th>
+            </tr>
+            </thead>
+
+            {% for service in services%}
+            <tbody>
+            <tr class="odd gradeX">
+              <td>{{ service.inventory_host.host_name }}</td>
+              <td>{{ service.inventory_host.ipv4_addr }}</td>
+              <td>{{ service.protocol }}</td>
+              <td>{{ service.portid }}</td> <!-- <i class="fa fa-linux"></i> -->
+              <td>{{ service.product.name }}</td>
+              <td>{% if service.product_id is none %}None{% else %}{{service.product.name}}{% endif %}</td>
+              <td>{{ service.product.version }}</td>
+              <td>{{ service.product.update }}</td>
+              <td>{{ service.product.edition }}</td>
+              <td>{{ service.extra_info }}</td>
+              <td>{{ service.updated_at.strftime('%b-%d-%Y %H:%M') }}</td>
+            </tr>
+            </tbody>
+            {% endfor %}
+          </table>
+
+          <table class="table table-striped table-bordered table-hover" id="sample_3">
+            <thead>
+            <tr>
+              <th>NSE Script Name</th>
+              <th>Output</th>
+            </tr>
+            </thead>
+
+            {% for script in nse_scripts %}
+            {% for x in script %}
+            <tbody>
+            <tr class="odd gradeX">
+              <td>{{ x.name }}</td>
+              <td>{{ x.output }}</td>
+            </tr>
+            </tbody>
+            {% endfor %}
+            {% endfor %}
+
+          </table>
+        </div>
+      </div>
+      <!-- END TABLE -->
+    </div>
+    <!--END COl-->
+  </div>
+  <!--END ROW-->
+</div>
+
+{% endblock %}
