@@ -1,8 +1,9 @@
 from os import getenv
 from flask.ext.script import Manager
 from app import create_app, db
-from app.main.models import SnmpString, DaysOfTheWeek, ScheduleTypes
+from app.main.models import SnmpString, DayOfTheWeek, ScheduleType
 from app.auth.models import TimeZones, AppUser
+from app.lib.crypt import decrypt_string
 from sqlalchemy.exc import IntegrityError
 
 web_app = create_app(getenv('FLASK_CONFIG') or 'default')
@@ -186,6 +187,25 @@ def seed_db():
                           lastname='Istrator',
                           phone='5558765309',
                           company='ACME, Inc.')
+
+  strings = SnmpString.query.all()
+  community_strings = list()
+
+  for s in strings:
+    community_string = decrypt_string(s.community_string_encrypted.encode("utf-8"),
+                                      s.community_string_encrypted_salt.encode("utf-8"))
+    if community_string.decode() not in community_strings:
+      community_strings.append(community_string.decode())
+
+  for element in snmp_strings:
+    try:
+      if element not in community_strings:
+        c = SnmpString(community_string=element)
+        db.session.add(c)
+        db.session.commit()
+    except IntegrityError:
+      db.session.rollback()
+
   try:
     db.session.add(default_admin)
     db.session.commit()
@@ -194,7 +214,7 @@ def seed_db():
 
   for element in days_of_the_week:
     try:
-      d = DaysOfTheWeek(name=element)
+      d = DayOfTheWeek(name=element)
       db.session.add(d)
       db.session.commit()
     except IntegrityError:
@@ -202,16 +222,8 @@ def seed_db():
 
   for element in schedule_types:
     try:
-      sch = ScheduleTypes(name=element)
+      sch = ScheduleType(name=element)
       db.session.add(sch)
-      db.session.commit()
-    except IntegrityError:
-      db.session.rollback()
-
-  for element in snmp_strings:
-    try:
-      c = SnmpString(community_string=element)
-      db.session.add(c)
       db.session.commit()
     except IntegrityError:
       db.session.rollback()
