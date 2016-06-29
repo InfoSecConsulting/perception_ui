@@ -191,11 +191,12 @@ def seed_db():
   strings = SnmpString.query.all()
   community_strings = list()
 
-  for s in strings:
-    community_string = decrypt_string(s.community_string_encrypted.encode("utf-8"),
-                                      s.community_string_encrypted_salt.encode("utf-8"))
-    if community_string.decode() not in community_strings:
-      community_strings.append(community_string.decode())
+  if strings:
+    for s in strings:
+      community_string = decrypt_string(s.community_string_encrypted.encode("utf-8"),
+                                        s.community_string_encrypted_salt.encode("utf-8"))
+      if community_string.decode() not in community_strings:
+        community_strings.append(community_string.decode())
 
   for element in snmp_strings:
     try:
