@@ -50,7 +50,7 @@ class OpenvasAdmin(db.Model):
 
   id = db.Column(db.Integer, db.Sequence('openvas_admin_id_seq'), primary_key=True, nullable=False)
   username = db.Column(db.Text, unique=True, nullable=False)
-  password = db.Column(db.TEXT, nullable=False)
+  password = db.Column(postgresql.UUID, nullable=False)
   created_at = db.Column(db.TIMESTAMP(timezone=False), default=_get_date)
   updated_at = db.Column(db.TIMESTAMP(timezone=False), onupdate=_get_date)
 
@@ -354,7 +354,7 @@ class Target(db.Model):
       self.subnet = subnet
 
 
-class DaysOfTheWeek(db.Model):
+class DayOfTheWeek(db.Model):
   __tablename__ = 'days_of_the_week'
 
   id = db.Column(db.Integer, db.Sequence('days_of_the_week_id_seq'), primary_key=True, nullable=False)
@@ -362,7 +362,7 @@ class DaysOfTheWeek(db.Model):
   created_at = db.Column(db.TIMESTAMP(timezone=False), default=_get_date)
 
 
-class ScheduleTypes(db.Model):
+class ScheduleType(db.Model):
   __tablename__ = 'schedule_types'
 
   id = db.Column(db.Integer, db.Sequence('schedule_types_id_seq'), primary_key=True, nullable=False)
@@ -370,28 +370,35 @@ class ScheduleTypes(db.Model):
   created_at = db.Column(db.TIMESTAMP(timezone=False), default=_get_date)
 
 
-class Schedules(db.Model):
+class Schedule(db.Model):
   __tablename__ = 'schedules'
 
   id = db.Column(db.Integer, db.Sequence('schedules_id_seq'), primary_key=True, nullable=False)
   name = db.Column(db.Text, nullable=False)
 
+  """Relation to schedule_types"""
   schedule_type_id = db.Column(db.Integer, db.ForeignKey('schedule_types.id'))
-  schedule_types = db.relationship('ScheduleTypes', backref='schedules', order_by=id)
+  schedule_types = db.relationship('ScheduleType', backref='schedules', order_by=id)
+
+  dynamic = db.Column(db.BOOLEAN)
 
   start_date = db.Column(db.TIMESTAMP(timezone=False))
   created_at = db.Column(db.TIMESTAMP(timezone=False), default=_get_date)
   updated_at = db.Column(db.TIMESTAMP(timezone=False), onupdate=_get_date)
 
 
-class DailySchedules(db.Model):
+class DailySchedule(db.Model):
   __tablename__ = 'daily_schedules'
 
   id = db.Column(db.Integer, db.Sequence('daily_schedules_id_seq'), primary_key=True, nullable=False)
-  schedule_id = db.Column(db.Integer, db.ForeignKey('schedules.id'), nullable=False)
 
+  """Relation to schedules"""
+  schedule_id = db.Column(db.Integer, db.ForeignKey('schedules.id'), nullable=False)
+  schedules = db.relationship('Schedule', backref='daily_schedules', order_by=id)
+
+  """Relation to days_of_week"""
   day_of_week_id = db.Column(db.Integer, db.ForeignKey('days_of_the_week.id'), nullable=False)
-  days_of_week = db.relationship('DaysOfTheWeek', backref='daily_schedules', order_by=id)
+  days_of_week = db.relationship('DayOfTheWeek', backref='daily_schedules', order_by=id)
 
   time_of_day = db.Column(db.TIME, nullable=False)
   start_date = db.Column(db.TIMESTAMP(timezone=False), nullable=False)
@@ -401,16 +408,18 @@ class DailySchedules(db.Model):
   updated_at = db.Column(db.TIMESTAMP(timezone=False), onupdate=_get_date)
 
 
-class WeeklySchedules(db.Model):
+class WeeklySchedule(db.Model):
   __tablename__ = 'weekly_schedules'
 
   id = db.Column(db.Integer, db.Sequence('daily_schedules_id_seq'), primary_key=True, nullable=False)
 
+  """Relation to schedules"""
   schedule_id = db.Column(db.Integer, db.ForeignKey('schedules.id'), nullable=False)
-  schedules = db.relationship('Schedules', backref='weekly_schedules', order_by=id)
+  schedules = db.relationship('Schedule', backref='weekly_schedules', order_by=id)
 
+  """Relation to days_of_week"""
   day_of_week_id = db.Column(db.Integer, db.ForeignKey('days_of_the_week.id'), nullable=False)
-  days_of_week = db.relationship('DaysOfTheWeek', backref='weekly_schedules', order_by=id)
+  days_of_week = db.relationship('DayOfTheWeek', backref='weekly_schedules', order_by=id)
 
   time_of_day = db.Column(db.TIME, nullable=False)
   start_date = db.Column(db.TIMESTAMP(timezone=False), nullable=False)
@@ -420,13 +429,14 @@ class WeeklySchedules(db.Model):
   updated_at = db.Column(db.TIMESTAMP(timezone=False), onupdate=_get_date)
 
 
-class MonthlySchedules(db.Model):
+class MonthlySchedule(db.Model):
   __tablename__ = 'monthly_schedules'
 
   id = db.Column(db.Integer, db.Sequence('monthly_schedules_id_seq'), primary_key=True, nullable=False)
 
+  """Relation to schedules"""
   schedule_id = db.Column(db.Integer, db.ForeignKey('schedules.id'), nullable=False)
-  schedules = db.relationship('Schedules', backref='monthly_schedules', order_by=id)
+  schedules = db.relationship('Schedule', backref='monthly_schedules', order_by=id)
 
   day_of_month = db.Column(db.Integer, nullable=False)
   time_of_day = db.Column(db.TIME, nullable=False)
@@ -434,27 +444,66 @@ class MonthlySchedules(db.Model):
   updated_at = db.Column(db.TIMESTAMP(timezone=False), onupdate=_get_date)
 
 
-class OneTimeSchedules(db.Model):
+class OneTimeSchedule(db.Model):
   __tablename__ = 'one_time_schedules'
 
   id = db.Column(db.Integer, db.Sequence('one_time_schedules_id_seq'), primary_key=True, nullable=False)
 
+  """Relation to schedules"""
   schedule_id = db.Column(db.Integer, db.ForeignKey('schedules.id'), nullable=False)
-  schedules = db.relationship('Schedules', backref='one_time_schedules', order_by=id)
+  schedules = db.relationship('Schedule', backref='one_time_schedules', order_by=id)
 
   start_date = db.Column(db.TIMESTAMP(timezone=False), nullable=False)
   created_at = db.Column(db.TIMESTAMP(timezone=False), default=_get_date)
   updated_at = db.Column(db.TIMESTAMP(timezone=False), onupdate=_get_date)
 
 
-class Tasks(db.Model):
+class Task(db.Model):
   __tablename__ = 'tasks'
 
   id = db.Column(db.Integer, db.Sequence('tasks_id_seq'), primary_key=True, nullable=False)
 
+  """Relation to schedules"""
   schedule_id = db.Column(db.Integer, db.ForeignKey('schedules.id'), nullable=False)
-  schedules = db.relationship('Schedules', backref='tasks', order_by=id)
+  schedules = db.relationship('Schedule', backref='tasks', order_by=id)
 
   run_date = db.Column(db.TIMESTAMP(timezone=False), nullable=False)
   created_at = db.Column(db.TIMESTAMP(timezone=False), default=_get_date)
   updated_at = db.Column(db.TIMESTAMP(timezone=False), onupdate=_get_date)
+
+
+class Vulnerability(db.Model):
+  __tablename__ = 'vulnerabilities'
+
+  id = db.Column(db.Integer, primary_key=True, nullable=False)
+  name = db.Column(db.Text, nullable=False)
+  cvss_score = db.Column(db.Float, nullable=False)
+  bug_id = db.Column(db.Text)
+  family = db.Column(db.Text)
+  cve_id = db.Column(db.Text)
+
+  """Relation to inventory_hosts"""
+  inventory_host_id = db.Column(db.Integer, db.ForeignKey('inventory_hosts.id', ondelete='cascade'))
+  inventory_host = db.relationship('InventoryHost', backref='vulnerabilities', order_by=id)
+
+  port = db.Column(db.Text)
+  threat_score = db.Column(db.Text)
+  severity_score = db.Column(db.Float)
+  xrefs = db.Column(db.Text)
+  tags = db.Column(db.Text)
+  validated = db.Column(db.BOOLEAN),
+  created_at = db.Column(db.TIMESTAMP(timezone=False), default=_get_date)
+
+
+class ScheduleIndex(db.Model):
+  __tablename__ = 'schedules_index'
+
+  id = db.Column(db.Integer, primary_key=True, nullable=False)
+
+  """Relation to schedules"""
+  schedule_id = db.Column(db.Integer, db.ForeignKey('schedules.id'), nullable=False)
+  schedules = db.relationship('Schedule', backref='schedule_index', order_by=id)
+
+  """Relation to targets"""
+  target_id = db.Column(db.Integer, db.ForeignKey('targets.id', ondelete='cascade'))
+  target = db.relationship('Target', backref='schedule_index', order_by=id)
