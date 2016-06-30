@@ -1,10 +1,10 @@
 # Import flask dependencies
-from app.main.models import CoreRouter, LinuxUser, SmbUser, Target, SnmpString
+from app.main.models import CoreRouter, LinuxUser, SmbUser, Target, SnmpString, Schedule
 from flask import request, render_template, flash, redirect, url_for
 from sqlalchemy.exc import IntegrityError
 from app import db
 from . import settings
-from .forms import Seeds, ServiceAccounts, Targets, SnmpInfo, EditSnmpInfo
+from .forms import Seeds, ServiceAccounts, Targets, SnmpInfo, EditSnmpInfo, SchedulesInfo
 from flask.ext.login import login_required
 from ipaddress import ip_address
 from app.lib.crypt import decrypt_string
@@ -265,4 +265,14 @@ def delete_snmp_info():
 @settings.route('/schedules', methods=['GET', 'POST'])
 @login_required
 def schedules():
-  return render_template('schedules.html')
+  schedules_info_form = SchedulesInfo(request.form)
+
+  if request.method == 'POST':
+    if schedules_info_form.validate_on_submit():
+      if schedules_info_form.name.data:
+        s_name = schedules_info_form.name.data
+
+  if request.method == 'GET':
+    all_schedules = Schedule.query.all()
+
+  return render_template('schedules.html', all_schedules=all_schedules, schedules_info_form=schedules_info_form)
