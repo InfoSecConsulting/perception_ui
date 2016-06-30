@@ -27,6 +27,7 @@ def upgrade():
                   sa.Column('name', sa.Text, nullable=False),
                   sa.Column('schedule_type_id', sa.Integer, sa.ForeignKey('schedule_types.id')),
                   sa.Column('start_date', sa.TIMESTAMP(timezone=False)),
+                  sa.Column('dynamic', sa.BOOLEAN),
                   sa.Column('created_at', sa.TIMESTAMP(timezone=False), default=_get_date),
                   sa.Column('updated_at', sa.TIMESTAMP(timezone=False), onupdate=_get_date))
 
