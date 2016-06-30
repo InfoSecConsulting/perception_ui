@@ -39,7 +39,7 @@
           <div class="actions">
             <a href="javascript:"
                class="btn btn-default btn-sm"
-                id="add-svc-acc-btn">
+                id="add-schedule-btn">
               <i class="fa fa-plus"></i> Add </a>
           </div>
         </div>
@@ -49,15 +49,14 @@
             <thead>
             <tr>
               <th>Task Name</th>
-              <th>Next Due</th>
+              <th>Task Type</th>
               <th>Scheduled</th>
               <th>Enable</th>
               <th>Run now</th>
             </tr>
             </thead>
 
-
-
+            {% for s in all_schedules %}
             <tbody>
             <tr class="odd gradeX">
               <td></td>
@@ -79,10 +78,41 @@
               <td><i class="fa fa-windows"></i></td>
             </tr>
             </tbody>
+            {% endfor %}
 
           </table>
         </div>
       </div>
+      <!-- form to add a schedule -->
+      <form class="schedules-form portlet light bordered" action="{{ url_for('settings.schedules') }}" method="post">
+        {{ schedules_info_form.hidden_tag() }}
+
+        <div class="row">
+          <div class="col-md-3">
+            <div class="form-group form-md-line-input form-md-floating-label">
+              <input type="text"
+                     class="form-control"
+                     autocomplete="off"
+                     name = "username"
+                     value="{{ request.form.username }}">
+              <label>{{ schedules_info_form.name.label }}</label>
+              <span class="help-block">Enter the friendly name for the schedule</span>
+            </div>
+          </div>
+          <!--end col-->
+
+          <div class="form-actions noborder">
+
+            <button type="submit" class="btn blue"
+                    value="{{ request.form.submit }}">{{ schedules_info_form.submit.label }}</button>
+
+            <button id="add-schedule-back-btn"
+                    type="button"
+                    class="btn default">Cancel</button>
+          </div>
+        </div>
+      </form>
+      <!-- END TABLE -->
     </div>
     <!--END COl-->
   </div>
