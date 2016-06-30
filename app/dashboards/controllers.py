@@ -1,5 +1,5 @@
 from . import dashboards
-from app.main.models import InventoryHost, InventorySvc, SvcNseScript
+from app.main.models import InventoryHost, InventorySvc, SvcNseScript, Vulnerability
 from flask import render_template, request, jsonify
 from flask.ext.login import login_required
 
@@ -22,6 +22,7 @@ def individual_asset():
     nse_scripts = list()
     data_id = request.args.get('data_id')
     services = InventorySvc.query.filter_by(inventory_host_id=data_id).all()
+    vulns = Vulnerability.query.filter_by(inventory_host_id=data_id).all()
 
     for service in services:
       svc_nse_script = SvcNseScript.query.filter_by(inventory_svc_id=service.id).all()
@@ -39,4 +40,4 @@ def individual_asset():
 
     #return jsonify(svc_list=svc_list)
 
-    return render_template('individual_asset.html', services=services, nse_scripts=nse_scripts)
+    return render_template('individual_asset.html', services=services, nse_scripts=nse_scripts, vulns=vulns)
