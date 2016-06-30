@@ -43,8 +43,14 @@ class SnmpInfo(Form):
   users = StringField('users')
   submit = SubmitField('Submit')
 
+
 class EditSnmpInfo(Form):
   string = StringField('string')
   user = StringField('user')
   group = StringField('group')
+  submit = SubmitField('Submit')
+
+
+class SchedulesInfo(Form):
+  name = StringField('Schedule Name')
   submit = SubmitField('Submit')
